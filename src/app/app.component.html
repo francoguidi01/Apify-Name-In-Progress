@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div>
+    <router-outlet></router-outlet>
+    <p>HOLAA ESTAS SON LAS CANCIONES DEL ALBUM APACHURRA EL BOTON PARA CONTINUAR:</p>
+    <button type="button" class="btn btn-info" (click)="promedio_popularity()">VER</button>
+    <div *ngIf="show_promedio">
+      <span> Tu promedio: {{ promedio }}</span>
+      <br>
+      <span> mi pronostico es que: {{you_are_normie}}</span>
+    </div>
+    <div>
+      <table class="table table-success table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Track Name</th>
+            <th scope="col">Artist (first one)</th>
+            <th scope="col">Album name</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Id</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="playlist">
+          <tr *ngFor="let song of playlist.tracks.items">
+            <td>{{song.track.name}}</td>
+            <td> {{song.track.artists[0].name}} </td>
+            <td>{{song.track.album.name }}</td>
+            <td> {{song.track.duration_ms * 60000}}</td>
+            <td>{{ song.track.id}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+</div>
+
+
+<!--*ngFor="let song of playlist.tracks.items"
+{{song.track.name}}-->
