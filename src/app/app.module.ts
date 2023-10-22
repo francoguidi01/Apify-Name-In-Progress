@@ -9,13 +9,15 @@ import { GuessSongComponent } from './component/guess-song/guess-song.component'
 import { HttpClientModule } from '@angular/common/http';
 import { SpotifyService } from './service/spotify.service';
 import { MakeAPlaylistComponent } from './component/make-a-playlist/make-a-playlist.component';
+import { PromedioComponent } from './promedio/promedio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     GuessSongComponent,
-    MakeAPlaylistComponent
+    MakeAPlaylistComponent,
+    PromedioComponent
   ],
   imports: [
     BrowserModule,

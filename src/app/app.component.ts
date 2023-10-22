@@ -9,6 +9,7 @@ export class AppComponent {
   title = 'apify';
   token: any;
   playlist: any;
+  playlisturl=''
 
   constructor(private service: SpotifyService) { }
 
@@ -18,16 +19,13 @@ export class AppComponent {
       //console.log('El token papucho: ', token);
 
       // Llama a getPlaylist dentro de la suscripción para asegurarte de tener el token
-      this.service.getPlaylist(this.token).subscribe(playlist => {
+      this.service.getPlaylist(this.token,this.playlisturl).subscribe(playlist => {
         this.playlist = playlist;
         // console.log('Datos de la playlist:', playlist);
 
         //console.log('tu lenght es: ', this.playlist.tracks.items.length);
 
         //console.log('tu promedio de popularidad es: ', prom);
-
-
-
 
       });
     });
