@@ -3,7 +3,7 @@
         <h1>🎵 Guess the Song 🎵</h1>
 
         <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-outline-dark" type="button" (click)="getThePlaylistForGuess()">Empezar a jugar</button>
+            <button class="btn btn-dark" type="button" (click)="getThePlaylistForGuess()">Empezar a jugar</button>
         </div>
 
         <div class="hints">
@@ -15,12 +15,12 @@
         
         <audio controls id="audioPlayer"></audio>
 
-        <div class="d-grid gap-2 d-md-block">
-            <button *ngFor="let song of randomSongs" class="btn btn-outline-success" type="button"
+        <div>
+            <button *ngFor="let song of randomSongs" class="btn btn-success btn-sm" type="button"
                 (click)="handleOptionClick(song)">{{ song.track.name }}</button>
         </div>
 
-        <button type="button" class="btn btn-outline-warning" (click)="showHint()">Hint</button>
+        <button type="button" class="btn btn-warning btn-sm" (click)="showHint()" [disabled]="hintButtonDisabled">Hint</button>
 
     </div>
 </body>

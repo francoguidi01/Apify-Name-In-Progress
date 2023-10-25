@@ -61,4 +61,24 @@ export class SpotifyService {
       );
   }
 
+  getFollowed(token: TokenModel): Observable<any> {
+    if (!token) {
+      console.error('Error: Token no disponible. Debes obtener el token primero.');
+      return of(null);
+    }
+  
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token.access_token
+    });
+  
+    return this._httpClient.get('https://api.spotify.com/v1/me/top/artists', { headers })
+    .pipe(
+      map((response: any) => {
+        console.log('TOP ARTISTS:', response);
+        return response; 
+      }),
+    );
+  }
+  
+
 }
