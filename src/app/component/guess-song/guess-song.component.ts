@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { SpotifyService } from './service/spotify.service';
+import { SpotifyService } from '../../service/spotify.service';
 
 @Component({
   selector: 'app-guess-song',

@@ -5,21 +5,23 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { TokenModel } from '../models/token-model';
 import { Token } from '@angular/compiler';
+import { environment } from 'src/environments/environment.development';
 @Injectable({
   providedIn: 'root'
 })
 export class SpotifyService {
-  private API_SPOTIFY = 'https://accounts.spotify.com/';
-  private API_SPOTIFY_ALL_DATA = 'https://api.spotify.com/v1/';
+  private API_SPOTIFY = environment.API_SPOTIFY;
+  private API_SPOTIFY_ALL_DATA = environment.API_SPOTIFY_ALL_DATA;
   constructor(private _httpClient: HttpClient) { }
 
-  client_id = 'a00cd5e5b4d34c1996b89d04beaa411a';
-  client_secret_id = '6313d27a268747029d6c51a7d5ad34a7';
+
+  client_id = environment.client_id;
+  client_secret_id = environment.client_secret_id;
 
 
   get_token(): Observable<TokenModel> {
     // console.log(this.client_id);
-    const body = 'grant_type=client_credentials&client_id=' + this.client_id + '&client_secret=' + this.client_secret_id;
+    const body = 'grant_type=client_credentials&client_id=' + environment.client_id + '&client_secret=' + environment.client_secret_id;
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
