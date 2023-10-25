@@ -15,8 +15,10 @@ export class GuessSongComponent {
   randomSongs: any[] = [];
   winningTrack: any;
   turn: number = 0;
+  limitTime: number = 4;
   hintMessage: string = '';
   albumImageUrl: string = '';
+  hintButtonDisabled: boolean = false;
 
   constructor(private service: SpotifyService) { }
 
@@ -27,81 +29,96 @@ export class GuessSongComponent {
         this.playlist = playlist;
         this.playTheGame();
 
-        this.hintMessage = ''; 
-        this.albumImageUrl = ''; 
+        this.hintMessage = '';
+        this.albumImageUrl = '';
         this.turn = 0;
       });
     });
   }
 
   playTheGame() {
+    this.hintButtonDisabled = false;
     this.randomSongs = this.getRandomSongsFromPlaylist(this.playlist.tracks.items, 4);
     console.log('Canciones aleatorias:', this.randomSongs);
 
     const winningTrackIndex = Math.floor(Math.random() * 4);
-     this.winningTrack = this.randomSongs[winningTrackIndex];
+    this.winningTrack = this.randomSongs[winningTrackIndex];
     console.log(this.winningTrack);
 
     const audioPlayer: HTMLAudioElement = document.getElementById('audioPlayer') as HTMLAudioElement;
     audioPlayer.src = this.winningTrack.track.preview_url;
     audioPlayer.play();
 
-    
-    let limitTime = 3;
 
     audioPlayer.addEventListener('timeupdate', () => {
 
-      if (audioPlayer.currentTime >= limitTime) {
-          audioPlayer.pause();
-          audioPlayer.currentTime = 0;
+      if (audioPlayer.currentTime >= this.limitTime) {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
       }
-  });
+    });
 
-}
 
-showHint() {
-  if (this.turn === 0) {
-    this.hintMessage = `Año: ${this.winningTrack.track.album.release_date}`;
-  } else if (this.turn === 1) {
-    this.hintMessage = `Año: ${this.winningTrack.track.album.release_date} / Artista: ${this.winningTrack.track.artists[0].name}`;
-  } else if (this.turn === 2) {
-    this.hintMessage = `Año: ${this.winningTrack.track.album.release_date} / Artista: ${this.winningTrack.track.artists[0].name}`;
-    this.albumImageUrl = this.winningTrack.track.album.images[0].url;
   }
-  this.turn += 1;
-}
 
-handleOptionClick(selectedTrack: any) {
-  if (selectedTrack === this.winningTrack) {
-    alert('¡Ganaste!');
-  } else {
-    alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "');
+  showHint() {
+    if (!this.playlist) {
+      alert('Por que no esperas un poquito emocion'); 
+    }
+    else if (this.turn === 0) {
+      this.hintMessage = `Año: ${this.winningTrack.track.album.release_date}`;
+    } else if (this.turn === 1) {
+      this.hintMessage = `Año: ${this.winningTrack.track.album.release_date} / Artista: ${this.winningTrack.track.artists[0].name}`;
+    } else if (this.turn === 2) {
+      this.hintMessage = `Año: ${this.winningTrack.track.album.release_date} / Artista: ${this.winningTrack.track.artists[0].name}`;
+      this.albumImageUrl = this.winningTrack.track.album.images[0].url;
+      this.hintButtonDisabled = true;
+    }
+    this.turn += 1;
+    this.limitTime += 4;
   }
-  this.newGame();
-}
 
-newGame()
-{
-  this.playTheGame();
+  handleOptionClick(selectedTrack: any) {
+    if (selectedTrack === this.winningTrack) {
+      alert('¡Ganaste!');
+    } else {
+      alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "');
+    }
+    this.newGame();
+  }
 
-  this.hintMessage = ''; 
-  this.albumImageUrl = ''; 
-  this.turn = 0;
-}
+  newGame() {
+    this.playTheGame();
+
+    this.hintMessage = '';
+    this.albumImageUrl = '';
+    this.turn = 0;
+  }
 
   getRandomSongsFromPlaylist(playlist: any[], count: number): any[] {
+
+    if (!playlist || playlist.length === 0) {
+      console.error('La playlist no contiene canciones.');
+      return [];
+    }
+
     const randomSongs: any[] = [];
     const totalSongs = playlist.length;
+
     if (totalSongs <= count) {
       return playlist;
     }
 
     const selectedIndices: number[] = [];
+
     while (randomSongs.length < count) {
       const randomIndex = Math.floor(Math.random() * totalSongs);
-      if (!selectedIndices.includes(randomIndex)) {
+      const selectedSong = playlist[randomIndex];
+      if (
+        !selectedIndices.includes(randomIndex) && selectedSong.track.preview_url
+      ) {
         selectedIndices.push(randomIndex);
-        randomSongs.push(playlist[randomIndex]);
+        randomSongs.push(selectedSong);
       }
     }
 
