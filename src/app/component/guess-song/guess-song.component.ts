@@ -25,6 +25,7 @@ export class GuessSongComponent {
   getThePlaylistForGuess(): void {
     this.service.get_token().subscribe(token => {
       this.token = token;
+      console.log(this.token);
       this.service.getPlaylist(this.token, this.playlisturl).subscribe(playlist => {
         this.playlist = playlist;
         this.playTheGame();

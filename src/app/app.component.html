@@ -1,40 +1,31 @@
-<app-navbar></app-navbar>
-<div class="container">
-  <div>
-    <router-outlet></router-outlet>
-    <p>HOLAA ESTAS SON LAS CANCIONES DEL ALBUM APACHURRA EL BOTON PARA CONTINUAR:</p>
-    <button type="button" class="btn btn-info" (click)="promedio_popularity()">VER</button>
-    <div *ngIf="show_promedio">
-      <span> Tu promedio: {{ promedio }}</span>
-      <br>
-      <span> mi pronostico es que: {{you_are_normie}}</span>
+<router-outlet></router-outlet>
+<body class="background-image">
+  <div class="container">
+    <div class="section">
+      <div>
+        <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/spotify_logo_icon_168793.png" alt="Logo"
+          class="logo-image">
+        <h2 class="tagline">Únite y divertite un rato</h2>
+        <button type="button" class="btn btn-success" (click)="login()">Login</button>
+      </div>
     </div>
-    <div>
-      <table class="table table-success table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Track Name</th>
-            <th scope="col">Artist (first one)</th>
-            <th scope="col">Album name</th>
-            <th scope="col">Duration</th>
-            <th scope="col">Id</th>
-          </tr>
-        </thead>
-        <tbody *ngIf="playlist">
-          <tr *ngFor="let song of playlist.tracks.items">
-            <td>{{song.track.name}}</td>
-            <td> {{song.track.artists[0].name}} </td>
-            <td>{{song.track.album.name }}</td>
-            <td> {{song.track.duration_ms * 60000}}</td>
-            <td>{{ song.track.id}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    
+
+    <footer class="footer">
+      <div class="footer-content">
+
+        <a href="https://www.linkedin.com/in/kevin-tolosa-a3a328221" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="Botón" />
+        </a>
+
+        <a href="https://www.linkedin.com/in/franco-g%C3%BCidi/" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="Botón" />
+        </a>
+
+        <a href="https://github.com/francoguidi01/Apify-Name-In-Progress" target="_blank">
+          <img src="   https://cdn-icons-png.flaticon.com/512/733/733553.png " alt="Botón" />
+        </a>
+      </div>
+      <p>Proyecto X - Facultad de Profesores - Materia Y</p>
+    </footer>
   </div>
-</div>
-
-
-<!--*ngFor="let song of playlist.tracks.items"
-{{song.track.name}}-->
+</body>

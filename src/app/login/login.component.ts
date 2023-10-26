@@ -14,10 +14,10 @@ export class LoginComponent {
   
   constructor(private service: SpotifyService) { }
 
-  loginSpotify(): void {    
+  /*loginSpotify(): void {    
     const client_id = 'a00cd5e5b4d34c1996b89d04beaa411a';
     
-    const redirect_uri = "http://localhost:4200/login";
+    const redirect_uri = "http://localhost:4200/guess-song";
     
     const api_uri = "https://accounts.spotify.com/authorize";
     
@@ -35,14 +35,13 @@ export class LoginComponent {
     window.location.href = `${api_uri}?client_id=${client_id}&redirect_uri=${redirect_uri}&scope=${scope.join(
       "%20")}&response_type=token&show_dialog=true`;
       
-  }
+  }*/
 
   getAlgo(): void {
     this.service.get_token().subscribe(token => {
       this.token = token;
       this.service.getFollowed(this.token).subscribe(followedArtist => {
         this.followedArtist = followedArtist;
-       console.log(followedArtist);
       });
     });
   }
