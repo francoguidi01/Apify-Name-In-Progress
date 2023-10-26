@@ -19,8 +19,8 @@ export class SpotifyService {
 
   token: TokenModel = new TokenModel({ access_token: '', expires_in: 0, token_type: '' });
 
-  constructor(private _httpClient: HttpClient) { 
-this.token=JSON.parse(localStorage.getItem('token') || '{}');
+  constructor(private _httpClient: HttpClient) {
+    this.token = JSON.parse(localStorage.getItem('token') || '{}');
   }
 
   client_id = 'a00cd5e5b4d34c1996b89d04beaa411a';
@@ -59,30 +59,9 @@ this.token=JSON.parse(localStorage.getItem('token') || '{}');
     return result;
   }
 
-
-  /*get_token(): Observable<TokenModel> {
-    const token = JSON.parse(sessionStorage.getItem('token') || '{}');
-
-    const tokenData = this.getTokenDataFromUrl();
-
-    localStorage.setItem('token', JSON.stringify(tokenData));
-
-    console.log(tokenData);
-
-    const body = 'grant_type=client_credentials&client_id=' + this.client_id + '&client_secret=' + this.client_secret_id;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
-
-    return this._httpClient.post(`${this.API_SPOTIFY}api/token`, body, { headers })
-      .pipe(
-        map((data: any) => new TokenModel(tokenData))
-      );
-  }*/
-
   get_token(): Observable<TokenModel> {
     
-    const localTokenData = this.token;
+    const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
     
   const tokenData = this.getTokenDataFromUrl();
 
@@ -109,18 +88,18 @@ this.token=JSON.parse(localStorage.getItem('token') || '{}');
         && tokenData1.token_type === tokenData2.token_type;
   }
 
-  /*get_token(): Observable<TokenModel> {
-
-    const body = 'grant_type=client_credentials&client_id=' + this.client_id + '&client_secret=' + this.client_secret_id;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
-    
-    return this._httpClient.post(`${this.API_SPOTIFY}api/token`, body, { headers })
-    .pipe(
-      map((data: any) => new TokenModel(data))
-    );
-  }*/
+  /* get_token(): Observable<TokenModel> {
+ 
+     const body = 'grant_type=client_credentials&client_id=' + this.client_id + '&client_secret=' + this.client_secret_id;
+     const headers = new HttpHeaders({
+       'Content-Type': 'application/x-www-form-urlencoded'
+     });
+     
+     return this._httpClient.post(`${this.API_SPOTIFY}api/token`, body, { headers })
+     .pipe(
+       map((data: any) => new TokenModel(data))
+     );
+   }*/
 
   getPlaylist(token: TokenModel, playlistUrl: string): Observable<any> {
     if (!token) {

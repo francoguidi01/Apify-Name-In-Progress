@@ -38,12 +38,14 @@ export class LoginComponent {
   }*/
 
   getAlgo(): void {
-    this.service.get_token().subscribe(token => {
-      this.token = token;
-      this.service.getFollowed(this.token).subscribe(followedArtist => {
+    const localtoken= JSON.parse(localStorage.getItem('token') || '{}');
+    //this.service.get_token().subscribe(token => {
+      //this.token = token;
+      this.service.getFollowed(localtoken).subscribe(followedArtist => {
         this.followedArtist = followedArtist;
       });
-    });
-  }
+   // });
+ // }
+}
 
 }

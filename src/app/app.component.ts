@@ -18,14 +18,14 @@ export class AppComponent {
   constructor(private service: SpotifyService) { }
 
   ngOnInit(): void {
-    this.service.get_token().subscribe(token => {
+   /* this.service.get_token().subscribe(token => {
       this.token = token;
  
       this.service.getPlaylist(this.token,this.playlisturl).subscribe(playlist => {
         this.playlist = playlist;
      
       });
-    });
+    });*/
   }
 
   login(): void {

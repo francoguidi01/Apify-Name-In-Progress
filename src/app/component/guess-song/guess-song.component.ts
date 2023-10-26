@@ -20,13 +20,17 @@ export class GuessSongComponent {
   albumImageUrl: string = '';
   hintButtonDisabled: boolean = false;
 
-  constructor(private service: SpotifyService) { }
+  constructor(private service: SpotifyService) { 
+    this.token = JSON.parse(localStorage.getItem('token') || '{}');
+  }
 
   getThePlaylistForGuess(): void {
-    this.service.get_token().subscribe(token => {
-      this.token = token;
-      console.log(this.token);
-      this.service.getPlaylist(this.token, this.playlisturl).subscribe(playlist => {
+   // this.service.get_token().subscribe(token => {
+      //this.token = token;
+      const localtoken = JSON.parse(localStorage.getItem('token') || '{}');
+
+      console.log(localtoken);
+      this.service.getPlaylist(localtoken, this.playlisturl).subscribe(playlist => {
         this.playlist = playlist;
         this.playTheGame();
 
@@ -34,7 +38,7 @@ export class GuessSongComponent {
         this.albumImageUrl = '';
         this.turn = 0;
       });
-    });
+    //});
   }
 
   playTheGame() {
