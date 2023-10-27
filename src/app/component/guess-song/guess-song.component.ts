@@ -28,15 +28,16 @@ export class GuessSongComponent {
   
       const localtoken = JSON.parse(localStorage.getItem('token') || '{}');
 
-      console.log(localtoken);
-
       this.service.getPlaylist(localtoken, this.playlisturl).subscribe(playlist => {
-        this.playlist = playlist;
-        this.playTheGame();
-
-        this.hintMessage = '';
-        this.albumImageUrl = '';
-        this.turn = 0;
+        if (playlist) {
+          this.playlist = playlist;
+          this.playTheGame();
+          this.hintMessage = '';
+          this.albumImageUrl = '';
+          this.turn = 0;
+        } else {
+          console.error('La lista de reproducción no está disponible.');
+        }
       });
 
   }

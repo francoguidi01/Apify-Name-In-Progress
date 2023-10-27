@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { SpotifyService } from '../service/spotify.service';
-import { environment } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-login',
@@ -13,22 +12,25 @@ export class LoginComponent {
   token: any;
   followedArtist: any;
   
-  constructor(private service: SpotifyService) { 
-    this.token = JSON.parse(localStorage.getItem('token') || '{}');
-  }
+  constructor(private service: SpotifyService) { }
 
   getAlgo(): void {
-
-    const localtoken= JSON.parse(localStorage.getItem('token') || '{}');
-    
-    console.log('local: ',localtoken);
-    //this.service.get_token().subscribe(token => {
-      //this.token = token;
-      this.service.getFollowed(localtoken).subscribe(followedArtist => {
+    const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
+  console.log(localTokenData);
+    if (Object.keys(localTokenData).length !== 0) {
+      this.token = localTokenData;
+      this.service.getFollowed(this.token).subscribe(followedArtist => {
         this.followedArtist = followedArtist;
       });
-   // });
- // }
-}
+    } else {
+      this.service.get_token().subscribe(token => {
+        this.token = token;
+        this.service.getFollowed(this.token).subscribe(followedArtist => {
+          this.followedArtist = followedArtist;
+        });
+      });
+    }
+  }
+
 
 }
