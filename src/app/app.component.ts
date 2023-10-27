@@ -1,5 +1,8 @@
 import { Component, Output } from '@angular/core';
 import { SpotifyService } from './service/spotify.service';
+import { TokenModel } from './models/token-model';
+import { LoginComponent } from './login/login.component';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,32 +12,25 @@ export class AppComponent {
   title = 'apify';
   token: any;
   playlist: any;
+  playlisturl=''
+  token2: TokenModel = new TokenModel({access_token: '', expires_in: 3600, token_type: 'Bearer'});
 
   constructor(private service: SpotifyService) { }
 
   ngOnInit(): void {
-    this.service.get_token().subscribe(token => {
+   /* this.service.get_token().subscribe(token => {
       this.token = token;
-      //console.log('El token papucho: ', token);
-
-      // Llama a getPlaylist dentro de la suscripción para asegurarte de tener el token
-      this.service.getPlaylist(this.token).subscribe(playlist => {
+ 
+      this.service.getPlaylist(this.token,this.playlisturl).subscribe(playlist => {
         this.playlist = playlist;
-        // console.log('Datos de la playlist:', playlist);
-
-        //console.log('tu lenght es: ', this.playlist.tracks.items.length);
-
-        //console.log('tu promedio de popularidad es: ', prom);
-
-
-
-
+     
       });
-    });
-
-
+    });*/
   }
 
+  login(): void {
+    this.service.loginSpotifyU(); 
+  }
 
 //esto tendria que ser un model?
   show_promedio: boolean = false;
@@ -64,4 +60,6 @@ export class AppComponent {
       this.show_promedio = false;
     }
   }
+  
+  
 }
