@@ -1,27 +1,37 @@
 <app-navbar></app-navbar>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+
 <body>
     <div class="container">
-        <h1>🎵 Guess the Song 🎵</h1>
+        <h1 class="animate__animated animate__zoomIn">🎵 Guess the Song 🎵</h1>
 
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-dark" type="button" (click)="getThePlaylistForGuess()">Empezar a jugar</button>
+        <div class="animate__animated animate__zoomIn">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button class="btn btn-dark" type="button" (click)="getThePlaylistForGuess()">Empezar a jugar</button>
+            </div>
         </div>
 
         <div class="hints">
-            <p *ngIf="hintMessage">{{hintMessage}}</p>
+            <p *ngIf="hintMessage"><strong>{{hintMessage}}</strong></p>
             <div class="album-container" *ngIf="albumImageUrl">
                 <img class="albumCover" [src]="albumImageUrl" width="200" height="200">
             </div>
         </div>
-        
-        <audio controls id="audioPlayer"></audio>
 
-        <div>
-            <button *ngFor="let song of randomSongs" class="btn btn-success btn-sm" type="button"
-                (click)="handleOptionClick(song)">{{ song.track.name }}</button>
+        <audio controls id="audioPlayer" class="animate__animated animate__zoomIn"></audio>
+
+        <div class="animate__animated animate__zoomIn">
+            <button style="margin: 0 5px; margin-bottom: 6px;" *ngFor="let song of randomSongs" class="btn btn-dark"
+                class="animate__animated animate__zoomIn" type="button" (click)="handleOptionClick(song)">{{
+                song.track.name }}</button>
         </div>
 
-        <button type="button" class="btn btn-warning btn-sm" (click)="showHint()" [disabled]="hintButtonDisabled">Hint</button>
-
+        <div class="animate__animated animate__zoomInUp">
+            <button type="button" class="btn btn-dark" (click)="showHint()"
+                [disabled]="hintButtonDisabled">Hint</button>
+        </div>
     </div>
 </body>

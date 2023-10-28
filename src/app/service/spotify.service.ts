@@ -35,7 +35,7 @@ export class SpotifyService {
   }
 
   loginSpotifyU(): void {
-    window.location.href = `${environment.api_uri}?client_id=${environment.client_id}&redirect_uri=${environment.redirect_uri}&scope=${environment.scope.join(
+    window.location.href = `${environment.api_uri}?client_id=${environment.client_id}&redirect_uri=${environment.redirect_uri_guess_song}&scope=${environment.scope.join(
       "%20")}&response_type=token&show_dialog=true`;
   }
 
@@ -43,9 +43,13 @@ export class SpotifyService {
   getTokenDataFromUrl(): any {
     const hash = window.location.hash.substr(1);
     const result = hash.split('&').reduce(function (result: any, item: string) {
-      const parts = item.split('=');
-      result[parts[0]] = parts[1];
-      return result;
+        const parts = item.split('=');
+        if (parts[0] === 'expires_in') {
+            result[parts[0]] = parseInt(parts[1]);
+        } else {
+            result[parts[0]] = parts[1];
+        }
+        return result;
     }, {});
     return result;
   }

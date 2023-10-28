@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SpotifyService } from '../../service/spotify.service';
+import { environment } from 'src/environments/environment.development';
 
 
 @Component({
@@ -9,26 +10,25 @@ import { SpotifyService } from '../../service/spotify.service';
 })
 export class GuessSongComponent {
 
-  token: any;
   playlist: any;
-  playlisturl = '';
   randomSongs: any[] = [];
   winningTrack: any;
   turn: number = 0;
+  points: number=0;
   limitTime: number = 4;
   hintMessage: string = '';
   albumImageUrl: string = '';
   hintButtonDisabled: boolean = false;
 
   constructor(private service: SpotifyService) { 
-    this.token = JSON.parse(localStorage.getItem('token') || '{}');
+    environment.token = JSON.parse(localStorage.getItem('token') || '{}');
   }
 
   getThePlaylistForGuess(): void {
   
       const localtoken = JSON.parse(localStorage.getItem('token') || '{}');
 
-      this.service.getPlaylist(localtoken, this.playlisturl).subscribe(playlist => {
+      this.service.getPlaylist(localtoken, environment.playlisturl).subscribe(playlist => {
         if (playlist) {
           this.playlist = playlist;
           this.playTheGame();
@@ -87,8 +87,11 @@ export class GuessSongComponent {
   handleOptionClick(selectedTrack: any) {
     if (selectedTrack === this.winningTrack) {
       alert('¡Ganaste!');
+      this.points+=1;
+      console.log(this.points);
     } else {
-      alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "');
+      alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "'+ '/Tus puntos son: ' + this.points);
+      this.points=0;
     }
     this.newGame();
   }
@@ -130,4 +133,5 @@ export class GuessSongComponent {
 
     return randomSongs;
   }
+
 }

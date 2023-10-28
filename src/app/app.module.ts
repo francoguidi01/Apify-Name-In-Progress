@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SpotifyService } from './service/spotify.service';
 import { MakeAPlaylistComponent } from './component/make-a-playlist/make-a-playlist.component';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './component/home/home.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { LoginComponent } from './login/login.component';
     GuessSongComponent,
     MakeAPlaylistComponent,
     LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

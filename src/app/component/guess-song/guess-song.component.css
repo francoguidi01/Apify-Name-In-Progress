@@ -21,8 +21,8 @@ h1 {
 }
 
 .hints {
-    font-size: 25px; 
-    color: rgba(0, 0, 0, 0.932); 
+    font-size: 20px; 
+    color: rgba(0, 0, 0, 0.87);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -47,4 +47,10 @@ h1 {
 
 #audioPlayer {
     margin-top: 10px;
+    
+}
+
+.button{
+    margin-bottom: 6px;
+    margin: 0 5px;
 }

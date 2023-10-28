@@ -2,7 +2,6 @@ import { Component, Output } from '@angular/core';
 import { SpotifyService } from './service/spotify.service';
 import { TokenModel } from './models/token-model';
 import { LoginComponent } from './login/login.component';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

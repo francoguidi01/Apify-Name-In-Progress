@@ -1,8 +1,17 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary" >
+<nav class="navbar navbar-expand-lg bg-body-tertiary"  >
+  <div class="container-fluid">
+    <div class="dropdown">
+        <img src="https://cdn-icons-png.flaticon.com/512/2956/2956788.png" alt="Imagen" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="width: 30px; height: 30px; border-radius: 50%;">
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" href="#">Login</a></li>
+      </ul>
+    </div>
+
+    
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mx-auto">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="">Home</a>
+            <a class="nav-link active" [routerLink]="['/home']" routerLinkActive="active" href="#">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/guess-song']" routerLinkActive="active" href="#">Guess Song!</a>
@@ -14,7 +23,7 @@
             <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active" href="#">Login</a> 
           </li>
         </ul>
-
+      </div>
     </div>
   </nav>
   
