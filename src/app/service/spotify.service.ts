@@ -121,7 +121,7 @@ export class SpotifyService {
   }
 
 
-  getFollowed(token: TokenModel): Observable<any> {
+  getTopArtists(token: TokenModel): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -138,6 +138,58 @@ export class SpotifyService {
           return response;
         }),
       );
+  }
+
+  getTopSongs(token: TokenModel): Observable<any> {
+    if (!token) {
+      console.error('Error: Token no disponible. Debes obtener el token primero.');
+      return of(null);
+    }
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token.access_token
+    });
+
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/tracks?limit=5`, { headers })
+      .pipe(
+        map((response: any) => {
+          console.log('TOP SONGS:', response);
+          return response;
+        }),
+      );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  getUserDataService(token: TokenModel): Observable<any>
+  {
+    if (!token) {
+      console.error('Error: Token no disponible. Debes obtener el token primero.');
+      return of(null);
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token.access_token
+    });
+//    https://api.spotify.com/v1/me
+
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/`, { headers })
+      .pipe(
+        map((response: any) => {
+          //console.log('MY DATA:', response);
+          return response;
+        }),
+      );
+
   }
 
 }

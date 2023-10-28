@@ -9,7 +9,7 @@ import { GuessSongComponent } from './component/guess-song/guess-song.component'
 import { HttpClientModule } from '@angular/common/http';
 import { SpotifyService } from './service/spotify.service';
 import { MakeAPlaylistComponent } from './component/make-a-playlist/make-a-playlist.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './component/login/login.component';
 
 @NgModule({
   declarations: [
