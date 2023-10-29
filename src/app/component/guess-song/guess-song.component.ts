@@ -14,31 +14,33 @@ export class GuessSongComponent {
   randomSongs: any[] = [];
   winningTrack: any;
   turn: number = 0;
-  points: number=0;
+  points: number = 0;
   limitTime: number = 4;
   hintMessage: string = '';
   albumImageUrl: string = '';
   hintButtonDisabled: boolean = false;
+  win: boolean = false;
 
-  constructor(private service: SpotifyService) { 
+
+  constructor(private service: SpotifyService) {
     environment.token = JSON.parse(localStorage.getItem('token') || '{}');
   }
 
   getThePlaylistForGuess(): void {
-  
-      const localtoken = JSON.parse(localStorage.getItem('token') || '{}');
 
-      this.service.getPlaylist(localtoken, environment.playlisturl).subscribe(playlist => {
-        if (playlist) {
-          this.playlist = playlist;
-          this.playTheGame();
-          this.hintMessage = '';
-          this.albumImageUrl = '';
-          this.turn = 0;
-        } else {
-          console.error('La lista de reproducción no está disponible.');
-        }
-      });
+    const localtoken = JSON.parse(localStorage.getItem('token') || '{}');
+
+    this.service.getPlaylist(localtoken, environment.playlisturl).subscribe(playlist => {
+      if (playlist) {
+        this.playlist = playlist;
+        this.playTheGame();
+        this.hintMessage = '';
+        this.albumImageUrl = '';
+        this.turn = 0;
+      } else {
+        console.error('La lista de reproducción no está disponible.');
+      }
+    });
 
   }
 
@@ -69,7 +71,7 @@ export class GuessSongComponent {
 
   showHint() {
     if (!this.playlist) {
-      alert('Por que no esperas un poquito emocion'); 
+      alert('Por que no esperas un poquito emocion');
     }
     else if (this.turn === 0) {
       this.hintMessage = `Año: ${this.winningTrack.track.album.release_date}`;
@@ -84,24 +86,39 @@ export class GuessSongComponent {
     this.limitTime += 4;
   }
 
+  updatePoints() {
+    if (this.turn === 1) {
+      this.points -= 5;
+    } else if (this.turn === 2) {
+      this.points -= 15;
+    } else if (this.turn === 3) {
+      this.points -= 30;
+    }
+  }
   handleOptionClick(selectedTrack: any) {
     if (selectedTrack === this.winningTrack) {
       alert('¡Ganaste!');
-      this.points+=1;
+      this.updatePoints();
+      this.points+=100;
       console.log(this.points);
     } else {
-      alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "'+ '/Tus puntos son: ' + this.points);
-      this.points=0;
+      alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "' + '/Tus puntos son: ' + this.points);
+      this.win = true;
     }
     this.newGame();
   }
 
   newGame() {
-    this.playTheGame();
 
+    if (this.win === true) {
+      this.points = 0;
+    }
+
+    this.playTheGame();
     this.hintMessage = '';
     this.albumImageUrl = '';
     this.turn = 0;
+
   }
 
   getRandomSongsFromPlaylist(playlist: any[], count: number): any[] {
