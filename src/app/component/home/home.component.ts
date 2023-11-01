@@ -36,21 +36,26 @@ export class HomeComponent {
     }
 
     this.getUserData();
-   //this.getTopSongs();
-   //this.getTopArtist();
+    //this.getTopArtist();
   }
 
 
-  getUserData(): void {
+  getUserData(): void { 
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
     console.log(localTokenData);
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
       this.service.getUserDataService(this.token).subscribe(userData => {
         this.userData = userData;
+  
+        const storedUserData = JSON.parse(localStorage.getItem('userData') || '{}');
+        if (!this.isEqualUserData(storedUserData, userData)) {
+          this.onAddUser(userData);
+        } else {
+          console.log('Data in local storage is the same as the new data.');
+        }
 
-        this.onAddUser(userData);
-
+        console.log(userData);
       });
     } else {
       this.service.get_token().subscribe(token => {
@@ -59,21 +64,30 @@ export class HomeComponent {
           this.userData = userData;
         });
       });
-    }
+    } 
   }
-
+   
+  isEqualUserData(userData1: any, userData2: any): boolean {
+    return (
+      userData1.id === userData2.id &&
+      userData1.display_name === userData2.display_name &&
+      userData1.url_photo === userData2.images[1].url
+    );
+  }
+  
   onAddUser(userData: any) {
-
     this.userDataToSave = {
       id: userData.id,
       display_name: userData.display_name,
       url_photo: userData.images[1].url
     };
-
+  
     this.user_service.addUser(this.userDataToSave).subscribe(
       (data) => {
         console.log('added', data);
         localStorage.setItem('userData', JSON.stringify(this.userDataToSave));
+        this.getTopSongs();
+
       },
       (error) => {
         if (error.status === 409) {
@@ -81,11 +95,12 @@ export class HomeComponent {
           localStorage.setItem('userData', JSON.stringify(this.userDataToSave));
           this.new = false;
         } else {
-          console.error('An error occurred:', error);
+          console.error('An error occurred:', error); 
         }
       }
     );
   }
+  
 
 
 
@@ -128,47 +143,47 @@ export class HomeComponent {
     }
   }
 
-/*
-  getTopArtist(): void {
-    const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
-    console.log(localTokenData);
-    if (Object.keys(localTokenData).length !== 0) {
-      this.token = localTokenData;
-      this.service.getTopArtists(this.token).subscribe(artistsData => {
-
-        this.topArtists = artistsData;
-
-        this.onAddArtist(artistsData.items);
-
-      });
-    } else {
-      this.service.get_token().subscribe(token => {
-        this.token = token;
+  /*
+    getTopArtist(): void {
+      const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
+      console.log(localTokenData);
+      if (Object.keys(localTokenData).length !== 0) {
+        this.token = localTokenData;
         this.service.getTopArtists(this.token).subscribe(artistsData => {
-          this.topArtists = artistsData;
-          this.onAddArtist(artistsData.items);
-        });
-      });
-    }
-  }
-
   
-  onAddArtist(artistsData: any[]) {
-    for (let i = 0; i < artistsData.length; i++) {
-      const currentArtistData = artistsData[i];
-      const artistToSave = {
-        id_api_artist: currentArtistData.id,
-        user: {
-          id: this.userDataToSave.id
-        }
-      };
-      this.user_service.addArtist(artistToSave).subscribe(data => {
-        console.log('added', data);
-      });
+          this.topArtists = artistsData;
+  
+          this.onAddArtist(artistsData.items);
+  
+        });
+      } else {
+        this.service.get_token().subscribe(token => {
+          this.token = token;
+          this.service.getTopArtists(this.token).subscribe(artistsData => {
+            this.topArtists = artistsData;
+            this.onAddArtist(artistsData.items);
+          });
+        });
+      }
     }
-  }
-
-*/
+  
+    
+    onAddArtist(artistsData: any[]) {
+      for (let i = 0; i < artistsData.length; i++) {
+        const currentArtistData = artistsData[i];
+        const artistToSave = {
+          id_api_artist: currentArtistData.id,
+          user: {
+            id: this.userDataToSave.id
+          }
+        };
+        this.user_service.addArtist(artistToSave).subscribe(data => {
+          console.log('added', data);
+        });
+      }
+    }
+  
+  */
 
 
 
