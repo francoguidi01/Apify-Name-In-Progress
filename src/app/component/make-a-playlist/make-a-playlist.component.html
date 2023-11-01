@@ -1,98 +1,110 @@
 <app-navbar></app-navbar>
-<p>make-a-playlist works!</p>
-<div class="container">
-<form [formGroup]="quizForm">
-    <div class="mb-3">
-        <label for="question1">¿Qué es lo primero que haces al levantarte?</label>
-        <select formControlName="question1">
-            <option value="1">Me miro al espejo para levantarme el ánimo.</option>
-            <option value="2">Voy al baño y me lavo la cara con muuuucha agua fría.</option>
-            <option value="3">Me estiro entera!! Me encanta desperezarme.</option>
-        </select>
-    </div>
 
-    <div>
-        <label for="question2">De este calzado, ¿cuál va más contigo?</label>
-        <select formControlName="question2">
-            <option value="1">Unas Converse.</option>
-            <option value="2">Unas bailarinas o sandalias. Son cómodas y muy monas!!</option>
-            <option value="3">Unas botas. Me flipa combinarlas con pitillos.</option>
-        </select>
-    </div>
+<body>
+    <div class="container">
+        <form [formGroup]="quizForm">
+            <div class="mb-3">
+                <label for="question1">¿Qué es lo primero que haces al levantarte?</label>
+                <select formControlName="question1">
+                    <option value="1">Me miro al espejo para levantarme el ánimo.</option>
+                    <option value="2">Voy al baño y me lavo la cara con muuuucha agua fría.</option>
+                    <option value="3">Me estiro entera!! Me encanta desperezarme.</option>
+                </select>
+            </div>
 
-    <div>
-        <label for="question3">Para una noche de chicas, ¿Qué planes preparas?</label>
-        <select formControlName="question3">
-            <option value="2">Alquilo pelis de terror y preparo historias de miedo para contar durante toda la noche. 2pts</option>
-            <option value="3">Organizo mogollón de juegos para que nos conozcamos mejor. 3pts</option>
-            <option value="1">Revistas de chicas, música y pelis románticas. 1pts</option>
-        </select>
-    </div>
+            <div>
+                <label for="question2">De este calzado, ¿cuál va más contigo?</label>
+                <select formControlName="question2">
+                    <option value="1">Unas Converse.</option>
+                    <option value="2">Unas bailarinas o sandalias. Son cómodas y muy monas!!</option>
+                    <option value="3">Unas botas. Me flipa combinarlas con pitillos.</option>
+                </select>
+            </div>
 
-    <div>
-        <label for="question4">Tu mejor amiga se ha enfadado con su novio porque le han dicho que él tiene otro ligue. ¿Qué le dices?</label>
-        <select formControlName="question4">
-            <option value="1">Que hable con él. Antes de nada tendrá que saber su versión de los hechos, ¿no? 1pts</option>
-            <option value="2">Que le olvide!! Hay muchos peces en el mar como para que se esté preocupando por alguien que no la merece. 2pts</option>
-            <option value="3">Que investigue bien si es cierto. Si le monta un pollo y luego resulta que es mentira, va a quedar muy mal!! 3pts</option>
-        </select>
-    </div>
+            <div>
+                <label for="question3">Para una noche de chicas, ¿Qué planes preparas?</label>
+                <select formControlName="question3">
+                    <option value="2">Alquilo pelis de terror y preparo historias de miedo para contar durante toda la
+                        noche. 2pts</option>
+                    <option value="3">Organizo mogollón de juegos para que nos conozcamos mejor. 3pts</option>
+                    <option value="1">Revistas de chicas, música y pelis románticas. 1pts</option>
+                </select>
+            </div>
 
-    <div>
-        <label for="question5">En lo primero que te fijas en un chico es...</label>
-        <select formControlName="question5">
-            <option value="2">En el estilo que tiene. Me gustan con un rollito especial. 2pts</option>
-            <option value="1">Puede sonar mal, pero en el físico. Si no me entra por los ojos no hay nada que hacer... 1pts</option>
-            <option value="3">En su personalidad!! 3pts</option>
-        </select>
-    </div>
-    
-    <div>
-        <label for="question6">¿Dónde te irías de vacas?</label>
-        <select formControlName="question6">
-            <option value="1">A Nueva York. Haría compras por un tubo!! 1pts</option>
-            <option value="3">A Los Ángeles. A ver si me encuentro alguna 'celebritie' 3pts</option>
-            <option value="2">A Londres. Es una ciudad que tiene de todo 2pts</option>
-        </select>
-    </div>
+            <div>
+                <label for="question4">Tu mejor amiga se ha enfadado con su novio porque le han dicho que él tiene otro
+                    ligue. ¿Qué le dices?</label>
+                <select formControlName="question4">
+                    <option value="1">Que hable con él. Antes de nada tendrá que saber su versión de los hechos, ¿no?
+                        1pts
+                    </option>
+                    <option value="2">Que le olvide!! Hay muchos peces en el mar como para que se esté preocupando por
+                        alguien que no la merece. 2pts</option>
+                    <option value="3">Que investigue bien si es cierto. Si le monta un pollo y luego resulta que es
+                        mentira,
+                        va a quedar muy mal!! 3pts</option>
+                </select>
+            </div>
 
-    <div>
-        <label for="question7">Seguro que estás enganchada a Internet pero, ¿cuál es tu red social favorita?</label>
-        <select formControlName="question7">
-            <option value="1">Tuenti 1pts</option>
-            <option value="2">Facebook 2pts</option>
-            <option value="3">Twitter 3pts</option>
-        </select>
-    </div>
+            <div>
+                <label for="question5">En lo primero que te fijas en un chico es...</label>
+                <select formControlName="question5">
+                    <option value="2">En el estilo que tiene. Me gustan con un rollito especial. 2pts</option>
+                    <option value="1">Puede sonar mal, pero en el físico. Si no me entra por los ojos no hay nada que
+                        hacer... 1pts</option>
+                    <option value="3">En su personalidad!! 3pts</option>
+                </select>
+            </div>
 
-    <div>
-        <label for="question8">En tu casa, ¿con quién tienes mejor rollito?</label>
-        <select formControlName="question8">
-            <option value="3">Con mi padre. Me da todos los caprichos que quiero. 3pts</option>
-            <option value="2">La verdad es que me ponen un poco de los nervios todos. aunque les quiero!! 2pts</option>
-            <option value="1">Con mi madre. Es mi mejor amiga y le cuento todo. 1pts</option>
-        </select>
-    </div>
+            <div>
+                <label for="question6">¿Dónde te irías de vacas?</label>
+                <select formControlName="question6">
+                    <option value="1">A Nueva York. Haría compras por un tubo!! 1pts</option>
+                    <option value="3">A Los Ángeles. A ver si me encuentro alguna 'celebritie' 3pts</option>
+                    <option value="2">A Londres. Es una ciudad que tiene de todo 2pts</option>
+                </select>
+            </div>
 
-    <div>
-        <label for="question9" >¿A quién borrarías del panorama musical?</label>
-        <select formControlName="question9">
-            <option value="3">A Tokio Hotel. 3pts</option>
-            <option value="1">A Justin Bieber. No me gusta mucho su música. 1pts</option>
-            <option value="2">A Eminem. No entiendo para nada su estilo!! 2pts</option>
-        </select>
-    </div>
-    
+            <div>
+                <label for="question7">Seguro que estás enganchada a Internet pero, ¿cuál es tu red social
+                    favorita?</label>
+                <select formControlName="question7">
+                    <option value="1">Tuenti 1pts</option>
+                    <option value="2">Facebook 2pts</option>
+                    <option value="3">Twitter 3pts</option>
+                </select>
+            </div>
 
-    <div *ngIf="quizForm.get('question1')?.touched">
+            <div>
+                <label for="question8">En tu casa, ¿con quién tienes mejor rollito?</label>
+                <select formControlName="question8">
+                    <option value="3">Con mi padre. Me da todos los caprichos que quiero. 3pts</option>
+                    <option value="2">La verdad es que me ponen un poco de los nervios todos. aunque les quiero!! 2pts
+                    </option>
+                    <option value="1">Con mi madre. Es mi mejor amiga y le cuento todo. 1pts</option>
+                </select>
+            </div>
 
-        <div *ngIf="quizForm.get('question1')?.hasError('required')">
-            <p>AHHHHHHHHHHHHHHHHHH!!!</p>
-            <img src="https://cdn.7tv.app/emote/62e25bfcd0dac916414d25cb/4x.webp">
-        </div>
+            <div>
+                <label for="question9">¿A quién borrarías del panorama musical?</label>
+                <select formControlName="question9">
+                    <option value="3">A Tokio Hotel. 3pts</option>
+                    <option value="1">A Justin Bieber. No me gusta mucho su música. 1pts</option>
+                    <option value="2">A Eminem. No entiendo para nada su estilo!! 2pts</option>
+                </select>
+            </div>
+
+
+            <div *ngIf="quizForm.get('question1')?.touched">
+
+                <div *ngIf="quizForm.get('question1')?.hasError('required')">
+                    <p>AHHHHHHHHHHHHHHHHHH!!!</p>
+                    <img src="https://cdn.7tv.app/emote/62e25bfcd0dac916414d25cb/4x.webp">
+                </div>
+            </div>
+            <div *ngIf="quizForm.valid">
+                <button (click)="quizPlaylist()"> HUH</button>
+            </div>
+        </form>
     </div>
-    <div *ngIf="quizForm.valid">
-        <button (click)="quizPlaylist()"> HUH</button>
-    </div>
-</form>
-</div>
+</body>

@@ -1,31 +1,43 @@
-<router-outlet></router-outlet>
+<head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+</head>
 <body class="background-image">
   <div class="container">
     <div class="section">
       <div>
         <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/spotify_logo_icon_168793.png" alt="Logo"
           class="logo-image">
-        <h2 class="tagline">Únite y divertite un rato</h2>
-        <button type="button" class="btn btn-success" (click)="login()">Login</button>
+        <h2 class="tagline" class="animate__animated animate__tada"><strong>Divertite un rato</strong></h2>
+        <button type="button" class="btn btn-success" class="tagline" class="animate__animated animate__flash"(click)="login()">Login</button>
       </div>
     </div>
 
-    <footer class="footer">
-      <div class="footer-content">
-
-        <a href="https://www.linkedin.com/in/kevin-tolosa-a3a328221" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="Botón" />
-        </a>
-
-        <a href="https://www.linkedin.com/in/franco-g%C3%BCidi/" target="_blank">
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="Botón" />
-        </a>
-
-        <a href="https://github.com/francoguidi01/Apify-Name-In-Progress" target="_blank">
-          <img src="   https://cdn-icons-png.flaticon.com/512/733/733553.png " alt="Botón" />
-        </a>
-      </div>
-      <p>Proyecto X - Facultad de Profesores - Materia Y</p>
-    </footer>
+    <footer class="footer" >
+          <div >
+              <div>
+                  <p class="animate__animated animate__fadeInLeftBig" style="margin-bottom: 6px;"><strong>Proyecto: </strong>Apify Maybe</p>
+                  <p class="animate__animated animate__fadeInRightBig" style="margin-bottom: 7px;"><strong>Facultad: </strong> Universidad Tecnológica de Mar del Plata</p>
+                  <p class="animate__animated animate__fadeInLeftBig" style="margin-bottom: 7px;"><strong>Materia: </strong> Laboratorio VI / Metodología de la Investigación</p>
+                  <p class="animate__animated animate__fadeInRightBig" style="margin-bottom: 7px;"><strong>Profesores: </strong>Juan Jose Azar / El Otro</p>
+              </div>
+              <div class="col-md-6" class="animate__animated animate__fadeInUpBig" >
+                  <div  class="footer-content" >
+                      <a href="https://www.linkedin.com/in/kevin-tolosa-a3a328221" target="_blank">
+                          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn de Kevin Tolosa" />
+                      </a>
+                      <a href="https://www.linkedin.com/in/franco-g%C3%BCidi/" target="_blank">
+                          <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn de Franco Güidi" />
+                      </a>
+                      <a href="https://github.com/francoguidi01/Apify-Name-In-Progress" target="_blank">
+                          <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub de Franco Güidi" />
+                      </a>
+                  </div>
+              </div>
+          </div>
+  </footer>  
   </div>
 </body>
+<router-outlet></router-outlet>

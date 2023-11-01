@@ -20,6 +20,31 @@ export class SpotifyService {
   this.checkLocalStorageAndUrl();
   }
 
+  add_User(userData: any): void {
+    fetch('http://localhost:8080/users/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json(); // Necesitas parsear la respuesta JSON
+        } else {
+            throw new Error('Error al agregar usuario.');
+        }
+    })
+    .then(data => {
+        console.log(data);
+        alert('Usuario agregado con éxito.');
+    })
+    .catch(error => {
+        alert('Error en la solicitud: ' + error.message);
+    });
+}
+
+
   checkLocalStorageAndUrl(): void {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
   
@@ -35,7 +60,7 @@ export class SpotifyService {
   }
 
   loginSpotifyU(): void {
-    window.location.href = `${environment.api_uri}?client_id=${environment.client_id}&redirect_uri=${environment.redirect_uri}&scope=${environment.scope.join(
+    window.location.href = `${environment.api_uri}?client_id=${environment.client_id}&redirect_uri=${environment.redirect_uri_home}&scope=${environment.scope.join(
       "%20")}&response_type=token&show_dialog=true`;
   }
 
@@ -43,9 +68,13 @@ export class SpotifyService {
   getTokenDataFromUrl(): any {
     const hash = window.location.hash.substr(1);
     const result = hash.split('&').reduce(function (result: any, item: string) {
-      const parts = item.split('=');
-      result[parts[0]] = parts[1];
-      return result;
+        const parts = item.split('=');
+        if (parts[0] === 'expires_in') {
+            result[parts[0]] = parseInt(parts[1]);
+        } else {
+            result[parts[0]] = parts[1];
+        }
+        return result;
     }, {});
     return result;
   }
