@@ -20,7 +20,7 @@ import { UserStatsComponent } from './component/user-stats/user-stats.component'
     GuessSongComponent,
     MakeAPlaylistComponent,
     LoginComponent,
-    UserStatsComponent,
+    UserStatsComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@ export class MakeAPlaylistComponent {
 
   quiz: QuizModel = new QuizModel();
   quizForm: FormGroup;
-
+  
   constructor(private formBuilder: FormBuilder) {
     this.quizForm = this.formBuilder.group({
       'question1': new FormControl(this.quiz.question1, [Validators.required]),

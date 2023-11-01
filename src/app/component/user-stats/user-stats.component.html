@@ -1,1 +1,32 @@
+<app-navbar></app-navbar>
+<button (click)="getTopArtists()">top artistas</button>
+<div  *ngIf="topArtists">
+    <table class="table table-success table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Photo</th>
+                <th scope="col">Artist Name</th>
+                <th scope="col">Genres</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let artist of topArtists.items">
+                <td><img src="{{artist.images[2].url}}" alt=""></td>
+                <td>{{artist.name}}</td>
+                <td>
+                    <ng-container *ngFor="let genre of artist.genres; let last = last; let first = first">
+                      <ng-container *ngIf="!first && !last">, </ng-container>
+                      <ng-container *ngIf="last && !first"> & </ng-container>
+                      {{genre}}
+                    </ng-container>
+                  </td>
+                  
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<button (click)="getTopSongs()">top songs</button>
 <p>user-stats works!</p>
