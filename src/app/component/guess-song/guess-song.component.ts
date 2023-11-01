@@ -37,6 +37,8 @@ export class GuessSongComponent {
         this.hintMessage = '';
         this.albumImageUrl = '';
         this.turn = 0;
+        this.points=0;
+        this.win=false;
       } else {
         console.error('La lista de reproducción no está disponible.');
       }
@@ -98,8 +100,8 @@ export class GuessSongComponent {
   handleOptionClick(selectedTrack: any) {
     if (selectedTrack === this.winningTrack) {
       alert('¡Ganaste!');
-      this.updatePoints();
       this.points+=100;
+      this.updatePoints();
       console.log(this.points);
     } else {
       alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "' + '/Tus puntos son: ' + this.points);
@@ -118,7 +120,7 @@ export class GuessSongComponent {
     this.hintMessage = '';
     this.albumImageUrl = '';
     this.turn = 0;
-
+    this.limitTime=4;
   }
 
   getRandomSongsFromPlaylist(playlist: any[], count: number): any[] {
