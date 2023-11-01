@@ -73,52 +73,61 @@ export class LoginComponent {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   getUserData(): void {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
     console.log(localTokenData);
     if (Object.keys(localTokenData).length !== 0) {
-      this.token = localTokenData;
-      this.service.getUserDataService(this.token).subscribe(userData => {
-        this.userData = userData;
-
-        this.userDataToSave = {
-          id: userData.id,
-          display_name: userData.display_name,
-          url_photo: userData.images[1].url
-        };
-
-        console.log(this.userDataToSave);
-      });
-    } else {
-      this.service.get_token().subscribe(token => {
-        this.token = token;
+        this.token = localTokenData;
         this.service.getUserDataService(this.token).subscribe(userData => {
-          this.userData = userData;
+            this.userData = userData;
+
+            this.userDataToSave = {
+                id: userData.id,
+                display_name: userData.display_name,
+                url_photo: userData.images[1].url
+            };
+
+            // Llamada al método addUser del servicio UsersDataService
+            this.user_service.addUser(this.userDataToSave).subscribe(data => {
+                console.log(data); // Aquí puedes manejar la respuesta si lo necesitas
+            }, error => {
+                console.error('Error al agregar usuario: ', error);
+                //ACORDATE DE GUARDAR LAS CANCIONES Y LOS ARTISTAS BOLUDO
+            });
+
+            localStorage.setItem('userData', JSON.stringify(this.userDataToSave));
+            console.log(this.userDataToSave);
         });
-      });
+    } else {
+        this.service.get_token().subscribe(token => {
+            this.token = token;
+            this.service.getUserDataService(this.token).subscribe(userData => {
+                this.userData = userData;
+            });
+        });
     }
-  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 
   onAddUser() {
 
@@ -132,7 +141,7 @@ export class LoginComponent {
   onAddSong() {
     //console.log(this.userDataToSave);
     let songToSave = {
-      id_song: 12344,
+      id_song: this.topSongs.items[0].uri,
       id_api_song: this.topSongs.items[0].id,
       user: {
         id: this.userDataToSave.id
