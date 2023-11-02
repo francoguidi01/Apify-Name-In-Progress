@@ -18,8 +18,8 @@ export class HomeComponent {
   userData: any;
   topArtists: any;
   topSongs: any;
-  songToSave: SongData = new SongData;
-  artistToSave: ArtistsData = new ArtistsData;
+  //songToSave: SongData = new SongData;
+ // artistToSave: ArtistsData = new ArtistsData;
   userDataToSave: UserData = new UserData;
   new: boolean = true;
   imageUrl: string = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
@@ -29,15 +29,13 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
-
     this.getUserData();
-    //this.getTopArtist();
+
   }
 
 
   getUserData(): void { 
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
-    console.log(localTokenData);
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
       this.service.getUserDataService(this.token).subscribe(userData => {
@@ -45,7 +43,6 @@ export class HomeComponent {
       
           this.onAddUser(userData);
 
-        console.log(userData);
       });
     } else {
       this.service.get_token().subscribe(token => {
@@ -71,7 +68,9 @@ export class HomeComponent {
       (data) => {
         console.log('added', data);
         localStorage.setItem('userData', JSON.stringify(this.userDataToSave));
+
         this.getTopSongs();
+        this.getTopArtist();
 
       },
       (error) => {
@@ -87,11 +86,8 @@ export class HomeComponent {
   }
   
 
-
-
   getTopSongs(): void {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
-    console.log(localTokenData);
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
       this.service.getTopSongs(this.token).subscribe(songData => {
@@ -128,10 +124,9 @@ export class HomeComponent {
     }
   }
 
-  /*
+  
     getTopArtist(): void {
       const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
-      console.log(localTokenData);
       if (Object.keys(localTokenData).length !== 0) {
         this.token = localTokenData;
         this.service.getTopArtists(this.token).subscribe(artistsData => {
@@ -155,23 +150,24 @@ export class HomeComponent {
     
     onAddArtist(artistsData: any[]) {
       for (let i = 0; i < artistsData.length; i++) {
+
         const currentArtistData = artistsData[i];
+        console.log(currentArtistData);
+
         const artistToSave = {
           id_api_artist: currentArtistData.id,
           user: {
             id: this.userDataToSave.id
           }
         };
+        
+        console.log("artistSave: ", artistToSave);
+
         this.user_service.addArtist(artistToSave).subscribe(data => {
           console.log('added', data);
         });
       }
     }
-  
-  */
-
-
-
 
 
 }

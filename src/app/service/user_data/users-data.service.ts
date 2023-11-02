@@ -18,7 +18,7 @@ export class UsersDataService {
   addUrl = "http://localhost:8080/user/add"; // URL ficticia para agregar (reemplaza con la URL real)
   addSongUrl= "http://localhost:8080/songs/add-song";
   addArtistUrl= "http://localhost:8080/artists/add-artist";
-  
+
   getAllUsers() {
     return this.httpClient.get(this.apiUrl);
   }
@@ -47,9 +47,12 @@ export class UsersDataService {
   }
 
   addArtist(newData: any){
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
+    console.log("NEWDATA: ",newData);
+
     return this.httpClient.post(this.addArtistUrl, newData,{headers});
   }
 

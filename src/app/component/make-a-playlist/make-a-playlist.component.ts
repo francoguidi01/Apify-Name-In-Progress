@@ -10,6 +10,8 @@ import { __values } from 'tslib';
 })
 export class MakeAPlaylistComponent {
 
+  currentQuestion: number = 1;
+  totalQuestions: number = 9;
   quiz: QuizModel = new QuizModel();
   quizForm: FormGroup;
 
@@ -27,33 +29,33 @@ export class MakeAPlaylistComponent {
     });
   }
 
- /* sumValues() {
-
-    const value1 = parseInt(this.quizForm.value.question1, 10) || 0;
-    const value2 = parseInt(this.quizForm.value.question2, 10) || 0;
-    const value3 = parseInt(this.quizForm.value.question3, 10) || 0;
-    const value4 = parseInt(this.quizForm.value.question4, 10) || 0;
-    const value5 = parseInt(this.quizForm.value.question5, 10) || 0;
-    const value6 = parseInt(this.quizForm.value.question6, 10) || 0;
-    const value7 = parseInt(this.quizForm.value.question7, 10) || 0;
-    const value8 = parseInt(this.quizForm.value.question8, 10) || 0;
-    const value9 = parseInt(this.quizForm.value.question9, 10) || 0;
-    return value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9;
-  }*/
+  /* sumValues() {
+ 
+     const value1 = parseInt(this.quizForm.value.question1, 10) || 0;
+     const value2 = parseInt(this.quizForm.value.question2, 10) || 0;
+     const value3 = parseInt(this.quizForm.value.question3, 10) || 0;
+     const value4 = parseInt(this.quizForm.value.question4, 10) || 0;
+     const value5 = parseInt(this.quizForm.value.question5, 10) || 0;
+     const value6 = parseInt(this.quizForm.value.question6, 10) || 0;
+     const value7 = parseInt(this.quizForm.value.question7, 10) || 0;
+     const value8 = parseInt(this.quizForm.value.question8, 10) || 0;
+     const value9 = parseInt(this.quizForm.value.question9, 10) || 0;
+     return value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9;
+   }*/
 
   sumValues() {
     let suma = 0;
     let strella = '';
 
     for (let questionName in this.quizForm.value) {
-        if (questionName.startsWith('question')) {
-            const value = parseInt(this.quizForm.value[questionName], 10) || 0;
-            suma += value;
-            strella += `${questionName}: ${value}\n`;
-        }
+      if (questionName.startsWith('question')) {
+        const value = parseInt(this.quizForm.value[questionName], 10) || 0;
+        suma += value;
+        strella += `${questionName}: ${value}\n`;
+      }
     }
     return suma;
-}
+  }
 
 
 
@@ -65,17 +67,36 @@ export class MakeAPlaylistComponent {
   quizPlaylist() {
     console.log(this.quizForm.value);
     console.log('La suma es:', this.sumValues());
-    if (9 < this.sumValues() && this.sumValues()<14) {
+    if (9 < this.sumValues() && this.sumValues() < 14) {
       console.log('eres pop');
       alert('eres pop tio');
-    } else if(15 < this.sumValues() && this.sumValues()<20){
+    } else if (15 < this.sumValues() && this.sumValues() < 20) {
       console.log('eres rock');
       alert('eres rock tio');
-    }else{
+    } else {
       console.log('eres r&b');
       alert('eres r&b tio');
     }
   }
+
+
+
+  nextQuestion() {
+    if (this.currentQuestion < this.totalQuestions) {
+      this.currentQuestion++;
+    }
+  }
+
+  previousQuestion() {
+    if (this.currentQuestion > 1) {
+      this.currentQuestion--;
+    }
+  }
+
+
+
+
+
 
 
 
