@@ -29,7 +29,8 @@ export class AppComponent {
   }
 
   login(): void {
-    localStorage.setItem('userData', JSON.stringify({})); // Establece userData como un objeto vacío en el almacenamiento local
+    localStorage.setItem('userData', JSON.stringify({}));
+    localStorage.setItem('token', JSON.stringify({}));
     this.service.loginSpotifyU(); 
   }
 

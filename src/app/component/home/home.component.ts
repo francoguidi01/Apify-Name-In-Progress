@@ -22,18 +22,13 @@ export class HomeComponent {
   artistToSave: ArtistsData = new ArtistsData;
   userDataToSave: UserData = new UserData;
   new: boolean = true;
-  imageUrl: string = '';
+  imageUrl: string = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 
   constructor(private service: SpotifyService, private user_service: UsersDataService) {
     environment.token = JSON.parse(localStorage.getItem('token') || '{}');
   }
 
   ngOnInit(): void {
-    const userDataString = localStorage.getItem('userData');
-    if (userDataString) {
-      const userData = JSON.parse(userDataString);
-      this.imageUrl = userData.url_photo || '';
-    }
 
     this.getUserData();
     //this.getTopArtist();
@@ -47,13 +42,8 @@ export class HomeComponent {
       this.token = localTokenData;
       this.service.getUserDataService(this.token).subscribe(userData => {
         this.userData = userData;
-  
-        const storedUserData = JSON.parse(localStorage.getItem('userData') || '{}');
-        if (!this.isEqualUserData(storedUserData, userData)) {
+      
           this.onAddUser(userData);
-        } else {
-          console.log('Data in local storage is the same as the new data.');
-        }
 
         console.log(userData);
       });
@@ -67,21 +57,16 @@ export class HomeComponent {
     } 
   }
    
-  isEqualUserData(userData1: any, userData2: any): boolean {
-    return (
-      userData1.id === userData2.id &&
-      userData1.display_name === userData2.display_name &&
-      userData1.url_photo === userData2.images[1].url
-    );
-  }
-  
   onAddUser(userData: any) {
     this.userDataToSave = {
       id: userData.id,
       display_name: userData.display_name,
-      url_photo: userData.images[1].url
+      url_photo: userData.images && userData.images.length > 1 ? userData.images[1].url : this.imageUrl
     };
   
+    this.imageUrl = this.userDataToSave.url_photo || '';
+
+
     this.user_service.addUser(this.userDataToSave).subscribe(
       (data) => {
         console.log('added', data);
