@@ -15,6 +15,10 @@ export class MakeAPlaylistComponent {
   quiz: QuizModel = new QuizModel();
   quizForm: FormGroup;
 
+ showPlaylistCard: boolean = true;
+  showMasEscuchadosCard: boolean = true;
+  showFormSection: boolean = false;
+  
   constructor(private formBuilder: FormBuilder) {
     this.quizForm = this.formBuilder.group({
       'question1': new FormControl(this.quiz.question1, [Validators.required]),
@@ -94,7 +98,16 @@ export class MakeAPlaylistComponent {
   }
 
 
-
+ 
+  toggleVisibility(card: string) {
+    if (card === 'playlist') {
+      this.showPlaylistCard = !this.showPlaylistCard;
+    } else if (card === 'form') {
+      this.showFormSection = !this.showFormSection;
+      this.showPlaylistCard = false; 
+    }
+  }
+  
 
 
 

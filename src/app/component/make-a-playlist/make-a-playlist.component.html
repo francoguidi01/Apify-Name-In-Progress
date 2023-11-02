@@ -5,7 +5,17 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="animate__animated animate__heartBeat">
+        <div class="card text-center mb-3" style="width: 18rem;" *ngIf="showPlaylistCard">
+            <div class="card-body">
+                <h5 class="card-title"><strong>Tu playlist personalizada</strong></h5>
+                <p class="card-text">Responde algunas preguntas para obtener una playlist según tus gustos.</p>
+                <a class="btn btn-dark" (click)="toggleVisibility('form')">Comenzar</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" *ngIf="showFormSection">
         <form [formGroup]="quizForm">
             <div class="animate__animated animate__bounce" *ngIf="currentQuestion === 1">
                 <label for="question1"><strong>¿Qué es lo primero que haces cuando te levantas?</strong></label>
@@ -35,7 +45,8 @@
             </div>
 
             <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 4">
-                <label for="question4"><strong>A tu amig@ se entera que le fueron infiel. ¿Qué le decis?</strong></label>
+                <label for="question4"><strong>A tu amig@ se entera que le fueron infiel. ¿Qué le
+                        decis?</strong></label>
                 <select class="form-select" formControlName="question4">
                     <option value="1">Que le pregunte directamente.</option>
                     <option value="2">Que l@ deje!! HNo vale la pena que se esté preocupando por alguien que no la
@@ -64,7 +75,7 @@
 
             <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 7">
                 <label for="question7"><strong>¿Cuál es tu red social
-                    favorita?</strong></label>
+                        favorita?</strong></label>
                 <select class="form-select" formControlName="question7">
                     <option value="1">Otra / No tengo.</option>
                     <option value="2">Instagram.</option>
@@ -109,7 +120,8 @@
             class="btn btn-dark">Enviar</button>
 
         <div *ngIf="currentQuestion === totalQuestions">
-            <p class="animate__animated animate__shakeX" style="color: red;" *ngIf="quizForm.invalid"><strong>Por favor, responde todas las preguntas antes de enviar el cuestionario.</strong></p>
+            <p class="animate__animated animate__shakeX" style="color: red;" *ngIf="quizForm.invalid"><strong>Por favor,
+                    responde todas las preguntas antes de enviar el cuestionario.</strong></p>
 
         </div>
     </div>
