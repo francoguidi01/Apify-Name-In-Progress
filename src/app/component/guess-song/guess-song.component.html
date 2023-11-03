@@ -21,12 +21,17 @@
             </div>
         </div>
 
-        <audio controls id="audioPlayer" class="animate__animated animate__fadeInLeftBig"></audio>
+        <div>
+            <audio controls id="audioPlayer" class="animate__animated animate__fadeInLeftBig"></audio>
 
+            <img class="animate__animated animate__fadeInRightBig"
+                src="https://cdn-icons-png.flaticon.com/512/3811/3811713.png" alt="Imagen" type="button"
+                data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 40px; height: 40px; margin-top: -45px; margin-left: 10px;">
+        </div>
 
         <div>
             <button style="margin: 0 5px; margin-bottom: 6px;" *ngFor="let song of randomSongs" class="btn btn-dark"
-                type="button" (click)="handleOptionClick(song)" [disabled]="songsButtonDisabled" >{{
+                type="button" (click)="handleOptionClick(song)" [disabled]="songsButtonDisabled">{{
                 song.track.name }}</button>
         </div>
 
@@ -36,22 +41,46 @@
         </div>
     </div>
 
-
-    <div class="modal">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">GAME OVER</h1>
-                    <button type="button" class="btn-close" aria-label="Close"></button>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel"><strong>INSTRUCCIONES</strong></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <P>Puntuacion: {{this.points}}</P>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="getThePlaylistForGuess()">Play again</button>
+                    <p>
+                        <strong>Inicio del Juego:</strong>
+                        Verás un botón que dice "Empezar a jugar". Haz clic en este botón para comenzar el juego.
+                    </p>
+                    <p>
+                        <strong>Adivina la Canción:</strong>
+                        Después de presionar el botón "Empezar a jugar", se te presentarán varias opciones de canciones.
+                        Escucha las pistas de audio y elige la canción que creas que es la correcta.
+                    </p>
+                    <p>
+                        <strong>Pistas:</strong>
+                        Si necesitas ayuda, puedes hacer clic en el botón "Hint" (Pista). Te proporcionará información
+                        adicional para ayudarte a adivinar la canción. Ten en cuenta que cada pista revelada puede
+                        restar puntos, así que úsalas con precaución.
+                        Modal de Reglas:
+                    </p>
+                    <p>
+                        <strong>Puntuación:</strong>
+                        Tu puntuación se acumula en función de cuántas pistas de ayuda utilizas y de si adivinas
+                        correctamente la canción. Intenta acumular la mayor cantidad de puntos posible.
+                    </p>
+                    <p>
+                        <strong>Nuevo Juego:</strong>
+                        Si deseas jugar de nuevo, puedes presionar el botón "Empezar a jugar" nuevamente para
+                        reiniciar el juego con una nueva selección de canciones.
+                        Espero que este instructivo te ayude a comprender cómo jugar "Guess the Song". ¡Disfruta del
+                        juego y diviértete adivinando las canciones!
+                    </p>
                 </div>
             </div>
         </div>
     </div>
+
 
 </body>
