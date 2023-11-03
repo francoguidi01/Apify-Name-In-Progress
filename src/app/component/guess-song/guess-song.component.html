@@ -23,9 +23,10 @@
 
         <audio controls id="audioPlayer" class="animate__animated animate__fadeInLeftBig"></audio>
 
+
         <div>
             <button style="margin: 0 5px; margin-bottom: 6px;" *ngFor="let song of randomSongs" class="btn btn-dark"
-                type="button" (click)="handleOptionClick(song)">{{
+                type="button" (click)="handleOptionClick(song)" [disabled]="songsButtonDisabled" >{{
                 song.track.name }}</button>
         </div>
 
@@ -36,25 +37,21 @@
     </div>
 
 
-    <div *ngIf="detergenteWindow" class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Game over</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">GAME OVER</h1>
+                    <button type="button" class="btn-close" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>hola</p>
+                    <P>Puntuacion: {{this.points}}</P>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" (click)="getThePlaylistForGuess()">Volver a
-                        jugar</button>
+                    <button type="button" class="btn btn-primary" (click)="getThePlaylistForGuess()">Play again</button>
                 </div>
             </div>
         </div>
     </div>
+
 </body>

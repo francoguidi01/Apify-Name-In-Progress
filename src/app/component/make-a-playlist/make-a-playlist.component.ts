@@ -103,7 +103,6 @@ export class MakeAPlaylistComponent {
   toggleVisibility(card: string) {
     if (card == 'playlist') {
       this.showMasEscuchadosCard = false;
-      //!this.showMasEscuchadosCard;
       this.showRecommendedPlaylist = true; 
       this.showPlaylistCard = false; 
     } else if (card == 'form') {
@@ -113,11 +112,6 @@ export class MakeAPlaylistComponent {
     } 
   }
   
-
-
-
-
-
 
 }
 

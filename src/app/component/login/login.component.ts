@@ -109,26 +109,6 @@ export class LoginComponent {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
   onAddUser() {
 
     console.log(this.userDataToSave);

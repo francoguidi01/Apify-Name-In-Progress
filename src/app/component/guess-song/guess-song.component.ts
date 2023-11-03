@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SpotifyService } from '../../service/spotify.service';
 import { environment } from 'src/environments/environment.development';
-
 
 @Component({
   selector: 'app-guess-song',
@@ -9,6 +8,7 @@ import { environment } from 'src/environments/environment.development';
   styleUrls: ['./guess-song.component.css']
 })
 export class GuessSongComponent {
+
 
   playlist: any;
   randomSongs: any[] = [];
@@ -19,8 +19,8 @@ export class GuessSongComponent {
   hintMessage: string = '';
   albumImageUrl: string = '';
   hintButtonDisabled: boolean = false;
+  songsButtonDisabled: boolean = false;
   win: boolean = false;
-
 
   constructor(private service: SpotifyService) {
     environment.token = JSON.parse(localStorage.getItem('token') || '{}');
@@ -37,8 +37,8 @@ export class GuessSongComponent {
         this.hintMessage = '';
         this.albumImageUrl = '';
         this.turn = 0;
-        this.points=0;
-        this.win=false;
+        this.points = 0;
+        this.win = false;
       } else {
         console.error('La lista de reproducción no está disponible.');
       }
@@ -48,6 +48,8 @@ export class GuessSongComponent {
 
   playTheGame() {
     this.hintButtonDisabled = false;
+    this.songsButtonDisabled = false;
+    this.limitTime=4;
     this.randomSongs = this.getRandomSongsFromPlaylist(this.playlist.tracks.items, 4);
 
     const winningTrackIndex = Math.floor(Math.random() * 4);
@@ -96,34 +98,43 @@ export class GuessSongComponent {
       this.points -= 30;
     }
   }
-detergenteWindow: boolean= false;
+
   handleOptionClick(selectedTrack: any) {
     if (selectedTrack === this.winningTrack) {
-     // alert('¡Ganaste!');
-      this.points+=100;
+      // alert('¡Ganaste!');
+      this.points += 100;
       this.updatePoints();
       console.log(this.points);
       this.newGame();
     } else {
       //alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "' + '/Tus puntos son: ' + this.points);
-      this.detergenteWindow=true;
-      console.log('hola')
+      this.disableOptions();
       this.win = true;
     }
-    
+
+  }
+
+  
+  disableOptions() {
+    this.hintButtonDisabled = true;
+    this.songsButtonDisabled = true;
+    const audioPlayer: HTMLAudioElement = document.getElementById('audioPlayer') as HTMLAudioElement;
+    audioPlayer.pause();
+    this.limitTime=0;
   }
 
   newGame() {
 
     if (this.win === true) {
       this.points = 0;
+      this.win = false;
     }
 
     this.playTheGame();
     this.hintMessage = '';
     this.albumImageUrl = '';
     this.turn = 0;
-    this.limitTime=4;
+    this.limitTime = 4;
   }
 
   getRandomSongsFromPlaylist(playlist: any[], count: number): any[] {

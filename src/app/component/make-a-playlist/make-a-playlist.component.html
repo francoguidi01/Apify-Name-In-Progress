@@ -5,22 +5,27 @@
 </head>
 
 <body>
-    <div class="animate__animated animate__heartBeat">
-        <div class="card text-center mb-3" style="width: 18rem;" *ngIf="showPlaylistCard">
-            <div class="card-body">
-                <h5 class="card-title"><strong>Playlist personalizada</strong></h5>
-                <p class="card-text">Responde algunas preguntas para obtener una playlist según tus gustos.</p>
-                <a class="btn btn-dark" (click)="toggleVisibility('form')">Comenzar</a>
+    <div class="row">
+        <div class="col-sm-6 " >
+            <div class="animate__animated animate__backInDown">
+                <div class="card text-center mb-3" style="width: 18rem;"  *ngIf="showPlaylistCard">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Playlist personalizada</strong></h5>
+                        <p class="card-text">Responde algunas preguntas para obtener una playlist según tus gustos.</p>
+                        <a class="btn btn-dark" (click)="toggleVisibility('form')">Comenzar</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="animate__animated animate__heartBeat">
-        <div class="card text-center mb-3" style="width: 18rem;" *ngIf="showMasEscuchadosCard">
-            <div class="card-body">
-                <h5 class="card-title"><strong>Playlist segun tus gustos</strong></h5>
-                <p class="card-text">Dejanos analizar que te gusta para obtener una nueva playlist que escuhcar.</p>
-                <a class="btn btn-dark" (click)="toggleVisibility('playlist')">Comenzar</a>
+        <div class="col-sm-6 ">
+            <div class="animate__animated animate__backInUp">
+                <div class="card text-center mb-3" style="width: 18rem;" *ngIf="showMasEscuchadosCard">
+                    <div class="card-body">
+                        <h5 class="card-title"><strong>Playlist segun tus gustos</strong></h5>
+                        <p class="card-text">Analizamos que te gusta para obtener una nueva playlist que escuchar.</p>
+                        <a class="btn btn-dark" (click)="toggleVisibility('playlist')">Comenzar</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -134,7 +139,8 @@
             class="btn btn-dark">Enviar</button>
 
         <div *ngIf="currentQuestion === totalQuestions">
-            <p class="animate__animated animate__shakeX" style="color: red;" *ngIf="quizForm.invalid"><strong>Por favor,
+            <p class="animate__animated animate__shakeX" style="color: red;" *ngIf="quizForm.invalid"><strong>Por
+                    favor,
                     responde todas las preguntas antes de enviar el cuestionario.</strong></p>
 
         </div>
