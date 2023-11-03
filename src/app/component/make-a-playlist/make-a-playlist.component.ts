@@ -18,7 +18,8 @@ export class MakeAPlaylistComponent {
  showPlaylistCard: boolean = true;
   showMasEscuchadosCard: boolean = true;
   showFormSection: boolean = false;
-  
+  showRecommendedPlaylist: boolean = false;
+
   constructor(private formBuilder: FormBuilder) {
     this.quizForm = this.formBuilder.group({
       'question1': new FormControl(this.quiz.question1, [Validators.required]),
@@ -100,12 +101,16 @@ export class MakeAPlaylistComponent {
 
  
   toggleVisibility(card: string) {
-    if (card === 'playlist') {
-      this.showPlaylistCard = !this.showPlaylistCard;
-    } else if (card === 'form') {
-      this.showFormSection = !this.showFormSection;
+    if (card == 'playlist') {
+      this.showMasEscuchadosCard = false;
+      //!this.showMasEscuchadosCard;
+      this.showRecommendedPlaylist = true; 
       this.showPlaylistCard = false; 
-    }
+    } else if (card == 'form') {
+      this.showFormSection = true;
+      this.showPlaylistCard = false; 
+      this.showMasEscuchadosCard = false; 
+    } 
   }
   
 

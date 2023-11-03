@@ -49,7 +49,6 @@ export class GuessSongComponent {
   playTheGame() {
     this.hintButtonDisabled = false;
     this.randomSongs = this.getRandomSongsFromPlaylist(this.playlist.tracks.items, 4);
-    console.log('Canciones aleatorias:', this.randomSongs);
 
     const winningTrackIndex = Math.floor(Math.random() * 4);
     this.winningTrack = this.randomSongs[winningTrackIndex];
@@ -97,17 +96,21 @@ export class GuessSongComponent {
       this.points -= 30;
     }
   }
+detergenteWindow: boolean= false;
   handleOptionClick(selectedTrack: any) {
     if (selectedTrack === this.winningTrack) {
-      alert('¡Ganaste!');
+     // alert('¡Ganaste!');
       this.points+=100;
       this.updatePoints();
       console.log(this.points);
+      this.newGame();
     } else {
-      alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "' + '/Tus puntos son: ' + this.points);
+      //alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "' + '/Tus puntos son: ' + this.points);
+      this.detergenteWindow=true;
+      console.log('hola')
       this.win = true;
     }
-    this.newGame();
+    
   }
 
   newGame() {

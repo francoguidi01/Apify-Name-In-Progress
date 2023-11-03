@@ -66,12 +66,10 @@ export class HomeComponent {
 
     this.user_service.addUser(this.userDataToSave).subscribe(
       (data) => {
-        console.log('added', data);
         localStorage.setItem('userData', JSON.stringify(this.userDataToSave));
-
         this.getTopSongs();
         this.getTopArtist();
-
+        console.log('added', data);
       },
       (error) => {
         if (error.status === 409) {
@@ -119,7 +117,6 @@ export class HomeComponent {
         }
       };
       this.user_service.addSongs(songToSave).subscribe(data => {
-        console.log('added', data);
       });
     }
   }
@@ -152,7 +149,6 @@ export class HomeComponent {
       for (let i = 0; i < artistsData.length; i++) {
 
         const currentArtistData = artistsData[i];
-        console.log(currentArtistData);
 
         const artistToSave = {
           id_api_artist: currentArtistData.id,
@@ -160,11 +156,7 @@ export class HomeComponent {
             id: this.userDataToSave.id
           }
         };
-        
-        console.log("artistSave: ", artistToSave);
-
         this.user_service.addArtist(artistToSave).subscribe(data => {
-          console.log('added', data);
         });
       }
     }

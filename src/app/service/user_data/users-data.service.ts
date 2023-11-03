@@ -51,8 +51,6 @@ export class UsersDataService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    console.log("NEWDATA: ",newData);
-
     return this.httpClient.post(this.addArtistUrl, newData,{headers});
   }
 
