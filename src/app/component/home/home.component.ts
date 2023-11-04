@@ -19,7 +19,7 @@ export class HomeComponent {
   topArtists: any;
   topSongs: any;
   //songToSave: SongData = new SongData;
- // artistToSave: ArtistsData = new ArtistsData;
+  // artistToSave: ArtistsData = new ArtistsData;
   userDataToSave: UserData = new UserData;
   new: boolean = true;
   imageUrl: string = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
@@ -30,18 +30,17 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.getUserData();
-
   }
 
-
-  getUserData(): void { 
+  
+  getUserData(): void {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
       this.service.getUserDataService(this.token).subscribe(userData => {
         this.userData = userData;
-      
-          this.onAddUser(userData);
+
+        this.onAddUser(userData);
 
       });
     } else {
@@ -51,16 +50,16 @@ export class HomeComponent {
           this.userData = userData;
         });
       });
-    } 
+    }
   }
-   
+
   onAddUser(userData: any) {
     this.userDataToSave = {
       id: userData.id,
       display_name: userData.display_name,
       url_photo: userData.images && userData.images.length > 1 ? userData.images[1].url : this.imageUrl
     };
-  
+
     this.imageUrl = this.userDataToSave.url_photo || '';
 
 
@@ -77,12 +76,12 @@ export class HomeComponent {
           localStorage.setItem('userData', JSON.stringify(this.userDataToSave));
           this.new = false;
         } else {
-          console.error('An error occurred:', error); 
+          console.error('An error occurred:', error);
         }
       }
     );
   }
-  
+
 
   getTopSongs(): void {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
@@ -106,7 +105,6 @@ export class HomeComponent {
     }
   }
 
-
   onAddSong(songData: any[]) {
     for (let i = 0; i < songData.length; i++) {
       const currentSongData = songData[i];
@@ -121,45 +119,45 @@ export class HomeComponent {
     }
   }
 
-  
-    getTopArtist(): void {
-      const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
-      if (Object.keys(localTokenData).length !== 0) {
-        this.token = localTokenData;
+
+  getTopArtist(): void {
+    const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
+    if (Object.keys(localTokenData).length !== 0) {
+      this.token = localTokenData;
+      this.service.getTopArtists(this.token).subscribe(artistsData => {
+
+        this.topArtists = artistsData;
+
+        this.onAddArtist(artistsData.items);
+
+      });
+    } else {
+      this.service.get_token().subscribe(token => {
+        this.token = token;
         this.service.getTopArtists(this.token).subscribe(artistsData => {
-  
           this.topArtists = artistsData;
-  
           this.onAddArtist(artistsData.items);
-  
         });
-      } else {
-        this.service.get_token().subscribe(token => {
-          this.token = token;
-          this.service.getTopArtists(this.token).subscribe(artistsData => {
-            this.topArtists = artistsData;
-            this.onAddArtist(artistsData.items);
-          });
-        });
-      }
+      });
     }
-  
-    
-    onAddArtist(artistsData: any[]) {
-      for (let i = 0; i < artistsData.length; i++) {
+  }
 
-        const currentArtistData = artistsData[i];
 
-        const artistToSave = {
-          id_api_artist: currentArtistData.id,
-          user: {
-            id: this.userDataToSave.id
-          }
-        };
-        this.user_service.addArtist(artistToSave).subscribe(data => {
-        });
-      }
+  onAddArtist(artistsData: any[]) {
+    for (let i = 0; i < artistsData.length; i++) {
+
+      const currentArtistData = artistsData[i];
+
+      const artistToSave = {
+        id_api_artist: currentArtistData.id,
+        user: {
+          id: this.userDataToSave.id
+        }
+      };
+      this.user_service.addArtist(artistToSave).subscribe(data => {
+      });
     }
+  }
 
 
 }

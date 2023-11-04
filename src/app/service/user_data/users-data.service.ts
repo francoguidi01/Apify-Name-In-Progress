@@ -12,15 +12,22 @@ export class UsersDataService {
   // URL de la API ficticia (reemplaza con la URL de tu API real)
   apiUrl = "http://localhost:8080/user/get-all-users";
   allSongs = "http://localhost:8080/songs/get-all-songs";
-  userById="http://localhost:8080/user/get-an-user/";
-  songById="http://localhost:8080/songs/get-songs-by-user/";
+  userById = "http://localhost:8080/user/get-an-user/";
+  songById = "http://localhost:8080/songs/get-songs-by-user/";
   deleteUrl = "http://localhost:8080/user/delete/2"; // URL ficticia para eliminar (reemplaza con la URL real)
   addUrl = "http://localhost:8080/user/add"; // URL ficticia para agregar (reemplaza con la URL real)
-  addSongUrl= "http://localhost:8080/songs/add-song";
-  addArtistUrl= "http://localhost:8080/artists/add-artist";
-
+  addSongUrl = "http://localhost:8080/songs/add-song";
+  addArtistUrl = "http://localhost:8080/artists/add-artist";
+  allLeader = "http://localhost:8080/leaderboard/get-leaderboard";
+  addToLeaderUrl = "http://localhost:8080/leaderboard/add-leaderboard";
+  
   getAllUsers() {
+  
     return this.httpClient.get(this.apiUrl);
+  }
+
+  getAllLeaderboard() {
+    return this.httpClient.get(this.allLeader);
   }
 
   getUserById(id: string) {
@@ -39,19 +46,26 @@ export class UsersDataService {
     return this.httpClient.post(this.addUrl, newData, { headers });
   }
 
-  addSongs(newData: any){
+  addSongs(newData: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.httpClient.post(this.addSongUrl, newData,{headers});
+    return this.httpClient.post(this.addSongUrl, newData, { headers });
   }
 
-  addArtist(newData: any){
+  addArtist(newData: any) {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.httpClient.post(this.addArtistUrl, newData,{headers});
+    return this.httpClient.post(this.addArtistUrl, newData, { headers });
+  }
+
+  addToLeader(newData: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.httpClient.post(this.addToLeaderUrl, newData, { headers });
   }
 
   getSongById(id: string) {

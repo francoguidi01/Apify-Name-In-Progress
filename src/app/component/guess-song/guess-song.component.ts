@@ -1,6 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SpotifyService } from '../../service/spotify.service';
 import { environment } from 'src/environments/environment.development';
+import { UsersDataService } from 'src/app/service/user_data/users-data.service';
+import { UserData } from 'src/app/models/user-data';
 
 @Component({
   selector: 'app-guess-song',
@@ -8,6 +10,7 @@ import { environment } from 'src/environments/environment.development';
   styleUrls: ['./guess-song.component.css']
 })
 export class GuessSongComponent {
+  @ViewChild('audioPlayer') audioPlayer!: ElementRef;
 
 
   playlist: any;
@@ -21,14 +24,28 @@ export class GuessSongComponent {
   hintButtonDisabled: boolean = false;
   songsButtonDisabled: boolean = false;
   win: boolean = false;
+  alert: boolean = false;
 
-  constructor(private service: SpotifyService) {
+  userFromDatabase: any;
+  userDataToSave: UserData = new UserData;
+
+  constructor(private service: SpotifyService, private user_service: UsersDataService) {
     environment.token = JSON.parse(localStorage.getItem('token') || '{}');
+    environment.token = JSON.parse(localStorage.getItem('userData') || '{}');
+
   }
+
+  ngOnInit() {
+    this.getTheLeaderboard();
+  }
+
 
   getThePlaylistForGuess(): void {
 
     const localtoken = JSON.parse(localStorage.getItem('token') || '{}');
+    this.win = true;
+    this.alert = false;
+    this.getTheLeaderboard();
 
     this.service.getPlaylist(localtoken, environment.playlisturl).subscribe(playlist => {
       if (playlist) {
@@ -38,7 +55,6 @@ export class GuessSongComponent {
         this.albumImageUrl = '';
         this.turn = 0;
         this.points = 0;
-        this.win = false;
       } else {
         console.error('La lista de reproducción no está disponible.');
       }
@@ -49,7 +65,7 @@ export class GuessSongComponent {
   playTheGame() {
     this.hintButtonDisabled = false;
     this.songsButtonDisabled = false;
-    this.limitTime=4;
+    this.limitTime = 4;
     this.randomSongs = this.getRandomSongsFromPlaylist(this.playlist.tracks.items, 4);
 
     const winningTrackIndex = Math.floor(Math.random() * 4);
@@ -100,34 +116,72 @@ export class GuessSongComponent {
   }
 
   handleOptionClick(selectedTrack: any) {
+    //const correctSound = document.getElementById('winSound') as HTMLAudioElement;
+    const wrongSound = document.getElementById('loseSound') as HTMLAudioElement;
+    const loseModal = document.getElementById('loseModal');
     if (selectedTrack === this.winningTrack) {
       // alert('¡Ganaste!');
+      // correctSound.play();
       this.points += 100;
       this.updatePoints();
       console.log(this.points);
       this.newGame();
     } else {
       //alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "' + '/Tus puntos son: ' + this.points);
+      this.onAddLeader();
+      if (loseModal) {
+        loseModal.style.display = 'block';
+      }
+      wrongSound.play();
       this.disableOptions();
-      this.win = true;
+      this.win = false;
+      this.alert = true;
     }
 
   }
 
-  
+  leaderboardData: any;
+
+  getTheLeaderboard() {
+    this.user_service.getAllLeaderboard().subscribe(LeaderboardData => {
+      this.leaderboardData = LeaderboardData;
+      console.log(this.leaderboardData);
+    });
+  }
+
+
+  onAddLeader() {
+    const userId = JSON.parse(localStorage.getItem('userData') || '{}').id;
+
+    if (this.points !== 0) {
+      const leaderToSave = {
+        user: {
+          id: userId
+        },
+        points: this.points
+      };
+
+      this.user_service.addToLeader(leaderToSave).subscribe(data => {
+      });
+    } else {
+      console.log("Los puntos fueron 0 ni lo agrego");
+    }
+  }
+
+
   disableOptions() {
     this.hintButtonDisabled = true;
     this.songsButtonDisabled = true;
     const audioPlayer: HTMLAudioElement = document.getElementById('audioPlayer') as HTMLAudioElement;
     audioPlayer.pause();
-    this.limitTime=0;
+    this.limitTime = 0;
   }
 
   newGame() {
+    this.getTheLeaderboard();
 
-    if (this.win === true) {
+    if (this.win === false) {
       this.points = 0;
-      this.win = false;
     }
 
     this.playTheGame();
