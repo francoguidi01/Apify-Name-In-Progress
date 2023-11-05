@@ -6,11 +6,44 @@
         style="width: 30px; height: 30px; border-radius: 50%;">
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <li>
-          <a class="dropdown-item" href="#">Cerrar sesion</a>
-          <a class="dropdown-item" (click)="deleteUser()" >Darse de baja</a> 
+          <!-- <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Darse de baja</a>
+          <a class="dropdown-item" href="#">Cerrar sesion</a>-->
+
+          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">
+            <img src="assets/DeleteUser.png" alt="Imagen" style="width: 35px; height: 35px;">
+            <strong>Darse de baja</strong>
+          </a>
+          <a class="dropdown-item" href="#">
+            <img src="assets/CerrarSesion.png" alt="Imagen" style="width: 35px; height: 35px;">
+            <strong>Cerrar sesión</strong>
+          </a>
+
         </li>
       </ul>
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" style="text-align: center;" id="exampleModalLabel">ELIMINACIÓN DE DATOS</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+            <p>¿Estás seguro de que deseas darte de baja? Esta acción no se puede deshacer.</p>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteUser()">Eliminar mi
+              usuario</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
 
 
     <div class="collapse navbar-collapse" id="navbarNav">

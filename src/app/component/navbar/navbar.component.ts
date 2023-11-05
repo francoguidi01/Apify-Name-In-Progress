@@ -3,6 +3,7 @@ import { SpotifyService } from '../../service/spotify.service';
 import { environment } from 'src/environments/environment.development';
 import { UsersDataService } from 'src/app/service/user_data/users-data.service';
 import { UserData } from 'src/app/models/user-data';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -10,6 +11,7 @@ import { UserData } from 'src/app/models/user-data';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+
 
   leaderboardData: any;
   friends: any;
@@ -27,26 +29,32 @@ export class NavbarComponent {
   }
 
   deleteUser() {
+
     const userId = JSON.parse(localStorage.getItem('userData') || '{}').id;
     this.deleteFriendsById(userId);
-    this.deleteSongsById(userId);
-    this.deleteArtistById(userId);
-    this.deleteLeaderboardById(userId);
+    // this.deleteSongsById(userId);
+    //this.deleteArtistById(userId);
+    // this.deleteLeaderboardById(userId);
     this.all = true;
     this.verificationAll(userId);
+
   }
 
 
   verificationAll(userId: string) {
-
     if (this.all === true) {
       this.deleteUserById(userId);
     } else {
       console.log("No funca papa");
     }
   }
+
   deleteUserById(userId: string) {
+    console.log(userId);
+
     this.user_service.deleteUser(userId).subscribe(response => {
+      console.log(userId);
+
       console.log('Usuario eliminado con éxito', response);
     }, error => {
       console.error('Error al eliminar usuario:', error.error);
