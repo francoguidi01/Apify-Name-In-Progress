@@ -25,6 +25,7 @@ export class GuessSongComponent {
   songsButtonDisabled: boolean = false;
   win: boolean = false;
   alert: boolean = false;
+  leaderboardData: any;
 
   userFromDatabase: any;
   userDataToSave: UserData = new UserData;
@@ -140,14 +141,17 @@ export class GuessSongComponent {
 
   }
 
-  leaderboardData: any;
 
   getTheLeaderboard() {
     this.user_service.getAllLeaderboard().subscribe(LeaderboardData => {
-      this.leaderboardData = LeaderboardData;
-      console.log(this.leaderboardData);
+        if (LeaderboardData instanceof Array) {
+            this.leaderboardData = LeaderboardData.slice(0, 5);
+        } else {
+            console.error('Error: LeaderboardData no es un array');
+        }
     });
-  }
+}
+
 
 
   onAddLeader() {

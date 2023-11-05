@@ -12,6 +12,7 @@ import { SpotifyService } from './service/spotify.service';
 import { MakeAPlaylistComponent } from './component/make-a-playlist/make-a-playlist.component';
 import { LoginComponent } from './component/login/login.component';
 import { HomeComponent } from './component/home/home.component';
+import { SocialComponent } from './component/social/social.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HomeComponent } from './component/home/home.component';
     MakeAPlaylistComponent,
     LoginComponent,
     HomeComponent,
+    SocialComponent,
   ],
   imports: [
     BrowserModule,
