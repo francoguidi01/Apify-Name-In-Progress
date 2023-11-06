@@ -1,6 +1,18 @@
 <app-navbar></app-navbar>
-<button (click)="getTopArtists()">top artistas</button>
-<div  *ngIf="topArtists">
+<div>
+    <!--CREO QUE LOS ATRIBUTOS QUE ESTAMOS MANDANDO SON ENVIROMENTS-->
+    <button (click)="getTopArtists('long_term')">top large artistas</button>
+    <button (click)="getTopArtists('medium_term')">top medium artistas</button>
+    <button (click)="getTopArtists('short_term')">top short artistas</button>
+</div>
+<div>
+    <button (click)="getTopSongs('long_term')">top songs large term</button>
+    <button (click)="getTopSongs('medium_term')">top songs mediem term</button>
+    <button (click)="getTopSongs('short_term')">top songs short term</button>
+  
+</div>
+
+<div *ngIf="topArtists">
     <table class="table table-success table-striped">
         <thead>
             <tr>
@@ -16,17 +28,57 @@
                 <td>{{artist.name}}</td>
                 <td>
                     <ng-container *ngFor="let genre of artist.genres; let last = last; let first = first">
-                      <ng-container *ngIf="!first && !last">, </ng-container>
-                      <ng-container *ngIf="last && !first"> & </ng-container>
-                      {{genre}}
+                        <ng-container *ngIf="!first && !last">, </ng-container>
+                        <ng-container *ngIf="last && !first"> & </ng-container>
+                        {{genre}}
                     </ng-container>
-                  </td>
-                  
+                </td>
+
             </tr>
         </tbody>
     </table>
 </div>
 
 
-<button (click)="getTopSongs()">top songs</button>
+<div *ngIf="topSongs">
+    <table class="table table-success table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Top</th>
+                <th scope="col">Song</th>
+                <th scope="col">Artist Name</th>
+                <th scope="col">Album</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Preview</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let song of topSongs.items; let i= index">
+                <td>{{i+1}}</td>
+                <td>{{song.name}}</td>
+                <td>{{song.album.artists[0].name}}</td>
+                <td>{{song.album.name}}</td>
+                <td>{{song.duration_ms/60000}}</td>
+                <div *ngIf="previewStarted">
+                    <button (click)="playPreview(song.preview_url)">Reproducir</button>
+                </div>
+                <div *ngIf="!previewStarted">
+                    <button (click)="pausePreview()">Pause</button>
+                </div>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <p>user-stats works!</p>
+
+<!--
+    <td>
+                    <ng-container *ngFor="let genre of song.genres; let last = last; let first = first">
+                        <ng-container *ngIf="!first && !last">, </ng-container>
+                        <ng-container *ngIf="last && !first"> & </ng-container>
+                        {{genre}}
+                    </ng-container>
+                </td>
+                                <td><audio src="https://p.scdn.co/mp3-preview/7c136e7220892133e94c4d13d4ca7262d3d5cf4c?cid=a00cd5e5b4d34c1996b89d04beaa411a" controls></audio></td>
+-->

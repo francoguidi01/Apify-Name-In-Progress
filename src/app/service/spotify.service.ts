@@ -17,14 +17,14 @@ export class SpotifyService {
 
   constructor(private _httpClient: HttpClient) {
     this.token = JSON.parse(localStorage.getItem('token') || '{}');
-  this.checkLocalStorageAndUrl();
+    this.checkLocalStorageAndUrl();
   }
 
   checkLocalStorageAndUrl(): void {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
-  
+
     const tokenData = this.getTokenDataFromUrl();
-  
+
     if (Object.keys(tokenData).length === 0) {
       console.log('gil');
     } else {
@@ -92,7 +92,7 @@ export class SpotifyService {
      );
    }*/
 
-   getPlaylist(token: TokenModel, playlistUrl: string): Observable<any> {
+  getPlaylist(token: TokenModel, playlistUrl: string): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -121,7 +121,7 @@ export class SpotifyService {
   }
 
 
-  getTopArtists(token: TokenModel): Observable<any> {
+  getTopArtists(token: TokenModel, range: String): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -130,8 +130,7 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
     });
-
-    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/artists?limit=5`, { headers })
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/artists?time_range=${range}&limit=5`, { headers })
       .pipe(
         map((response: any) => {
           console.log('TOP ARTISTS:', response);
@@ -139,8 +138,8 @@ export class SpotifyService {
         }),
       );
   }
-
-  getTopSongs(token: TokenModel): Observable<any> {
+  //tracks?time_range=short_term
+  getTopSongs(token: TokenModel, range: String/*, limit*/): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -148,8 +147,7 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
     });
-
-    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/tracks?limit=5`, { headers })
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/tracks?time_range=${range}&limit=50`, { headers })
       .pipe(
         map((response: any) => {
           console.log('TOP SONGS:', response);
@@ -157,6 +155,24 @@ export class SpotifyService {
         }),
       );
   }
+  //me/top/artists
+  //me/top/tracks
+  // getDataUser(token: TokenModel, range: String, endpoint: String) {
+  //   if (!token) {
+  //     console.error('Error: Token no disponible. Debes obtener el token primero.');
+  //     return of(null);
+  //   }
+  //   const headers = new HttpHeaders({
+  //     'Authorization': 'Bearer ' + token.access_token
+  //   });
+  //   return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}${endpoint}?time_range=${range}&limit=10`, { headers })
+  //     .pipe(
+  //       map((response: any) => {
+  //         console.log('TOP SONGS:', response);
+  //         return response;
+  //       }),
+  //     );
+  // }
 
 
 
@@ -167,11 +183,7 @@ export class SpotifyService {
 
 
 
-
-
-
-  getUserDataService(token: TokenModel): Observable<any>
-  {
+  getUserDataService(token: TokenModel): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -180,7 +192,7 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
     });
-//    https://api.spotify.com/v1/me
+    //    https://api.spotify.com/v1/me
 
     return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/`, { headers })
       .pipe(
