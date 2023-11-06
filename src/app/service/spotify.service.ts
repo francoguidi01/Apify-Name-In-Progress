@@ -175,7 +175,19 @@ export class SpotifyService {
   // }
 
 
-
+  getAudioFeatures(token: TokenModel, ids: String) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token.access_token
+    });
+    return this._httpClient.get(`https://api.spotify.com/v1/audio-features?ids=${ids}`, { headers })
+      .pipe(
+        map((response: any) => {
+          console.log('Audio Features:', response);
+          return response;
+        }),
+      );
+    //https://api.spotify.com/v1/audio-features
+  }
 
 
 
