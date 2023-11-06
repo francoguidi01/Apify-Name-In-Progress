@@ -25,6 +25,7 @@ export class GuessSongComponent {
   songsButtonDisabled: boolean = false;
   win: boolean = false;
   alert: boolean = false;
+  gameStarted: boolean = false;
   leaderboardData: any;
 
   userFromDatabase: any;
@@ -38,14 +39,15 @@ export class GuessSongComponent {
 
   ngOnInit() {
     this.getTheLeaderboard();
+    
   }
-
 
   getThePlaylistForGuess(): void {
 
     const localtoken = JSON.parse(localStorage.getItem('token') || '{}');
     this.win = true;
     this.alert = false;
+    this.gameStarted = true;
     this.getTheLeaderboard();
 
     this.service.getPlaylist(localtoken, environment.playlisturl).subscribe(playlist => {
@@ -121,14 +123,12 @@ export class GuessSongComponent {
     const wrongSound = document.getElementById('loseSound') as HTMLAudioElement;
     const loseModal = document.getElementById('loseModal');
     if (selectedTrack === this.winningTrack) {
-      // alert('¡Ganaste!');
       // correctSound.play();
       this.points += 100;
       this.updatePoints();
       console.log(this.points);
       this.newGame();
     } else {
-      //alert('Perdiste, La canción era: " ' + this.winningTrack.track.name + ' "' + '/Tus puntos son: ' + this.points);
       this.onAddLeader();
       if (loseModal) {
         loseModal.style.display = 'block';
@@ -136,6 +136,7 @@ export class GuessSongComponent {
       wrongSound.play();
       this.disableOptions();
       this.win = false;
+      this.gameStarted = false;
       this.alert = true;
     }
 

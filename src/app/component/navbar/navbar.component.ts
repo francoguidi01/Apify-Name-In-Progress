@@ -32,54 +32,90 @@ export class NavbarComponent {
 
     const userId = JSON.parse(localStorage.getItem('userData') || '{}').id;
     this.deleteFriendsById(userId);
-    // this.deleteSongsById(userId);
-    //this.deleteArtistById(userId);
-    // this.deleteLeaderboardById(userId);
-    this.all = true;
-    this.verificationAll(userId);
-
-  }
-
-
-  verificationAll(userId: string) {
-    if (this.all === true) {
-      this.deleteUserById(userId);
-    } else {
-      console.log("No funca papa");
-    }
+    this.deleteUserById(userId);
   }
 
   deleteUserById(userId: string) {
-    console.log(userId);
 
     this.user_service.deleteUser(userId).subscribe(response => {
-      console.log(userId);
-
       console.log('Usuario eliminado con éxito', response);
     }, error => {
       console.error('Error al eliminar usuario:', error.error);
     });
   }
 
-
   deleteFriendsById(userId: string) {
+
     this.user_service.getFriendsById(userId).subscribe(myFriendsData => {
+
       console.log(myFriendsData);
+
       if (Array.isArray(myFriendsData)) {
         myFriendsData.forEach(friendData => {
-          const friendId = friendData.id_friend;
-          this.user_service.deleteFriend(friendId).subscribe(response => {
-          }, error => {
-            //console.error(`Error al eliminar amigo con ID ${friendId}: ${error}`);
+          const friendId = friendData.user2.id;
+          const friendshipIdUser1 = friendData.id_friend;
+
+          this.user_service.getFriendsById(friendId).subscribe(friendFriendsData => {
+
+            if (Array.isArray(friendFriendsData) && friendFriendsData.length > 0) {
+
+              const friendshipIdUser2 = friendFriendsData[0].id_friend;
+
+              if (this.checkIfMutualFriend(friendFriendsData, userId)) {
+                console.log(friendFriendsData);
+                this.user_service.deleteFriend(friendshipIdUser1).subscribe(response => {
+                  console.log(`Amigo con ID ${friendshipIdUser1} eliminado correctamente.`);
+                }, error => {
+                  console.error(`Error al eliminar amigo con ID ${friendshipIdUser1}: ${error}`);
+                });
+                this.user_service.deleteFriend(friendshipIdUser2).subscribe(response => {
+                  console.log(`Amigo con ID ${friendshipIdUser2} eliminado correctamente.`);
+                }, error => {
+                  console.error(`Error al eliminar amigo con ID ${friendshipIdUser2}: ${error}`);
+                });
+              } else {
+                this.user_service.deleteFriend(friendshipIdUser1).subscribe(response => {
+                  console.log(`Amigo con ID ${friendshipIdUser1} eliminado correctamente.`);
+                }, error => {
+                  console.error(`Error al eliminar amigo con ID ${friendshipIdUser1}: ${error}`);
+                });
+              }
+            }
           });
         });
-      } else {
-        console.log('No hay más amigos para eliminar.');
       }
     });
   }
 
+  checkIfMutualFriend(friendsData: any, userId: string) {
+    if (Array.isArray(friendsData)) {
+      for (let i = 0; i < friendsData.length; i++) {
+        if (friendsData[i].user2.id === userId) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
+/* deleteFriendsById(userId: string) {
+     this.user_service.getFriendsById(userId).subscribe(myFriendsData => {
+       console.log(myFriendsData);
+       if (Array.isArray(myFriendsData)) {
+         myFriendsData.forEach(friendData => {
+           const friendId = friendData.id_friend;
+           this.user_service.deleteFriend(friendId).subscribe(response => {
+           }, error => {
+             //console.error(`Error al eliminar amigo con ID ${friendId}: ${error}`);
+           });
+         });
+       } else {
+         console.log('No hay más amigos para eliminar.');
+       }
+     });
+   }*/
+
+   /*
   deleteSongsById(userId: string) {
     this.user_service.getSongById(userId).subscribe(mySongsData => {
       console.log(mySongsData);
@@ -130,6 +166,7 @@ export class NavbarComponent {
       }
     });
   }
+  */
 }
 
 

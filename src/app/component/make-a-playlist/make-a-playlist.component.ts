@@ -15,7 +15,9 @@ export class MakeAPlaylistComponent {
   quiz: QuizModel = new QuizModel();
   quizForm: FormGroup;
 
- showPlaylistCard: boolean = true;
+  showIcon1: boolean = true;
+  showIcon2: boolean = true;
+  showPlaylistCard: boolean = true;
   showMasEscuchadosCard: boolean = true;
   showFormSection: boolean = false;
   showRecommendedPlaylist: boolean = false;
@@ -82,6 +84,7 @@ export class MakeAPlaylistComponent {
       console.log('eres r&b');
       alert('eres r&b tio');
     }
+
   }
 
 
@@ -99,19 +102,25 @@ export class MakeAPlaylistComponent {
   }
 
 
- 
+
   toggleVisibility(card: string) {
     if (card == 'playlist') {
       this.showMasEscuchadosCard = false;
-      this.showRecommendedPlaylist = true; 
-      this.showPlaylistCard = false; 
+      this.showRecommendedPlaylist = true;
+      this.showPlaylistCard = false;
+      this.showIcon1 = false;
+      this.showIcon2 = false;
+
     } else if (card == 'form') {
       this.showFormSection = true;
-      this.showPlaylistCard = false; 
-      this.showMasEscuchadosCard = false; 
-    } 
+      this.showPlaylistCard = false;
+      this.showMasEscuchadosCard = false;
+      this.showIcon2 = false;
+      this.showIcon1 = false;
+
+    }
   }
-  
+
 
 }
 

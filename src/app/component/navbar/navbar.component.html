@@ -1,15 +1,16 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+ 
+<nav class="navbar navbar-expand-lg" style="background-color: rgba(255, 255, 255, 0.8);">
   <div class="container-fluid">
     <div class="dropdown">
-      <img src="https://cdn-icons-png.flaticon.com/512/2956/2956788.png" alt="Imagen" type="button"
+      <img src="assets/Config.png" alt="Imagen" type="button"
         id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
-        style="width: 30px; height: 30px; border-radius: 50%;">
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        style="width: 40px; height: 40px;">
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: rgba(255, 255, 255, 0.8);">
         <li>
           <!-- <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Darse de baja</a>
           <a class="dropdown-item" href="#">Cerrar sesion</a>-->
 
-          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">
+          <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal2" href="#">
             <img src="assets/DeleteUser.png" alt="Imagen" style="width: 35px; height: 35px;">
             <strong>Darse de baja</strong>
           </a>
@@ -22,48 +23,57 @@
       </ul>
     </div>
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.8);">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" style="text-align: center;" id="exampleModalLabel">ELIMINACIÓN DE DATOS</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body text-center">
-            <p>¿Estás seguro de que deseas darte de baja? Esta acción no se puede deshacer.</p>
+            <p><strong>¿Estás seguro que queres darte de baja? Esta acción no se puede deshacer.</strong></p>
           </div>
           <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteUser()">Eliminar mi
-              usuario</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteUser()"><strong>💀Eliminar mi
+              usuario💀</strong></button>
           </div>
         </div>
       </div>
     </div>
 
-
-
-
-
-
-
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
-          <a class="nav-link active" [routerLink]="['/home']" routerLinkActive="active" href="#">Home</a>
+          <a class="nav-link" [routerLink]="['/home']" routerLinkActive="active" href="#">
+            <img src="assets/Home.png" alt="Imagen" style="width: 32px; height: 32px;">
+            <strong> HOME</strong>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/guess-song']" routerLinkActive="active" href="#">Guess Song!</a>
+          <a class="nav-link" [routerLink]="['/guess-song']" routerLinkActive="active" href="#">
+            <img src="assets/Guess.png" alt="Imagen" style="width: 32px; height: 32px;">
+            <strong>GUESS THE SONG</strong>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/make-a-playlist']" routerLinkActive="active" href="#">Make a playlist</a>
+          <a class="nav-link" [routerLink]="['/make-a-playlist']" routerLinkActive="active" href="#">
+            <img src="assets/Playlist.png" alt="Imagen" style="width: 32px; height: 32px;">
+            <strong> MAKE A PLAYLIST</strong>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active" href="#">Stats</a>
+          <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active" href="#">
+            <img src="assets/Stats.png" alt="Imagen" style="width: 32px; height: 32px;">
+            <strong> STATS</strong>
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/social']" routerLinkActive="active" href="#">Social</a>
+          <a class="nav-link" [routerLink]="['/social']" routerLinkActive="active" href="#">
+            <img src="assets/Social.png" alt="Imagen" style="width: 32px; height: 32px;">
+            <strong> SOCIAL</strong>
+          </a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
