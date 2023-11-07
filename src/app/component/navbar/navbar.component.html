@@ -1,11 +1,10 @@
- 
 <nav class="navbar navbar-expand-lg" style="background-color: rgba(255, 255, 255, 0.8);">
   <div class="container-fluid">
     <div class="dropdown">
-      <img src="assets/Config.png" alt="Imagen" type="button"
-        id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
-        style="width: 40px; height: 40px;">
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: rgba(255, 255, 255, 0.8);">
+      <img src="assets/Config.png" alt="Imagen" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+        aria-expanded="false" style="width: 40px; height: 40px;">
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+        style="background-color: rgba(255, 255, 255, 0.8);">
         <li>
           <!-- <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">Darse de baja</a>
           <a class="dropdown-item" href="#">Cerrar sesion</a>-->
@@ -27,15 +26,27 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.8);">
           <div class="modal-header">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button *ngIf="hintDeleteButton" type="button" class="btn-close" data-bs-dismiss="modal"
+              aria-label="Close"></button>
           </div>
           <div class="modal-body text-center">
-            <p><strong>¿Estás seguro que queres darte de baja? Esta acción no se puede deshacer.</strong></p>
+            <p *ngIf="hintDeleteButton"><strong>¿Estás seguro que queres darte de baja? Esta acción no se puede
+                deshacer.</strong></p>
+            <p *ngIf="showContinueButton"><strong>Presiona "Continuar" para terminar con el proceso de
+                eliminacion.</strong></p>
+
           </div>
-          <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteUser()"><strong>💀Eliminar mi
-              usuario💀</strong></button>
+
+          <div *ngIf="hintDeleteButton" class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-danger" (click)="deleteFriendsById()"><strong>💀Eliminar mi
+                usuario💀</strong></button>
           </div>
+
+          <div *ngIf="showContinueButton" class="modal-footer d-flex justify-content-center">
+            <button class="btn btn-danger" data-bs-dismiss="modal"
+              (click)="deleteUserById()"><strong>💀Continuar💀</strong></button>
+          </div>
+          
         </div>
       </div>
     </div>
@@ -76,4 +87,3 @@
     </div>
   </div>
 </nav>
-

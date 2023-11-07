@@ -19,6 +19,9 @@ export class NavbarComponent {
   artist: any;
   all: boolean = false;
 
+  showContinueButton: boolean = false;
+  hintDeleteButton: boolean = true;
+
   userFromDatabase: any;
   userDataToSave: UserData = new UserData;
 
@@ -28,14 +31,10 @@ export class NavbarComponent {
 
   }
 
-  deleteUser() {
+ 
+  deleteUserById() {
 
     const userId = JSON.parse(localStorage.getItem('userData') || '{}').id;
-    this.deleteFriendsById(userId);
-    this.deleteUserById(userId);
-  }
-
-  deleteUserById(userId: string) {
 
     this.user_service.deleteUser(userId).subscribe(response => {
       console.log('Usuario eliminado con éxito', response);
@@ -44,7 +43,9 @@ export class NavbarComponent {
     });
   }
 
-  deleteFriendsById(userId: string) {
+  deleteFriendsById() {
+
+    const userId = JSON.parse(localStorage.getItem('userData') || '{}').id;
 
     this.user_service.getFriendsById(userId).subscribe(myFriendsData => {
 
@@ -85,6 +86,8 @@ export class NavbarComponent {
         });
       }
     });
+    this.showContinueButton = true;
+    this.hintDeleteButton = false;
   }
 
   checkIfMutualFriend(friendsData: any, userId: string) {
