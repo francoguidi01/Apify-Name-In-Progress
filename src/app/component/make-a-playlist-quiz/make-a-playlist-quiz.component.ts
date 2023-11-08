@@ -40,10 +40,10 @@ export class MakeAPlaylistQuizComponent {
       //alert('eres pop tio');
     } else if (15 < sumTotal && sumTotal < 20) {
       console.log('eres rock');
-    //  alert('eres rock tio');
+      //  alert('eres rock tio');
     } else {
       console.log('eres r&b');
-    //  alert('eres r&b tio');
+      //  alert('eres r&b tio');
     }
 
   }
@@ -82,15 +82,15 @@ export class MakeAPlaylistQuizComponent {
     let target_popularity = 50;
     let target_valence = 0.5;
 
-   
-      if (this.quizForm.value.question1 == 1) {
-        target_popularity += 20;
-      } else if (this.quizForm.value.question1 == 2) {
-        target_popularity -= 20;
-      } else {
-        target_energy += 0.1;
-        target_danceability += 0.1;
-      }
+
+    if (this.quizForm.value.question1 == 1) {
+      target_popularity += 20;
+    } else if (this.quizForm.value.question1 == 2) {
+      target_popularity -= 20;
+    } else {
+      target_energy += 0.1;
+      target_danceability += 0.1;
+    }
     console.log('Pregunta 1')
     console.log(target_popularity)
     console.log(target_danceability)
@@ -109,7 +109,80 @@ export class MakeAPlaylistQuizComponent {
     console.log(target_danceability)
     console.log(target_energy)
     console.log(target_acousticness)
-    console.log(target_valence)
+    console.log(target_valence);
+
+    if (this.quizForm.value.question3 == 1) {
+      target_acousticness += 0.1;
+      target_valence -= 0.2;
+      target_energy -= 0.2;
+    } else if (this.quizForm.value.question3 == 2) {
+      target_danceability += 0.1;
+      target_energy += 0.2;
+    } else {
+      target_popularity += 15;
+    }
+
+    if (this.quizForm.value.question4 == 1) {
+      target_popularity -= 20;
+    } else if (this.quizForm.value.question4 == 2) {
+      target_danceability += 0.2;
+    } else {
+      target_popularity += 15;
+    }
+
+    if (this.quizForm.value.question5 == 1) {
+      target_popularity -= 20;
+    } else if (this.quizForm.value.question5 == 2) {
+      target_danceability += 0.2;
+    } else {
+      target_popularity += 15;
+    }
+
+    if (this.quizForm.value.question6 == 1) {
+      target_valence -= 0, 1;
+    } else if (this.quizForm.value.question6 == 2) {
+      target_danceability += 0.2;
+      target_popularity += 20;
+    } else {
+      target_acousticness += 15;
+    }
+
+    if (this.quizForm.value.question7 == 1) {
+      target_popularity -= 15;
+    } else if (this.quizForm.value.question7 == 2) {
+      target_danceability += 0.2;
+      target_popularity += 20;
+      target_energy += 0.2;
+    } else {
+      target_valence -= 0.2;
+      target_popularity -= 15;
+    }
+
+    if (this.quizForm.value.question8 == 1) {
+      target_popularity -= 15;
+    } else if (this.quizForm.value.question8 == 2) {
+      target_valence -= 0.1;
+      target_energy -= 0.2;
+    } else {
+      target_valence += 0.2;
+      target_popularity += 15;
+      target_danceability += 0.3;
+    }
+
+    if (this.quizForm.value.question9 == 1) {
+      target_acousticness += 0.2;
+      target_valence -= 0.1;
+      target_popularity -= 15;
+    } else if (this.quizForm.value.question9 == 2) {
+      target_valence += 0.2;
+      target_danceability += 0.2;
+      target_popularity += 20;
+    } else {
+      target_popularity += 15;
+      target_energy -= 0.2;
+    }
+
+
     // for (let questionName in this.quizForm.value) {
     //   if (questionName.startsWith('question')) {
     //     const value = parseInt(this.quizForm.value[questionName], 10) || 0;
