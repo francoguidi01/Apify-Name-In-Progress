@@ -1,73 +1,27 @@
 <app-navbar></app-navbar>
-
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-</head>
-
 <body>
-    <button [routerLink]="['/make-a-playlist/recommendations']" routerLinkActive="active">FUNCIONA RECOMENDACION?</button>
-    <button [routerLink]="['/make-a-playlist/quiz']" routerLinkActive="active">FUNCIONA QUIZ?</button>
-    <div class="row">
-        <div class="col-sm-6" *ngIf="showIcon1">
-            <div class="animate__animated animate__backInDown">
+    
 
-                <img src="assets/Preguntas.png" alt="Imagen"
-                    style="width: 100px; height: 100px; display: block; margin: 0 auto;">
-
-                <div class="card text-center mb-3" style="width: 18rem;" *ngIf="showPlaylistCard">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong>SEGUN COMO SOS</strong></h5>
-                        <p class="card-text">Responde algunas preguntas para obtener una playlist según tus gustos.</p>
-                        <a style="background-color: rgba(209, 241, 158, 0.8); color: black;" class="btn btn-dark"
-                            (click)="toggleVisibility('form')"><strong>EMPEZAR</strong></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-6" *ngIf="showIcon2">
-            <div class="animate__animated animate__backInUp">
-                <img src="assets/Gustos.png" alt="Imagen"
-                    style="width: 100px; height: 100px; display: block; margin: 0 auto;">
-
-                <div class="card text-center mb-3 " style="width: 18rem;" *ngIf="showMasEscuchadosCard">
-                    <div class="card-body">
-                        <h5 class="card-title"><strong>SEGUN QUE ESCUCHAS</strong></h5>
-                        <p class="card-text">Analizamos que te gusta para obtener una nueva playlist que escuchar.</p>
-                        <a style="background-color: rgba(209, 241, 158, 0.8); color: black;" class="btn btn-dark"
-                            (click)="toggleVisibility('playlist')"><strong>EMPEZAR</strong></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container" *ngIf="showRecommendedPlaylist">
-        <p>hola</p>
-    </div>
-<!--
-
-
-    <div class="container" *ngIf="showFormSection">
+    <div class="container">
         <form [formGroup]="quizForm">
             <div class="animate__animated animate__bounce" *ngIf="currentQuestion === 1">
                 <label for="question1"><strong>¿Qué es lo primero que haces cuando te levantas?</strong></label>
                 <select class="form-select" formControlName="question1">
-                    <option value="1">Me miro al espejo.</option>
-                    <option value="2">Voy al baño y me lavo la cara.</option>
-                    <option value="3">Me estiro un par de minutos.</option>
+                    <option value="1">Me miro al espejo y sonrio.</option>
+                    <option value="2">Voy al baño y me lavo la cara con agua fria.</option>
+                    <option value="3">Me estiro un par de minutos para arrancar con todo.</option>
                 </select>
             </div>
-
             <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 2">
                 <label for="question2"><strong>Que eligirias para ponerte?</strong></label>
                 <select class="form-select" formControlName="question2">
-                    <option value="1">Unas zapatillas.</option>
+                    <option value="1">Unas zapatillas. Me van las Converse.</option>
                     <option value="2">Unas ojotas.</option>
                     <option value="3">Unos zapatos capaz.</option>
                 </select>
             </div>
-
+            
+            <!--
             <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 3">
                 <label for="question3"><strong>Para una noche con tus amigos, ¿Qué harias?</strong></label>
                 <select class="form-select" formControlName="question3">
@@ -140,7 +94,7 @@
                     <p style="color: red;"><strong>¡Este campo es obligatorio!</strong></p>
                 </div>
             </div>
-
+-->
         </form>
 
         <button *ngIf="currentQuestion > 1" (click)="previousQuestion()" class="btn btn-dark">Anterior</button>
@@ -158,5 +112,5 @@
             </p>
 
         </div>
-    </div>-->
+    </div>
 </body>

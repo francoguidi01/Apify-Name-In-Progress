@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { QuizModel } from 'src/app/models/quiz-model';
 import { __values } from 'tslib';
 @Component({
   selector: 'app-make-a-playlist',
@@ -9,31 +7,17 @@ import { __values } from 'tslib';
 })
 export class MakeAPlaylistComponent {
 
-currentQuestion: number = 1;
-totalQuestions: number = 9;
-quiz: QuizModel = new QuizModel();
-quizForm: FormGroup;
+
+
 
 showIcon1: boolean = true;
 showIcon2: boolean = true;
 showPlaylistCard: boolean = true;
 showMasEscuchadosCard: boolean = true;
-showFormSection: boolean = false;
+
 showRecommendedPlaylist: boolean = false;
 
-constructor(private formBuilder: FormBuilder) {
-  this.quizForm = this.formBuilder.group({
-    'question1': new FormControl(this.quiz.question1, [Validators.required]),
-    'question2': new FormControl(this.quiz.question2, [Validators.required]),
-    'question3': new FormControl(this.quiz.question3, [Validators.required]),
-    'question4': new FormControl(this.quiz.question4, [Validators.required]),
-    'question5': new FormControl(this.quiz.question5, [Validators.required]),
-    'question6': new FormControl(this.quiz.question6, [Validators.required]),
-    'question7': new FormControl(this.quiz.question7, [Validators.required]),
-    'question8': new FormControl(this.quiz.question8, [Validators.required]),
-    'question9': new FormControl(this.quiz.question9, [Validators.required]),
-  });
-}
+
 
 /* sumValues() {
  
@@ -49,19 +33,7 @@ constructor(private formBuilder: FormBuilder) {
    return value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9;
  }*/
 
-sumValues() {
-  let suma = 0;
-  let strella = '';
 
-  for (let questionName in this.quizForm.value) {
-    if (questionName.startsWith('question')) {
-      const value = parseInt(this.quizForm.value[questionName], 10) || 0;
-      suma += value;
-      strella += `${questionName}: ${value}\n`;
-    }
-  }
-  return suma;
-}
 
 
 
@@ -70,35 +42,11 @@ sumValues() {
 //ROCK 15-20
 //R&B 21-27 
 
-quizPlaylist() {
-  console.log(this.quizForm.value);
-  console.log('La suma es:', this.sumValues());
-  if (9 < this.sumValues() && this.sumValues() < 14) {
-    console.log('eres pop');
-    alert('eres pop tio');
-  } else if (15 < this.sumValues() && this.sumValues() < 20) {
-    console.log('eres rock');
-    alert('eres rock tio');
-  } else {
-    console.log('eres r&b');
-    alert('eres r&b tio');
-  }
-
-}
 
 
 
-nextQuestion() {
-  if (this.currentQuestion < this.totalQuestions) {
-    this.currentQuestion++;
-  }
-}
 
-previousQuestion() {
-  if (this.currentQuestion > 1) {
-    this.currentQuestion--;
-  }
-}
+
 
 
 
@@ -111,7 +59,7 @@ toggleVisibility(card: string) {
     this.showIcon2 = false;
 
   } else if (card == 'form') {
-    this.showFormSection = true;
+ //   this.showFormSection = true;
     this.showPlaylistCard = false;
     this.showMasEscuchadosCard = false;
     this.showIcon2 = false;
