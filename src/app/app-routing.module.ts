@@ -5,12 +5,14 @@ import { MakeAPlaylistComponent } from './component/make-a-playlist/make-a-playl
 import { LoginComponent } from './component/login/login.component';
 import { HomeComponent } from './component/home/home.component';
 import { SocialComponent } from './component/social/social.component';
+import { MakeAPlaylistRecommendationsComponent } from './component/make-a-playlist-recommendations/make-a-playlist-recommendations.component';
 const routes: Routes = [
   {path: 'guess-song', component: GuessSongComponent},
   {path: 'make-a-playlist', component: MakeAPlaylistComponent},
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'social',component: SocialComponent }
+  {path: 'social',component: SocialComponent },
+  {path: 'make-a-playlist/recommendations', component: MakeAPlaylistRecommendationsComponent}
 ];
 
 @NgModule({

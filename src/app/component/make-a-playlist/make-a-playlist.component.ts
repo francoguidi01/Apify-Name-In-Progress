@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuizModel } from 'src/app/models/quiz-model';
 import { __values } from 'tslib';
-
 @Component({
   selector: 'app-make-a-playlist',
   templateUrl: './make-a-playlist.component.html',
@@ -10,116 +9,116 @@ import { __values } from 'tslib';
 })
 export class MakeAPlaylistComponent {
 
-  currentQuestion: number = 1;
-  totalQuestions: number = 9;
-  quiz: QuizModel = new QuizModel();
-  quizForm: FormGroup;
+currentQuestion: number = 1;
+totalQuestions: number = 9;
+quiz: QuizModel = new QuizModel();
+quizForm: FormGroup;
 
-  showIcon1: boolean = true;
-  showIcon2: boolean = true;
-  showPlaylistCard: boolean = true;
-  showMasEscuchadosCard: boolean = true;
-  showFormSection: boolean = false;
-  showRecommendedPlaylist: boolean = false;
+showIcon1: boolean = true;
+showIcon2: boolean = true;
+showPlaylistCard: boolean = true;
+showMasEscuchadosCard: boolean = true;
+showFormSection: boolean = false;
+showRecommendedPlaylist: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.quizForm = this.formBuilder.group({
-      'question1': new FormControl(this.quiz.question1, [Validators.required]),
-      'question2': new FormControl(this.quiz.question2, [Validators.required]),
-      'question3': new FormControl(this.quiz.question3, [Validators.required]),
-      'question4': new FormControl(this.quiz.question4, [Validators.required]),
-      'question5': new FormControl(this.quiz.question5, [Validators.required]),
-      'question6': new FormControl(this.quiz.question6, [Validators.required]),
-      'question7': new FormControl(this.quiz.question7, [Validators.required]),
-      'question8': new FormControl(this.quiz.question8, [Validators.required]),
-      'question9': new FormControl(this.quiz.question9, [Validators.required]),
-    });
-  }
+constructor(private formBuilder: FormBuilder) {
+  this.quizForm = this.formBuilder.group({
+    'question1': new FormControl(this.quiz.question1, [Validators.required]),
+    'question2': new FormControl(this.quiz.question2, [Validators.required]),
+    'question3': new FormControl(this.quiz.question3, [Validators.required]),
+    'question4': new FormControl(this.quiz.question4, [Validators.required]),
+    'question5': new FormControl(this.quiz.question5, [Validators.required]),
+    'question6': new FormControl(this.quiz.question6, [Validators.required]),
+    'question7': new FormControl(this.quiz.question7, [Validators.required]),
+    'question8': new FormControl(this.quiz.question8, [Validators.required]),
+    'question9': new FormControl(this.quiz.question9, [Validators.required]),
+  });
+}
 
-  /* sumValues() {
+/* sumValues() {
  
-     const value1 = parseInt(this.quizForm.value.question1, 10) || 0;
-     const value2 = parseInt(this.quizForm.value.question2, 10) || 0;
-     const value3 = parseInt(this.quizForm.value.question3, 10) || 0;
-     const value4 = parseInt(this.quizForm.value.question4, 10) || 0;
-     const value5 = parseInt(this.quizForm.value.question5, 10) || 0;
-     const value6 = parseInt(this.quizForm.value.question6, 10) || 0;
-     const value7 = parseInt(this.quizForm.value.question7, 10) || 0;
-     const value8 = parseInt(this.quizForm.value.question8, 10) || 0;
-     const value9 = parseInt(this.quizForm.value.question9, 10) || 0;
-     return value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9;
-   }*/
+   const value1 = parseInt(this.quizForm.value.question1, 10) || 0;
+   const value2 = parseInt(this.quizForm.value.question2, 10) || 0;
+   const value3 = parseInt(this.quizForm.value.question3, 10) || 0;
+   const value4 = parseInt(this.quizForm.value.question4, 10) || 0;
+   const value5 = parseInt(this.quizForm.value.question5, 10) || 0;
+   const value6 = parseInt(this.quizForm.value.question6, 10) || 0;
+   const value7 = parseInt(this.quizForm.value.question7, 10) || 0;
+   const value8 = parseInt(this.quizForm.value.question8, 10) || 0;
+   const value9 = parseInt(this.quizForm.value.question9, 10) || 0;
+   return value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9;
+ }*/
 
-  sumValues() {
-    let suma = 0;
-    let strella = '';
+sumValues() {
+  let suma = 0;
+  let strella = '';
 
-    for (let questionName in this.quizForm.value) {
-      if (questionName.startsWith('question')) {
-        const value = parseInt(this.quizForm.value[questionName], 10) || 0;
-        suma += value;
-        strella += `${questionName}: ${value}\n`;
-      }
-    }
-    return suma;
-  }
-
-
-
-
-  //POP 9-14
-  //ROCK 15-20
-  //R&B 21-27 
-
-  quizPlaylist() {
-    console.log(this.quizForm.value);
-    console.log('La suma es:', this.sumValues());
-    if (9 < this.sumValues() && this.sumValues() < 14) {
-      console.log('eres pop');
-      alert('eres pop tio');
-    } else if (15 < this.sumValues() && this.sumValues() < 20) {
-      console.log('eres rock');
-      alert('eres rock tio');
-    } else {
-      console.log('eres r&b');
-      alert('eres r&b tio');
-    }
-
-  }
-
-
-
-  nextQuestion() {
-    if (this.currentQuestion < this.totalQuestions) {
-      this.currentQuestion++;
+  for (let questionName in this.quizForm.value) {
+    if (questionName.startsWith('question')) {
+      const value = parseInt(this.quizForm.value[questionName], 10) || 0;
+      suma += value;
+      strella += `${questionName}: ${value}\n`;
     }
   }
+  return suma;
+}
 
-  previousQuestion() {
-    if (this.currentQuestion > 1) {
-      this.currentQuestion--;
-    }
+
+
+
+//POP 9-14
+//ROCK 15-20
+//R&B 21-27 
+
+quizPlaylist() {
+  console.log(this.quizForm.value);
+  console.log('La suma es:', this.sumValues());
+  if (9 < this.sumValues() && this.sumValues() < 14) {
+    console.log('eres pop');
+    alert('eres pop tio');
+  } else if (15 < this.sumValues() && this.sumValues() < 20) {
+    console.log('eres rock');
+    alert('eres rock tio');
+  } else {
+    console.log('eres r&b');
+    alert('eres r&b tio');
   }
 
+}
 
 
-  toggleVisibility(card: string) {
-    if (card == 'playlist') {
-      this.showMasEscuchadosCard = false;
-      this.showRecommendedPlaylist = true;
-      this.showPlaylistCard = false;
-      this.showIcon1 = false;
-      this.showIcon2 = false;
 
-    } else if (card == 'form') {
-      this.showFormSection = true;
-      this.showPlaylistCard = false;
-      this.showMasEscuchadosCard = false;
-      this.showIcon2 = false;
-      this.showIcon1 = false;
-
-    }
+nextQuestion() {
+  if (this.currentQuestion < this.totalQuestions) {
+    this.currentQuestion++;
   }
+}
+
+previousQuestion() {
+  if (this.currentQuestion > 1) {
+    this.currentQuestion--;
+  }
+}
+
+
+
+toggleVisibility(card: string) {
+  if (card == 'playlist') {
+    this.showMasEscuchadosCard = false;
+    this.showRecommendedPlaylist = true;
+    this.showPlaylistCard = false;
+    this.showIcon1 = false;
+    this.showIcon2 = false;
+
+  } else if (card == 'form') {
+    this.showFormSection = true;
+    this.showPlaylistCard = false;
+    this.showMasEscuchadosCard = false;
+    this.showIcon2 = false;
+    this.showIcon1 = false;
+
+  }
+}
 
 
 }

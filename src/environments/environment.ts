@@ -16,7 +16,9 @@ export const environment = {
         "user-read-email",
         "user-read-currently-playing",
         "user-read-recently-played",
-        "user-top-read"
+        "user-top-read",
+        "playlist-modify-public",
+        "playlist-modify-private"
     ],
     token: null,
     playlisturl: ''

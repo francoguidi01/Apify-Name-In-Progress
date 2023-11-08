@@ -17,39 +17,39 @@ export class SpotifyService {
 
   constructor(private _httpClient: HttpClient) {
     this.token = JSON.parse(localStorage.getItem('token') || '{}');
-  this.checkLocalStorageAndUrl();
+    this.checkLocalStorageAndUrl();
   }
 
   add_User(userData: any): void {
     fetch('http://localhost:8080/users/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
     })
-    .then(response => {
+      .then(response => {
         if (response.ok) {
-            return response.json(); // Necesitas parsear la respuesta JSON
+          return response.json(); // Necesitas parsear la respuesta JSON
         } else {
-            throw new Error('Error al agregar usuario.');
+          throw new Error('Error al agregar usuario.');
         }
-    })
-    .then(data => {
+      })
+      .then(data => {
         console.log(data);
         alert('Usuario agregado con éxito.');
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         alert('Error en la solicitud: ' + error.message);
-    });
-}
+      });
+  }
 
 
   checkLocalStorageAndUrl(): void {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
-  
+
     const tokenData = this.getTokenDataFromUrl();
-  
+
     if (Object.keys(tokenData).length === 0) {
       console.log('gil');
     } else {
@@ -68,13 +68,13 @@ export class SpotifyService {
   getTokenDataFromUrl(): any {
     const hash = window.location.hash.substr(1);
     const result = hash.split('&').reduce(function (result: any, item: string) {
-        const parts = item.split('=');
-        if (parts[0] === 'expires_in') {
-            result[parts[0]] = parseInt(parts[1]);
-        } else {
-            result[parts[0]] = parts[1];
-        }
-        return result;
+      const parts = item.split('=');
+      if (parts[0] === 'expires_in') {
+        result[parts[0]] = parseInt(parts[1]);
+      } else {
+        result[parts[0]] = parts[1];
+      }
+      return result;
     }, {});
     return result;
   }
@@ -121,7 +121,7 @@ export class SpotifyService {
      );
    }*/
 
-   getPlaylist(token: TokenModel, playlistUrl: string): Observable<any> {
+  getPlaylist(token: TokenModel, playlistUrl: string): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -169,7 +169,7 @@ export class SpotifyService {
       );
   }
 
-  getTopSongs(token: TokenModel): Observable<any> {
+  getTopSongs(token: TokenModel, limit: number): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -178,29 +178,16 @@ export class SpotifyService {
       'Authorization': 'Bearer ' + token.access_token
     });
 
-    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/tracks?limit=5`, { headers })
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/tracks?limit=${limit}`, { headers })
       .pipe(
         map((response: any) => {
-          console.log('TOP SONGS:', response);
+          //  console.log('TOP SONGS:', response);
           return response;
         }),
       );
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-  getUserDataService(token: TokenModel): Observable<any>
-  {
+  getUserDataService(token: TokenModel): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -209,7 +196,7 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
     });
-//    https://api.spotify.com/v1/me
+    //    https://api.spotify.com/v1/me
 
     return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/`, { headers })
       .pipe(
@@ -220,5 +207,78 @@ export class SpotifyService {
       );
 
   }
+
+
+
+
+  getRecommendations(token: TokenModel, songDataIds: Array<String>) {
+    if (!token) {
+      console.error('Error: Token no disponible. Debes obtener el token primero.');
+      return of(null);
+    }
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token.access_token
+    });
+    console.log(songDataIds);
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=5&seed_tracks=${songDataIds.join(',')}`, { headers })
+      .pipe(
+        map((response: any) => {
+          console.log('TOP RECOMMENDED:', response);
+          return response;
+        })
+      );
+  }
+
+
+  //users/{user_id}/playlists
+
+  postPlaylist(token: TokenModel, user_id: String) {
+    if (!token) {
+      console.error('Error: Token no disponible. Debes obtener el token primero.');
+      return of(null);
+    }
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token.access_token
+    });
+    const body = {
+      "name": "Playlist Creada con Apify!",
+      "description": "Holaaaa",
+      "public": true
+    };
+
+    return this._httpClient.post(`${environment.API_SPOTIFY_ALL_DATA}users/${user_id}/playlists`, body, { headers })
+    .pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+
+  }
+
+
+  postSongOnPlaylist(token: TokenModel, playlist_id: String, uriIds: Array<String>){
+    if (!token) {
+      console.error('Error: Token no disponible. Debes obtener el token primero.');
+      return of(null);
+    }
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token.access_token
+    });
+    const body = {
+      "name": "Playlist 2 bro!",
+      "description": 'Esta playlist fue creada por kevin tolosa y franco güidi',
+      "public": true
+    };
+    return this._httpClient.post(`${environment.API_SPOTIFY_ALL_DATA}playlists/${playlist_id}/tracks?uris=${uriIds.join(',')}`, body, { headers })
+    .pipe(
+      map((response: any) => {
+        return response;
+      })
+    );
+
+
+  }
+
+
 
 }
