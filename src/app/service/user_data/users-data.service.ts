@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,12 +15,14 @@ export class UsersDataService {
 
   allSongs = "http://localhost:8080/songs/get-all-songs";
   allLeader = "http://localhost:8080/leaderboard/get-leaderboard";
-  getAllFriends = "http://localhost:8080/friends/get-friends-by-user/";
+  AllFriends="http://localhost:8080/friends/get-all-friends";
 
   userById = "http://localhost:8080/user/get-an-user/";
   songById = "http://localhost:8080/songs/get-songs-by-user/";
   artistById = "http://localhost:8080/artists/get-artists-by-user/"
   leaderboardById = "http://localhost:8080/leaderboard/get-leaderboard-by-user/";
+  getFriendById = "http://localhost:8080/friends/get-friends-by-user/";
+
 
   deleteUserUrl = "http://localhost:8080/user/delete/"; // URL ficticia para eliminar (reemplaza con la URL real)
   deleteFriendUrl = "http://localhost:8080/friends/delete-friend/";
@@ -31,6 +34,18 @@ export class UsersDataService {
   addSongUrl = "http://localhost:8080/songs/add-song";
   addArtistUrl = "http://localhost:8080/artists/add-artist";
   addToLeaderUrl = "http://localhost:8080/leaderboard/add-leaderboard";
+  addFriendUrl = "http://localhost:8080/friends/add-friend";
+
+
+  searchFriends(query: string) {
+    return this.httpClient.get(this.apiUrl).pipe(
+      map((users: any) =>
+        users.filter((user: any) =>
+          user.id.toLowerCase().includes(query.toLowerCase())
+        )
+      )
+    );
+  }
 
   getAllUsers() {
 
@@ -41,16 +56,32 @@ export class UsersDataService {
     return this.httpClient.get(this.allLeader);
   }
 
+  getAllFriends() {
+    return this.httpClient.get(this.AllFriends);
+  }
+
   getUserById(id: string) {
     return this.httpClient.get(this.userById + id);
   }
 
   getFriendsById(id: string) {
-    return this.httpClient.get(this.getAllFriends + id);
+    return this.httpClient.get(this.getFriendById + id);
   }
 
   getLeaderboardById(id: string) {
     return this.httpClient.get(this.leaderboardById + id);
+  }
+
+
+  getSongById(id: string) {
+    return this.httpClient.get(this.songById + id);
+  }
+
+  getArtistById(id: string) {
+    return this.httpClient.get(this.artistById + id);
+  }
+  getAllSongs() {
+    return this.httpClient.get(this.allSongs);
   }
 
   deleteUser(id: string) {
@@ -102,14 +133,11 @@ export class UsersDataService {
     return this.httpClient.post(this.addToLeaderUrl, newData, { headers });
   }
 
-  getSongById(id: string) {
-    return this.httpClient.get(this.songById + id);
+  addNewFriend(newData: any) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this.httpClient.post(this.addFriendUrl, newData, { headers });
   }
 
-  getArtistById(id: string) {
-    return this.httpClient.get(this.artistById + id);
-  }
-  getAllSongs() {
-    return this.httpClient.get(this.allSongs);
-  }
 }

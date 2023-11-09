@@ -5,6 +5,7 @@ import { MakeAPlaylistComponent } from './component/make-a-playlist/make-a-playl
 import { LoginComponent } from './component/login/login.component';
 import { HomeComponent } from './component/home/home.component';
 import { SocialComponent } from './component/social/social.component';
+
 const routes: Routes = [
   {path: 'guess-song', component: GuessSongComponent},
   {path: 'make-a-playlist', component: MakeAPlaylistComponent},

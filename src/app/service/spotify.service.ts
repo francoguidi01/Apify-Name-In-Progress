@@ -108,19 +108,6 @@ export class SpotifyService {
       && tokenData1.token_type === tokenData2.token_type;
   }
 
-  /* get_token(): Observable<TokenModel> {
- 
-     const body = 'grant_type=client_credentials&client_id=' + environment.client_id + '&client_secret=' + environment.client_secret_id;
-     const headers = new HttpHeaders({
-       'Content-Type': 'application/x-www-form-urlencoded'
-     });
-     
-     return this._httpClient.post(`${environment.API_SPOTIFY}api/token`, body, { headers })
-     .pipe(
-       map((data: any) => new TokenModel(data))
-     );
-   }*/
-
    getPlaylist(token: TokenModel, playlistUrl: string): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
