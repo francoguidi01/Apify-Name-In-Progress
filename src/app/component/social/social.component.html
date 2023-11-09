@@ -12,14 +12,16 @@
             <input class="form-control input-src" [spellcheck]="false" placeholder="🔍 Buscar amigos" type="text"
                 (input)="searchFriends($event)">
 
-            <div class="results" *ngIf="filteredFriends">
+            <div class="results" *ngIf="filteredFriends" type="button">
                 <ul>
                     <li *ngFor="let friend of filteredFriends"
-                        [ngClass]="{ 'followed': isFriend(friend),'not-followed': !isFriend(friend) }"
-                        (click)="selectedFriends(friend)" data-bs-toggle="modal" data-bs-target="#modalFollow">
+                        [ngClass]="{'followed': isFriend(friend),'not-followed': !isFriend(friend) }"
+                        (click)="selectedFriends(friend)" data-bs-toggle="modal" data-bs-target="#ModalFollow">
+
                         <div class="name" target="_blank" type="button">
                             <p>{{friend.id}}</p>
                         </div>
+
                         <img [src]="friend.url_photo" alt="User Photo" class="user-photo rounded-circle">
                     </li>
                 </ul>
@@ -28,7 +30,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalFollow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    <div class="modal fade" id="ModalFollow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
         *ngIf="selectedFriend">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.8);">
