@@ -20,8 +20,6 @@
                     <option value="3">Unos zapatos capaz.</option>
                 </select>
             </div>
-            
-            <!--
             <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 3">
                 <label for="question3"><strong>Para una noche con tus amigos, ¿Qué harias?</strong></label>
                 <select class="form-select" formControlName="question3">
@@ -94,7 +92,6 @@
                     <p style="color: red;"><strong>¡Este campo es obligatorio!</strong></p>
                 </div>
             </div>
--->
         </form>
 
         <button *ngIf="currentQuestion > 1" (click)="previousQuestion()" class="btn btn-dark">Anterior</button>

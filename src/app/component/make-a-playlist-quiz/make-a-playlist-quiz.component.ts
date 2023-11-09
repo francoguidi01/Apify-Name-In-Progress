@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { QuestionAdjugdement } from 'src/app/models/question-adjugdement';
 import { QuizModel } from 'src/app/models/quiz-model';
 
 @Component({
@@ -10,31 +11,81 @@ import { QuizModel } from 'src/app/models/quiz-model';
 export class MakeAPlaylistQuizComponent {
 
   currentQuestion: number = 1;
-  totalQuestions: number = 2;
+  totalQuestions: number = 9;
   quiz: QuizModel = new QuizModel();
   quizForm: FormGroup;
   constructor(private formBuilder: FormBuilder) {
     this.quizForm = this.formBuilder.group({
       'question1': new FormControl(this.quiz.question1, [Validators.required]),
       'question2': new FormControl(this.quiz.question2, [Validators.required]),
-      // 'question3': new FormControl(this.quiz.question3, [Validators.required]),
-      // 'question4': new FormControl(this.quiz.question4, [Validators.required]),
-      // 'question5': new FormControl(this.quiz.question5, [Validators.required]),
-      // 'question6': new FormControl(this.quiz.question6, [Validators.required]),
-      // 'question7': new FormControl(this.quiz.question7, [Validators.required]),
-      // 'question8': new FormControl(this.quiz.question8, [Validators.required]),
-      // 'question9': new FormControl(this.quiz.question9, [Validators.required]),
+      'question3': new FormControl(this.quiz.question3, [Validators.required]),
+      'question4': new FormControl(this.quiz.question4, [Validators.required]),
+      'question5': new FormControl(this.quiz.question5, [Validators.required]),
+      'question6': new FormControl(this.quiz.question6, [Validators.required]),
+      'question7': new FormControl(this.quiz.question7, [Validators.required]),
+      'question8': new FormControl(this.quiz.question8, [Validators.required]),
+      'question9': new FormControl(this.quiz.question9, [Validators.required])
     });
   }
+  questionAdjugdement: QuestionAdjugdement = new QuestionAdjugdement();
+
+  initialTargets = {
+    acousticness: 0.5,
+    danceability: 0.5,
+    energy: 0.5,
+    popularity: 0,
+    valence: 0.5,
+  };
 
 
 
-
+  sumValues() {
+    this.questionAdjugdement.adjustments = {
+      1: { popularity: 1 },//20
+      2: { popularity: 1 },//-20
+      3: { energy: 0.1, danceability: 0.1 },
+      4: { acousticness: 0.1, danceability: 0.1, valence: -0.2 },
+      5: { danceability: 0.2, popularity: 1 },//-20
+      6: { valence: -0.1, danceability: 0.2, popularity: 1 },//20
+      7: { popularity: 1, danceability: 0.2, energy: 0.2 },//-15
+      8: { popularity: 1, valence: -0.1, energy: -0.2 },//-15
+      9: { acousticness: 0.2, valence: -0.1, popularity: 1 }//-15
+    };
+  
+    if (this.quizForm && this.quizForm.value) {
+      let targets: { [key: string]: number } = { ...this.initialTargets };
+  
+      for (let i = 1; i <= 9; i++) {
+        const answer = this.quizForm.value[`question${i}`];
+  
+        console.log(answer);
+  
+        if (answer && this.questionAdjugdement.adjustments[i]) {
+          // Sumar valores en lugar de reemplazar
+          for (const key in this.questionAdjugdement.adjustments[i]) {
+            if (this.questionAdjugdement.adjustments[i].hasOwnProperty(key)) {
+              // Asegurar que 'key' sea del tipo string
+              const adjustedKey = key as string;
+              targets[adjustedKey] = (targets[adjustedKey] || 0) + this.questionAdjugdement.adjustments[i][key];
+            }
+          }
+        }
+  
+        console.log('question ', i, ' ', targets);
+      }
+  
+      console.log('Final Targets:', targets);
+    }
+  
+    return 0;
+  }
+  
+  
 
   quizPlaylist() {
-    console.log(this.quizForm.value);
+   // console.log(this.quizForm.value);
     let sumTotal = this.sumValues()
-    console.log('La suma es:', sumTotal);
+   // console.log('La suma es:', sumTotal);
     if (9 < sumTotal && sumTotal < 14) {
       console.log('eres pop');
       //alert('eres pop tio');
@@ -60,140 +111,6 @@ export class MakeAPlaylistQuizComponent {
       this.currentQuestion--;
     }
   }
-
-
-
-  /*
-  
-  
-  target_acousticness Range: 0 - 1
-  target_danceability Range: 0 - 1
-  target_energy Range: 0 - 1
-  target_popularity Range: 0 - 100
-  target_valence Range: 0 - 1
-  */
-
-  sumValues() {
-    let suma = 0;
-    let strella = '';
-    let target_acousticness = 0.5;
-    let target_danceability = 0.5;
-    let target_energy = 0.5;
-    let target_popularity = 50;
-    let target_valence = 0.5;
-
-
-    if (this.quizForm.value.question1 == 1) {
-      target_popularity += 20;
-    } else if (this.quizForm.value.question1 == 2) {
-      target_popularity -= 20;
-    } else {
-      target_energy += 0.1;
-      target_danceability += 0.1;
-    }
-    console.log('Pregunta 1')
-    console.log(target_popularity)
-    console.log(target_danceability)
-    console.log(target_energy)
-
-    if (this.quizForm.value.question2 == 1) {
-      target_acousticness += 0.1;
-    } else if (this.quizForm.value.question2 == 2) {
-      target_danceability += 0.1;
-    } else {
-      target_valence -= 0.1;
-      target_popularity -= 15;
-    }
-    console.log('Pregunta 2')
-    console.log(target_popularity)
-    console.log(target_danceability)
-    console.log(target_energy)
-    console.log(target_acousticness)
-    console.log(target_valence);
-
-    if (this.quizForm.value.question3 == 1) {
-      target_acousticness += 0.1;
-      target_valence -= 0.2;
-      target_energy -= 0.2;
-    } else if (this.quizForm.value.question3 == 2) {
-      target_danceability += 0.1;
-      target_energy += 0.2;
-    } else {
-      target_popularity += 15;
-    }
-
-    if (this.quizForm.value.question4 == 1) {
-      target_popularity -= 20;
-    } else if (this.quizForm.value.question4 == 2) {
-      target_danceability += 0.2;
-    } else {
-      target_popularity += 15;
-    }
-
-    if (this.quizForm.value.question5 == 1) {
-      target_popularity -= 20;
-    } else if (this.quizForm.value.question5 == 2) {
-      target_danceability += 0.2;
-    } else {
-      target_popularity += 15;
-    }
-
-    if (this.quizForm.value.question6 == 1) {
-      target_valence -= 0, 1;
-    } else if (this.quizForm.value.question6 == 2) {
-      target_danceability += 0.2;
-      target_popularity += 20;
-    } else {
-      target_acousticness += 15;
-    }
-
-    if (this.quizForm.value.question7 == 1) {
-      target_popularity -= 15;
-    } else if (this.quizForm.value.question7 == 2) {
-      target_danceability += 0.2;
-      target_popularity += 20;
-      target_energy += 0.2;
-    } else {
-      target_valence -= 0.2;
-      target_popularity -= 15;
-    }
-
-    if (this.quizForm.value.question8 == 1) {
-      target_popularity -= 15;
-    } else if (this.quizForm.value.question8 == 2) {
-      target_valence -= 0.1;
-      target_energy -= 0.2;
-    } else {
-      target_valence += 0.2;
-      target_popularity += 15;
-      target_danceability += 0.3;
-    }
-
-    if (this.quizForm.value.question9 == 1) {
-      target_acousticness += 0.2;
-      target_valence -= 0.1;
-      target_popularity -= 15;
-    } else if (this.quizForm.value.question9 == 2) {
-      target_valence += 0.2;
-      target_danceability += 0.2;
-      target_popularity += 20;
-    } else {
-      target_popularity += 15;
-      target_energy -= 0.2;
-    }
-
-
-    // for (let questionName in this.quizForm.value) {
-    //   if (questionName.startsWith('question')) {
-    //     const value = parseInt(this.quizForm.value[questionName], 10) || 0;
-    //     suma += value;
-    //     strella += `${questionName}: ${value}\n`;
-    //   }
-    // }
-    return suma;
-  }
-
-
 
 
 }
