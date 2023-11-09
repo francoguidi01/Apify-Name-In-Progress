@@ -10,6 +10,7 @@
                     <option value="1">Me miro al espejo y sonrio.</option>
                     <option value="2">Voy al baño y me lavo la cara con agua fria.</option>
                     <option value="3">Me estiro un par de minutos para arrancar con todo.</option>
+                    <option value="4">Answer Testing</option>
                 </select>
             </div>
             <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 2">
@@ -18,14 +19,16 @@
                     <option value="1">Unas zapatillas. Me van las Converse.</option>
                     <option value="2">Unas ojotas.</option>
                     <option value="3">Unos zapatos capaz.</option>
+                    <option value="4">Answer Testing</option>
                 </select>
             </div>
             <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 3">
                 <label for="question3"><strong>Para una noche con tus amigos, ¿Qué harias?</strong></label>
                 <select class="form-select" formControlName="question3">
+                    <option value="1">Hablar tranquilos y algo de música.</option>
                     <option value="2">Unas pelis de terror y algo dulce.</option>
                     <option value="3">Algun juego de mesa.</option>
-                    <option value="1">Hablar tranquilos y algo de música.</option>
+                    <option value="4">Answer Testing</option>
                 </select>
             </div>
 
@@ -34,17 +37,17 @@
                         decis?</strong></label>
                 <select class="form-select" formControlName="question4">
                     <option value="1">Que le pregunte directamente.</option>
-                    <option value="2">Que la deje!! No vale la pena que se esté preocupando por alguien que no lo
-                        merece.</option>
+                    <option value="2">Que la deje!! No vale la pena que se esté preocupando por alguien que no lo merece.</option>
                     <option value="3">Que investigue primero, no hay que arriesgarse.</option>
+                    <option value="4">Answer Testing</option>
                 </select>
             </div>
 
             <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 5">
                 <label for="question5"><strong>Que es lo primero que ves de alguien?</strong></label>
                 <select class="form-select" formControlName="question5">
-                    <option value="2">En el estilo que tiene. Me gustan medios raros.</option>
                     <option value="1">En el físico. Si no me entra por los ojos no hay nada que hacer...</option>
+                    <option value="2">En el estilo que tiene. Me gustan medios raros.</option>
                     <option value="3">En su personalidad!!</option>
                 </select>
             </div>
@@ -53,8 +56,8 @@
                 <label for="question6"><strong>¿Dónde te irías de vacaciones?</strong></label>
                 <select class="form-select" formControlName="question6">
                     <option value="1">A Nueva York. Me cansaria de gastar plata.</option>
-                    <option value="3">A Los Ángeles. A ver si me encuentro algun famoso.</option>
                     <option value="2">A Londres. Es una ciudad que tiene de todo (ponele).</option>
+                    <option value="3">A Los Ángeles. A ver si me encuentro algun famoso.</option>
                 </select>
             </div>
 
@@ -71,18 +74,19 @@
             <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 8">
                 <label for="question8"><strong>Con quien te llevas mejor?</strong></label>
                 <select class="form-select" formControlName="question8">
-                    <option value="3">Con mi papa, Me banca en todas.</option>
-                    <option value="2">Me vuelven locos todos en mi familia pero los quiero.</option>
                     <option value="1">Con mi mama, Le cuento todo.</option>
+                    <option value="2">Me vuelven locos todos en mi familia pero los quiero.</option>
+                    <option value="3">Con mi papa, Me banca en todas.</option>
+                    <option value="4">Con mi papa, Me banca en todas.</option>
                 </select>
             </div>
 
             <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 9">
                 <label for="question9"><strong>¿A quién borrarías del panorama musical?</strong></label>
                 <select class="form-select" formControlName="question9">
-                    <option value="3">A The weekend, me cae mal.</option>
                     <option value="1">A Justin Bieber, No me gusta mucho su música.</option>
                     <option value="2">A Eminem, No entiendo su estilo.</option>
+                    <option value="3">A The weekend, me cae mal.</option>
                 </select>
             </div>
 
@@ -100,7 +104,7 @@
             *ngIf="currentQuestion < totalQuestions && !quizForm.get('question' + currentQuestion)?.pristine && quizForm.get('question' + currentQuestion)?.valid"
             (click)="nextQuestion()" class="btn btn-dark">Siguiente</button>
 
-        <button *ngIf="currentQuestion === totalQuestions && quizForm.valid" (click)="quizPlaylist()"
+        <button *ngIf="currentQuestion === totalQuestions && quizForm.valid" (click)="sumValues()"
             class="btn btn-dark">Enviar</button>
 
         <div *ngIf="currentQuestion === totalQuestions">

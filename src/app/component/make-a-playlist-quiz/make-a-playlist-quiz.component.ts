@@ -11,7 +11,7 @@ import { QuizModel } from 'src/app/models/quiz-model';
 export class MakeAPlaylistQuizComponent {
 
   currentQuestion: number = 1;
-  totalQuestions: number = 9;
+  totalQuestions: number = 4;
   quiz: QuizModel = new QuizModel();
   quizForm: FormGroup;
   constructor(private formBuilder: FormBuilder) {
@@ -20,80 +20,79 @@ export class MakeAPlaylistQuizComponent {
       'question2': new FormControl(this.quiz.question2, [Validators.required]),
       'question3': new FormControl(this.quiz.question3, [Validators.required]),
       'question4': new FormControl(this.quiz.question4, [Validators.required]),
-      'question5': new FormControl(this.quiz.question5, [Validators.required]),
-      'question6': new FormControl(this.quiz.question6, [Validators.required]),
-      'question7': new FormControl(this.quiz.question7, [Validators.required]),
-      'question8': new FormControl(this.quiz.question8, [Validators.required]),
-      'question9': new FormControl(this.quiz.question9, [Validators.required])
+      // 'question5': new FormControl(this.quiz.question5, [Validators.required]),
+      // 'question6': new FormControl(this.quiz.question6, [Validators.required]),
+      // 'question7': new FormControl(this.quiz.question7, [Validators.required]),
+      // 'question8': new FormControl(this.quiz.question8, [Validators.required]),
+      // 'question9': new FormControl(this.quiz.question9, [Validators.required])
     });
   }
-  questionAdjugdement: QuestionAdjugdement = new QuestionAdjugdement();
+  questionAdjudgment: QuestionAdjugdement = new QuestionAdjugdement();
 
   initialTargets = {
-    acousticness: 0.5,
-    danceability: 0.5,
-    energy: 0.5,
+    acousticness: 0,
+    danceability: 0,
+    energy: 0,
     popularity: 0,
-    valence: 0.5,
+    valence: 0,
   };
-
-
-
-  sumValues() {
-    this.questionAdjugdement.adjustments = {
-      1: { popularity: 1 },//20
-      2: { popularity: 1 },//-20
-      3: { energy: 0.1, danceability: 0.1 },
-      4: { acousticness: 0.1, danceability: 0.1, valence: -0.2 },
-      5: { danceability: 0.2, popularity: 1 },//-20
-      6: { valence: -0.1, danceability: 0.2, popularity: 1 },//20
-      7: { popularity: 1, danceability: 0.2, energy: 0.2 },//-15
-      8: { popularity: 1, valence: -0.1, energy: -0.2 },//-15
-      9: { acousticness: 0.2, valence: -0.1, popularity: 1 }//-15
+  
+  sumValues(): void {
+    this.questionAdjudgment.adjustments = {
+      1: { popularity: 1, energy: 1, valence: 1 },
+     2: { popularity: 5, energy: 5, valence: 5 },
+       3: { popularity: -2, energy: 1, valence: 1 },
+      // 4: { popularity: 1, energy: 1, valence: 1 }
     };
   
     if (this.quizForm && this.quizForm.value) {
       let targets: { [key: string]: number } = { ...this.initialTargets };
   
-      for (let i = 1; i <= 9; i++) {
+      for (let i = 1; i <= 4; i++) {
         const answer = this.quizForm.value[`question${i}`];
+        console.log('answer: ', answer);
   
-        console.log(answer);
-  
-        if (answer && this.questionAdjugdement.adjustments[i]) {
-          // Sumar valores en lugar de reemplazar
-          for (const key in this.questionAdjugdement.adjustments[i]) {
-            if (this.questionAdjugdement.adjustments[i].hasOwnProperty(key)) {
-              // Asegurar que 'key' sea del tipo string
-              const adjustedKey = key as string;
-              targets[adjustedKey] = (targets[adjustedKey] || 0) + this.questionAdjugdement.adjustments[i][key];
+        if (this.questionAdjudgment.adjustments[answer]) {
+          // Aplicar los ajustes directamente a las propiedades correspondientes en targets
+          for (const key in this.questionAdjudgment.adjustments[answer]) {
+            if (this.questionAdjudgment.adjustments[answer].hasOwnProperty(key)) {
+              targets[key] = (targets[key] || 0) + this.questionAdjudgment.adjustments[answer][key];
             }
           }
         }
   
-        console.log('question ', i, ' ', targets);
+        console.log('question ', i, ' ', { ...targets });
       }
   
       console.log('Final Targets:', targets);
     }
-  
-    return 0;
   }
   
   
+  
+   /*== 1 &&*/
+  // 2: { popularity: -1, energy: -0.1, valence: -0.1 }, // -20
+  // 3: { acousticness: 0.1, danceability: 0.1, energy: -0.1 },
+  // 4: { acousticness: -0.1, danceability: -0.1, valence: 0.1 }
+  // 5: { danceability: 0.2, popularity: 1 },//-20
+  // 6: { valence: -0.1, danceability: 0.2, popularity: 1 },//20
+  // 7: { popularity: 1, danceability: 0.2, energy: 0.2 },//-15
+  // 8: { popularity: 1, valence: -0.1, energy: -0.2 },//-15
+  // 9: { acousticness: 0.2, valence: -0.1, popularity: 1 }//-15
+
 
   quizPlaylist() {
-   // console.log(this.quizForm.value);
-    let sumTotal = this.sumValues()
-   // console.log('La suma es:', sumTotal);
+    // console.log(this.quizForm.value);
+    let sumTotal = 0//this.sumValues()
+    // console.log('La suma es:', sumTotal);
     if (9 < sumTotal && sumTotal < 14) {
-      console.log('eres pop');
+     // console.log('eres pop');
       //alert('eres pop tio');
     } else if (15 < sumTotal && sumTotal < 20) {
-      console.log('eres rock');
+      //console.log('eres rock');
       //  alert('eres rock tio');
     } else {
-      console.log('eres r&b');
+     // console.log('eres r&b');
       //  alert('eres r&b tio');
     }
 
