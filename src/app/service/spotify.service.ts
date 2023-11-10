@@ -211,7 +211,7 @@ export class SpotifyService {
 
 
 
-  getRecommendations(token: TokenModel, songDataIds: Array<String>) {
+  getRecommendations(token: TokenModel, songDataIds: Array<String> | null, values: any | null) {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -219,14 +219,30 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
     });
-    console.log(songDataIds);
-    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=5&seed_tracks=${songDataIds.join(',')}`, { headers })
-      .pipe(
-        map((response: any) => {
-          console.log('TOP RECOMMENDED:', response);
-          return response;
-        })
-      );
+  
+    if (!values) {
+      if (songDataIds) {
+        console.log('song data ids: ', songDataIds);
+        return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=5&seed_tracks=${songDataIds.join(',')}`, { headers })
+          .pipe(
+            map((response: any) => {
+              console.log('TOP RECOMMENDED:', response);
+              return response;
+            })
+          );
+      }
+    } else {
+      console.log('values: ',values);
+      console.log(`url: ${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=5&seed_tracks=6OnfBiiSc9RGKiBKKtZXgQ&target_acousticness=${values[0]}&target_danceability=${values[1]}&target_energy=${values[2]}&target_popularity=${values[3]}&target_valence=${values[4]}`);
+      return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=5&seed_tracks=6OnfBiiSc9RGKiBKKtZXgQ&target_acousticness=${values[0]}&target_danceability=${values[1]}&target_energy=${values[2]}&target_popularity=${values[3]}&target_valence=${values[4]}`, { headers })
+        .pipe(
+          map((response: any) => {
+            console.log('TOP RECOMMENDED:', response);
+            return response;
+          })
+        );
+    }
+    return of(null);
   }
 
 
@@ -247,16 +263,16 @@ export class SpotifyService {
     };
 
     return this._httpClient.post(`${environment.API_SPOTIFY_ALL_DATA}users/${user_id}/playlists`, body, { headers })
-    .pipe(
-      map((response: any) => {
-        return response;
-      })
-    );
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
 
   }
 
 
-  postSongOnPlaylist(token: TokenModel, playlist_id: String, uriIds: Array<String>){
+  postSongOnPlaylist(token: TokenModel, playlist_id: String, uriIds: Array<String>) {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -270,11 +286,11 @@ export class SpotifyService {
       "public": true
     };
     return this._httpClient.post(`${environment.API_SPOTIFY_ALL_DATA}playlists/${playlist_id}/tracks?uris=${uriIds.join(',')}`, body, { headers })
-    .pipe(
-      map((response: any) => {
-        return response;
-      })
-    );
+      .pipe(
+        map((response: any) => {
+          return response;
+        })
+      );
 
 
   }

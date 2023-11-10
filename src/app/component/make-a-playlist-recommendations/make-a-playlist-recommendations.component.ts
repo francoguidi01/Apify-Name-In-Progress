@@ -66,14 +66,14 @@ export class MakeAPlaylistRecommendationsComponent {
   //  console.log(localTokenData);
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
-      this.service.getRecommendations(this.token, this.idsArray).subscribe(recommended => {
+      this.service.getRecommendations(this.token, this.idsArray, null).subscribe(recommended => {
         this.recommended = recommended;
         console.log(recommended);
       });
     } else {
       this.service.get_token().subscribe(token => {
         this.token = token;
-        this.service.getRecommendations(this.token, this.idsArray).subscribe(recommended => {
+        this.service.getRecommendations(this.token, this.idsArray, null).subscribe(recommended => {
           this.recommended = recommended;
           console.log(recommended);
         });
