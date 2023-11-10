@@ -11,6 +11,9 @@ import { environment } from 'src/environments/environment.development';
 })
 export class MakeAPlaylistQuizComponent {
 
+  ngOnInit() {
+    console.log(this.showData)
+  }
   currentQuestion: number = 1;
   totalQuestions: number = 9;
   quiz: QuizModel = new QuizModel();
@@ -53,7 +56,7 @@ export class MakeAPlaylistQuizComponent {
 
       for (let i = 1; i <= 9; i++) {
         const answer = this.quizForm.value[`question${i}`];
-       // console.log('answer: ', answer);
+        // console.log('answer: ', answer);
 
         if (this.questionAdjudgment.adjustments[answer]) {
           // Aplicar los ajustes directamente a las propiedades correspondientes en targets
@@ -64,7 +67,7 @@ export class MakeAPlaylistQuizComponent {
           }
         }
 
-       // console.log('question ', i, ' ', { ...targets });
+        // console.log('question ', i, ' ', { ...targets });
       }
 
     }
@@ -93,7 +96,7 @@ export class MakeAPlaylistQuizComponent {
     targets['danceability'] = targets['danceability'] / 10;
     targets['energy'] = targets['energy'] / 10;
 
-   // console.log('Final Targets:', targets);
+    // console.log('Final Targets:', targets);
     const arrayData = [
       targets['acousticness'].toString(),
       targets['danceability'].toString(),
@@ -102,31 +105,103 @@ export class MakeAPlaylistQuizComponent {
       targets['valence'].toString()
     ];
     console.log('array data: ', arrayData)
-
-
-
-
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
     if (Object.keys(localTokenData).length !== 0) {
       this.service.getRecommendations(localTokenData, null, arrayData).subscribe(recommended => {
         this.recommended = recommended;
         console.log(recommended);
-        this.showData=true;
+        this.showData = true;
+        console.log(this.showData);
       });
     } else {
       this.service.get_token().subscribe(token => {
         // this.token = token;
         this.service.getRecommendations(localTokenData, null, arrayData).subscribe(recommended => {
           //   this.recommended = recommended;
-          console.log(recommended);
-    
+          console.log('canciones recomendadas 1: ',recommended);
+
         });
       });
     }
+  }
+
+  playlistCreated: any;
+  postPlaylist() {
+    const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
+  //  console.log(localTokenData);
+    if (Object.keys(localTokenData).length !== 0) {
+     // this.token = localTokenData;
+      this.service.postPlaylist(localTokenData, 'francoguidi1235').subscribe(playlistCreated => {
+        this.playlistCreated = playlistCreated;
+        console.log(playlistCreated);
+      });
+    } else {
+      this.service.get_token().subscribe(token => {
+        // this.token = token;
+        // this.service.postPlaylist(this.token, 'francoguidi1235').subscribe(playlistCreated => {
+        //   this.playlistCreated = playlistCreated;
+        //   console.log(playlistCreated);
+       // });
+      });
+    }
+  }
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  uriIds: Array<String> = [];
+  getSongsRecommendedURIS() {
+    console.log('canciones recomendadas2: ',this.recommended);
+
+    this.recommended.tracks.forEach((tracks: { uri: String }) => {
+      this.uriIds.push(tracks.uri);
+    });
+    console.log(this.uriIds);
+  }
+
+
+
+
+
+
+
+
+
+  postSongOnPlaylist() {
+    const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
+    // console.log(localTokenData);
+    if (Object.keys(localTokenData).length !== 0) {
+
+      this.service.postSongOnPlaylist(localTokenData, this.playlistCreated.id, this.uriIds).subscribe(songsAdded => {
+        // this.songsAdded = songsAdded;
+        console.log(songsAdded);
+      });
+    } else {
+      this.service.get_token().subscribe(token => {
+        //  this.token = token;
+        //  this.service.postSongOnPlaylist(this.token, this.playlistCreated.id, this.uriIds).subscribe(songsAdded => {
+        //  this.songsAdded = songsAdded;
+        //      console.log(songsAdded);
+        //    });
+      });
+    }
   }
 
 
