@@ -46,51 +46,30 @@ export class NavbarComponent {
   }
 
   deleteFriendsById() {
-
     const userId = JSON.parse(localStorage.getItem('userData') || '{}').id;
 
-    this.user_service.getFriendsById(userId).subscribe(myFriendsData => {
+    this.user_service.getAllFriends().subscribe(allFriendsData => {
+      if (Array.isArray(allFriendsData)) {
+        allFriendsData
+          .filter(friendData => friendData.user1.id === userId || friendData.user2.id === userId)
+          .forEach(filteredFriendData => {
 
-      console.log(myFriendsData);
-
-      if (Array.isArray(myFriendsData)) {
-        myFriendsData.forEach(friendData => {
-          const friendId = friendData.user2.id;
-          const friendshipIdUser1 = friendData.id_friend;
-
-          this.user_service.getFriendsById(friendId).subscribe(friendFriendsData => {
-
-            if (Array.isArray(friendFriendsData) && friendFriendsData.length > 0) {
-
-              const friendshipIdUser2 = friendFriendsData[0].id_friend;
-
-              if (this.checkIfMutualFriend(friendFriendsData, userId)) {
-                console.log(friendFriendsData);
-                this.user_service.deleteFriend(friendshipIdUser1).subscribe(response => {
-                  console.log(`Amigo con ID ${friendshipIdUser1} eliminado correctamente.`);
-                }, error => {
-                  console.error(`Error al eliminar amigo con ID ${friendshipIdUser1}: ${error}`);
-                });
-                this.user_service.deleteFriend(friendshipIdUser2).subscribe(response => {
-                  console.log(`Amigo con ID ${friendshipIdUser2} eliminado correctamente.`);
-                }, error => {
-                  console.error(`Error al eliminar amigo con ID ${friendshipIdUser2}: ${error}`);
-                });
-              } else {
-                this.user_service.deleteFriend(friendshipIdUser1).subscribe(response => {
-                  console.log(`Amigo con ID ${friendshipIdUser1} eliminado correctamente.`);
-                }, error => {
-                  console.error(`Error al eliminar amigo con ID ${friendshipIdUser1}: ${error}`);
-                });
-              }
-            }
+            this.user_service.deleteFriend(filteredFriendData.id_friend
+            ).subscribe(response => {
+              console.log(`Amigo con ID ${filteredFriendData.id_friend
+                } eliminado correctamente.`);
+            }, error => {
+              console.error(`Error al eliminar amigo con ID ${filteredFriendData.id_friend
+                }: ${error}`);
+            });
           });
-        });
       }
+
+      this.showContinueButton = true;
+      this.hintDeleteButton = false;
     });
-    this.showContinueButton = true;
-    this.hintDeleteButton = false;
   }
+
 
   checkIfMutualFriend(friendsData: any, userId: string) {
     if (Array.isArray(friendsData)) {
