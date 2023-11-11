@@ -1,16 +1,23 @@
-<app-navbar></app-navbar>
-<body>
+<div class="div-container">
+  <div class="background">
+
+    <app-navbar></app-navbar>
+
     <div class="profileContainer">
-        <div class="profilePhoto">
-          <img [src]="imageUrl" alt="Foto de perfil" />
-        </div>
-        <div *ngIf="userData" class="profileText">
-          <h2 *ngIf="new; else returningUser">
-            Bienvenido {{ userData.display_name }}!
-          </h2>
-          <ng-template #returningUser>
-            <h2>Bienvenido de vuelta {{ userData.display_name }}!</h2>
-          </ng-template>
-        </div>
+
+      <div class="profilePhoto">
+        <img [src]="imageUrl" alt="Foto de perfil" />
       </div>
-</body>
+
+      <div *ngIf="userData" class="profileText">
+        <h2 *ngIf="new; else returningUser">
+          Bienvenido {{ userData.display_name }}!
+        </h2>
+        <ng-template #returningUser>
+          <h2>Bienvenido de vuelta {{ userData.display_name }}!</h2>
+        </ng-template>
+      </div>
+
+    </div>
+  </div>
+</div>

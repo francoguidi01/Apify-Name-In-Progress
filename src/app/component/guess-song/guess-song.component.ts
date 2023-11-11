@@ -11,6 +11,7 @@ import { UserData } from 'src/app/models/user-data';
 })
 export class GuessSongComponent {
   @ViewChild('audioPlayer') audioPlayer!: ElementRef;
+  @ViewChild('magicButton') magicButton: any;
 
 
   playlist: any;
@@ -22,14 +23,15 @@ export class GuessSongComponent {
   hintMessage: string = '';
   albumImageUrl: string = '';
   hintButtonDisabled: boolean = false;
-  songsButtonDisabled: boolean = false;
+
   win: boolean = false;
-  alert: boolean = false;
   gameStarted: boolean = false;
   leaderboardData: any;
 
   userFromDatabase: any;
   userDataToSave: UserData = new UserData;
+
+
 
   constructor(private service: SpotifyService, private user_service: UsersDataService) {
     environment.token = JSON.parse(localStorage.getItem('token') || '{}');
@@ -39,14 +41,12 @@ export class GuessSongComponent {
 
   ngOnInit() {
     this.getTheLeaderboard();
-    
   }
 
   getThePlaylistForGuess(): void {
 
     const localtoken = JSON.parse(localStorage.getItem('token') || '{}');
     this.win = true;
-    this.alert = false;
     this.gameStarted = true;
     this.getTheLeaderboard();
 
@@ -67,7 +67,6 @@ export class GuessSongComponent {
 
   playTheGame() {
     this.hintButtonDisabled = false;
-    this.songsButtonDisabled = false;
     this.limitTime = 4;
     this.randomSongs = this.getRandomSongsFromPlaylist(this.playlist.tracks.items, 4);
 
@@ -119,25 +118,19 @@ export class GuessSongComponent {
   }
 
   handleOptionClick(selectedTrack: any) {
-    //const correctSound = document.getElementById('winSound') as HTMLAudioElement;
     const wrongSound = document.getElementById('loseSound') as HTMLAudioElement;
-    const loseModal = document.getElementById('loseModal');
     if (selectedTrack === this.winningTrack) {
-      // correctSound.play();
       this.points += 100;
       this.updatePoints();
       console.log(this.points);
       this.newGame();
     } else {
       this.onAddLeader();
-      if (loseModal) {
-        loseModal.style.display = 'block';
-      }
       wrongSound.play();
       this.disableOptions();
       this.win = false;
       this.gameStarted = false;
-      this.alert = true;
+      this.magicButton.nativeElement.click();
     }
 
   }
@@ -145,13 +138,13 @@ export class GuessSongComponent {
 
   getTheLeaderboard() {
     this.user_service.getAllLeaderboard().subscribe(LeaderboardData => {
-        if (LeaderboardData instanceof Array) {
-            this.leaderboardData = LeaderboardData.slice(0, 5);
-        } else {
-            console.error('Error: LeaderboardData no es un array');
-        }
+      if (LeaderboardData instanceof Array) {
+        this.leaderboardData = LeaderboardData.slice(0, 5);
+      } else {
+        console.error('Error: LeaderboardData no es un array');
+      }
     });
-}
+  }
 
 
 
@@ -176,7 +169,6 @@ export class GuessSongComponent {
 
   disableOptions() {
     this.hintButtonDisabled = true;
-    this.songsButtonDisabled = true;
     const audioPlayer: HTMLAudioElement = document.getElementById('audioPlayer') as HTMLAudioElement;
     audioPlayer.pause();
     this.limitTime = 0;

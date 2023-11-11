@@ -1,47 +1,77 @@
-body {
-    background-image: url('../../../assets/Background.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.div-container {
     margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
 }
 
-h1 {
-    margin-top: -170px;
-    font-size: 40px; 
-    color: rgba(0, 0, 0, 0.87);  
+.background {
+    background-image: url('/assets/Background.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    z-index: -1;
 }
+
+.page-container {
+    position: relative;
+}
+
+  .leaderboard-container {
+    margin-top: 20px; /* Ajusta según sea necesario para evitar solapamientos con otros elementos */
+  }
+
+.title {
+
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+
 .image-container {
     display: flex;
     align-items: center;
-    color: rgb(255, 255, 255); 
-
+    color: rgb(255, 255, 255);
 }
 
-.image-text {
-    margin-top: -290px;
-    margin-left: 7px;
-} 
+.image-instructions {
+    width: 60px;
+    height: 60px;
+    margin-left: 10%;
+}
 
+.text-instructions {
+    margin-left: 7.2%;
+    color: rgb(255, 255, 255);
+}
 
+.image-leaderboard {
+    width: 60px;
+    height: 60px;
+    margin-left: 85%;
+    margin-top: -11.8%;
+}
 
-.buttons
-{
+.text-leaderboard {
+    margin-left: 82.7%;
+    margin-top: -4.4%;
+    color: rgb(255, 255, 255);
+}
+
+.buttons {
     margin-right: 20px;
 }
 
 .hints {
-    font-size: 20px; 
-    color: rgba(0, 0, 0, 0.87);
+    margin-top: -6%;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.8);
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-direction: column;
 }
 
 .container {
@@ -49,33 +79,60 @@ h1 {
     margin-top: 5px;
 }
 
-.album-container {
+.album {
     display: flex;
-    align-items: center;
+    justify-content: center;
 }
 
 .albumCover {
-    margin-right: 20px;
+    display: flex;
+    justify-content: center;
     border-radius: 10%;
+    width: 100px;
+    height: 100px;
 }
 
-#audioPlayer {
+.audioPlayer {
     margin-top: 10px;
-    margin-right: -20px;
-
+    display: flex;
+    justify-content: center;
 }
 
-.button{
+.tracks {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 6px;
+    margin-top: 1%;
+    color: rgba(32, 32, 32, 1)
+}
+
+.hint-button {
+    margin-top: 1%;
+    display: flex;
+    justify-content: center;
+}
+
+.button {
     margin-bottom: 6px;
     margin: 0 5px;
 }
 
-.table-container {
-    border-radius: 10px;
-    overflow: hidden;
+.start {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
 }
 
-.table {
+.image-start {
+    width: 60px;
+    height: 60px;
+    margin-left: 40px;
+}
+
+.table-container {
+    margin-top: -118px;
+    margin-left: 380px;
+    width: 270px;
     border-radius: 10px;
 }
 
@@ -86,13 +143,23 @@ h1 {
     margin-right: 10px;
 }
 
+.game-over {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 400px;
+    height: 186px;
+    margin-left: 35.5%;
+    border-radius: 10px;
+    background-color: rgba(193, 147, 220, 0.8);
+}
 
-
-.animate__animated.animate__zoomIn{
+.animate__animated.animate__zoomIn {
     --animate-duration: 1s;
 
 }
-.animate__animated.animate__fadeInUpBig{
+
+.animate__animated.animate__fadeInUpBig {
     --animate-duration: 0.3s;
 
 }

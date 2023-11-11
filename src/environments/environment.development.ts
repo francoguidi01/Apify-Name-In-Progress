@@ -7,6 +7,8 @@ export const environment = {
     redirect_uri_guess_song: "http://localhost:4200/guess-song",
     redirect_uri_mp: "http://localhost:4200/make-a-playlist",
     redirect_uri_login: "http://localhost:4200/login",
+    redirect_uri_social: "http://localhost:4200/social",
+
     api_uri: "https://accounts.spotify.com/authorize",
     scope: [
         "user-follow-read",

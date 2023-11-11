@@ -1,12 +1,39 @@
-body {
-    background-image: url('../../../assets/Background.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.div-container {
     margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
 }
 
+.background {
+    background-image: url('/assets/Background.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.sc {
+    display: flex;
+    justify-content: center;
+    margin-top:20%;
+    margin-left: 0%;
+}
+
+.image-scs {
+    width: 100px;
+    height: 100px;
+    margin-left: 60%;
+   
+}
+
+.image-sqe{
+    width: 100px;
+    height: 100px;
+    margin-left: -55%;
+   
+}

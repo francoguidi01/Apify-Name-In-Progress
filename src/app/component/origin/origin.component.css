@@ -1,0 +1,91 @@
+.animate__animated.animate__fadeInUpBig {
+    --animate-duration: 0.7s;
+}
+
+
+.div-container {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
+}
+
+ .background {
+    background-image: url('/assets/Background.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden; 
+    z-index: -1;
+}
+
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
+
+.logo-image {
+    width: 400px;
+    height: auto;
+
+}
+
+.section {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.tagline {
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-size: 25px;
+}
+
+.footer {
+    left: 0%;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 29%;
+    background-color: rgba(0, 0, 0, 0.8);
+    ;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-content {
+    position: fixed;
+    width: 100%;
+}
+
+.footer-content a {
+    margin: 0 10px;
+}
+
+.footer-content a img {
+    width: 30px;
+    height: 30px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: rgba(245, 138, 151, 0.67);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #C193DC;
+}

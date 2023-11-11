@@ -1,20 +1,27 @@
-body {
-  background-image: url('../../../assets/Background.png');
-  background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+.div-container {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
 }
 
+.background {
+  background-image: url('/assets/Background.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden; 
+  z-index: -1;
+}
 .profileContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 80px; 
+    margin-top: 150px; 
+    
   }
   
   .profilePhoto {

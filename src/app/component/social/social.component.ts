@@ -21,6 +21,11 @@ export class SocialComponent {
     friends: [],
     followers: []
   };
+  showFollowers = false;
+
+  toggleFollowers() {
+    this.showFollowers = !this.showFollowers;
+  }
   ngOnInit() {
     this.getMyFriends();
 

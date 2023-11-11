@@ -13,6 +13,7 @@ import { MakeAPlaylistComponent } from './component/make-a-playlist/make-a-playl
 import { LoginComponent } from './component/login/login.component';
 import { HomeComponent } from './component/home/home.component';
 import { SocialComponent } from './component/social/social.component';
+import { OriginComponent } from './component/origin/origin.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,8 @@ import { SocialComponent } from './component/social/social.component';
     LoginComponent,
     HomeComponent,
     SocialComponent,
+    OriginComponent,
+    
   ],
   imports: [
     BrowserModule,
