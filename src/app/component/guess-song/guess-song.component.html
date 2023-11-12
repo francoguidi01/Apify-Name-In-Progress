@@ -7,32 +7,37 @@
                 GUESS THE SONG 🎵</h1>
         </div>
 
-        <div type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+
+        <div>
             <div class="animate__animated animate__fadeInLeft">
                 <div class="animate__animated animate__fadeInLeft">
-                    <img class="image-instructions" src="assets/reglas.png" alt="Imagen">
+                    <img class="image-instructions" src="assets/reglas.png" alt="Imagen" type="button"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal">
                 </div>
                 <div class="text-instructions">
-                    <p class="animate__animated animate__fadeInLeft">
+                    <span class="animate__animated animate__fadeInLeft" type="button" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
                         <strong>INSTRUCCIONES</strong>
-                    </p>
+                    </span>
                 </div>
             </div>
         </div>
 
-        <div type="button" data-bs-toggle="collapse" data-bs-target="#leaderboardCollapse" *ngIf="!gameStarted">
+
+        <div class="animate__animated animate__fadeInRight">
             <div class="animate__animated animate__fadeInRight">
-                <div class="animate__animated animate__fadeInRight">
-                    <img class="image-leaderboard" src="assets/Leaderboard.png" alt="Imagen">
-                </div>
+                <img class="image-leaderboard" src="assets/Leaderboard.png" alt="Imagen" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#leaderboardCollapse" *ngIf="!gameStarted">
+            </div>
 
-                <div class="text-leaderboard">
-                    <p class="animate__animated animate__fadeInRight">
-                        <strong>LEADERBOARD</strong>
-                    </p>
-                </div>
+            <div class="text-leaderboard">
+                <span class="animate__animated animate__fadeInRight" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#leaderboardCollapse" *ngIf="!gameStarted">
+                    <strong>LEADERBOARD</strong>
+                </span>
             </div>
         </div>
+
         <div class="start">
             <div (click)="getThePlaylistForGuess()" *ngIf="!gameStarted" class="animate__animated animate__fadeInUp">
                 <img class="image-start" src="assets/Jugar.png" type="button" alt="Imagen">
@@ -40,8 +45,25 @@
             </div>
         </div>
 
-        <div class="leaderboard-container">
 
+        <div class="collapse" id="leaderboardCollapse" *ngIf="!gameStarted"
+            style=" margin-left: 76% ; margin-top: -8%;">
+            <div class="animate__animated animate__fadeInRightBig">
+                <div *ngFor="let user of leaderboardData; let i = index">
+                    <div class="leaderboard__profile">
+                        <img [src]="user.url_photo" alt="profile-photo" class="user-photo rounded-circle">
+                        <span class="leaderboard__name">{{ user.displayName }}</span>
+                        <span class="leaderboard__value">{{ user.points }}<span>puntos</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!--  <div class="leaderboard-container">
+        
             <div class="collapse" id="leaderboardCollapse" *ngIf="!gameStarted">
                 <div class="col-md-6 offset-md-6">
                     <div class="table-container rounded">
@@ -60,7 +82,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <div class="hints" *ngIf="win">
             <p *ngIf="hintMessage" class="animate__animated animate__fadeIn">
@@ -160,7 +182,7 @@
     </div>
 </div>
 
-<div #magicButton  type="button" data-bs-toggle="modal" data-bs-target="#gameoverModal" *ngIf="gameStarted">
+<div #magicButton type="button" data-bs-toggle="modal" data-bs-target="#gameoverModal" *ngIf="gameStarted">
     <div class="modal fade" id="gameoverModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog d-flex align-items-center justify-content-center">
             <div class="modal-content" style="background-color: rgba(193, 147, 220, 0.8);">

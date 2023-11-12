@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { UsersDataService } from 'src/app/service/user_data/users-data.service';
 import { UserData } from 'src/app/models/user-data';
@@ -9,7 +9,7 @@ import { SpotifyService } from '../../service/spotify.service';
   templateUrl: './social.component.html',
   styleUrls: ['./social.component.css']
 })
-export class SocialComponent {
+export class SocialComponent{
 
   userFromDatabase: any;
   userDataToSave: UserData = new UserData;
@@ -17,18 +17,31 @@ export class SocialComponent {
   followers: any[] = [];
   filteredFriends: any[] = [];
   selectedFriend: any;
+
+  showComparison: boolean = false;
+  showFollowButton: boolean = true;
+
   selectedUser: any = {
     friends: [],
     followers: []
   };
+
+ userMusicData: any ={
+    myArtists:[],
+    frindArtists:[],
+    mySongs:[],
+    friendSongs:[]
+  };
+
+  
   showFollowers = false;
 
   toggleFollowers() {
     this.showFollowers = !this.showFollowers;
   }
+
   ngOnInit() {
     this.getMyFriends();
-
   }
 
   constructor(private service: SpotifyService, private user_service: UsersDataService) {
@@ -163,9 +176,110 @@ export class SocialComponent {
 }
 
 
+getArtistByTheUser(userId: string) {
 
+  if (!userId) {
+    console.error("El userId está vacío");
+    return;
+  }else{
+    this.user_service.getArtistById(userId).subscribe(
+      (friendArtistData: any) => {
+        if (Array.isArray(friendArtistData) && friendArtistData.length > 0) {
+          this.userMusicData.friendArtists = Array.isArray(friendArtistData) ? friendArtistData : [];
+          console.log(friendArtistData);
+        } else {
+          console.log("No hay artistas para el usuario");
+        }
+      },
+      (error) => {
+        console.error(`Error al buscar artistas: ${error}`);
+      }
+      );
+    }
+    
+    const storedUserId = JSON.parse(localStorage.getItem('userData') || '{}').id;
+    
+    if (!storedUserId) {
+    console.error("El userId almacenado en el local storage está vacío");
+    return;
+  }else{
+    this.user_service.getArtistById(storedUserId).subscribe(
+      (myArtistData: any) => {
+        if (Array.isArray(myArtistData) && myArtistData.length > 0) {
+          this.userMusicData.myArtists = Array.isArray(myArtistData) ? myArtistData : [];
+          console.log(myArtistData);
+        } else {
+          console.log("No hay artistas para el usuario");
+        }
+      },
+      (error) => {
+        console.error(`Error al buscar artistas: ${error}`);
+      }
+    );
+  }
+ 
+}
 
+getSongsByTheUser(userId: string) {
 
+  if (!userId) {
+    console.error("El userId está vacío");
+    return;
+  }else{
+    this.user_service.getSongById(userId).subscribe(
+      (friendSongData: any) => {
+        if (Array.isArray(friendSongData) && friendSongData.length > 0) {
+          this.userMusicData.friendSongs = Array.isArray(friendSongData) ? friendSongData : [];
+          console.log(friendSongData);
+        } else {
+          console.log("No hay artistas para el usuario");
+        }
+      },
+      (error) => {
+        console.error(`Error al buscar artistas: ${error}`);
+      }
+      );
+    }
+    
+    const storedUserId = JSON.parse(localStorage.getItem('userData') || '{}').id;
+    
+    if (!storedUserId) {
+    console.error("El userId almacenado en el local storage está vacío");
+    return;
+  }else{
+    this.user_service.getSongById(storedUserId).subscribe(
+      (mySongData: any) => {
+        if (Array.isArray(mySongData) && mySongData.length > 0) {
+          this.userMusicData.mySongs = Array.isArray(mySongData) ? mySongData : [];
+          console.log(mySongData);
+        } else {
+          console.log("No hay artistas para el usuario");
+        }
+      },
+      (error) => {
+        console.error(`Error al buscar artistas: ${error}`);
+      }
+    );
+  }
+ 
+}
+
+compareUsers(friendId: string)
+{
+this.getArtistByTheUser(friendId);
+this.getSongsByTheUser(friendId);
+
+}
+
+showComparisonOptions() {
+  this.showComparison = true;
+  this.showFollowButton = false;
+}
+
+hideComparisonOptions() {
+  this.showComparison = false;
+  this.showFollowButton = true;
+}
 
 }
 

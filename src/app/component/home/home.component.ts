@@ -110,6 +110,7 @@ export class HomeComponent {
       const currentSongData = songData[i];
       const songToSave = {
         id_api_song: currentSongData.id,
+        song_name: currentSongData.name,
         user: {
           id: this.userDataToSave.id
         }
@@ -150,6 +151,8 @@ export class HomeComponent {
 
       const artistToSave = {
         id_api_artist: currentArtistData.id,
+        artist_name: currentArtistData.name,
+        artist_url_photo: currentArtistData.images && currentArtistData.images.length > 1 ? currentArtistData.images[1].url : this.imageUrl,
         user: {
           id: this.userDataToSave.id
         }
