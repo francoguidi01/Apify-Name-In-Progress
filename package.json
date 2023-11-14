@@ -21,6 +21,9 @@
     "@types/bootstrap": "^5.2.8",
     "animate.css": "^4.1.1",
     "apexcharts": "^3.44.0",
+    "bootstrap": "^5.3.2",
+    "jquery": "^3.7.1",
+    "ngx-bootstrap": "^11.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

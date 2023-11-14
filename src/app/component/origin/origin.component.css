@@ -75,17 +75,39 @@
     height: 30px;
 }
 
-button {
-    padding: 10px 20px;
-    background-color: rgba(245, 138, 151, 0.67);
-    color: white;
+.btn-shine {
+    position: relative;
+    padding: 8px 30px; /* Reducido el padding */
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px; /* Tamaño de fuente reducido */
     border: none;
-    border-radius: 5px;
+    letter-spacing: 2px; /* Aumentado el espacio entre letras */
+    text-transform: uppercase;
+    border-radius: 8px; /* Reducido el radio de borde */
+    color: #fff;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-}
+    overflow: hidden;
+    background-color: #F58A97;
+    margin-left: 10px; 
+    margin-bottom: 6px;
+    &::after {
+      content: "";
+      background: white;
+      position: absolute;
+      top: -30px; /* Ajustado la posición superior */
+      left: -40px; /* Ajustado la posición izquierda */
+      width: 30px; /* Reducido el ancho */
+      height: 90px; /* Reducido la altura */
+      opacity: 0.3;
+      border-radius: 8px; /* Reducido el radio de borde */
+      transform: rotate(35deg);
+      transition: all 650ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+  
+    &:hover::after {
+      left: 120%;
+      transition: all 650ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+  }
+  
 
-button:hover {
-    background-color: #C193DC;
-}

@@ -46,7 +46,7 @@
 }
 
 
-/*---------------------------------*/
+/*-----------------Search----------------*/
 
 :focus {
   outline: none;
@@ -109,6 +109,26 @@ input::placeholder {
 
 }
 
+.ulCompare {
+  list-style-type: none;
+  padding: 0;
+}
+
+.liCompare {
+  margin-bottom: 5px;
+  padding-left: 20px; 
+  line-height: 20px; 
+}
+.liCompare div {
+  display: flex; 
+  align-items: center; 
+}
+
+.liCompare img {
+  margin-right: 10px; 
+}
+
+
 .results ul li.followed:hover {
   background-color: #D1F19E;
 }
@@ -141,7 +161,7 @@ input::placeholder {
   margin-top: -10%;
 }
 
-/*---------------------------------*/
+/*-------------------------Tablas---------------------------------*/
 .user-photo {
   width: 38px;
   height: 38px;
@@ -193,3 +213,4 @@ input::placeholder {
 
 }
 
+/*---------------------------------------------------------------------------------------------*/

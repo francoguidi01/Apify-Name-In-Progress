@@ -1,14 +1,13 @@
+
 <div class="div-container">
   <div class="background">
 
     <app-navbar></app-navbar>
-
-    <div class="profileContainer">
-
+    
+   <div class="profileContainer">
       <div class="profilePhoto">
         <img [src]="imageUrl" alt="Foto de perfil" />
       </div>
-
       <div *ngIf="userData" class="profileText">
         <h2 *ngIf="new; else returningUser">
           Bienvenido {{ userData.display_name }}!
@@ -17,7 +16,65 @@
           <h2>Bienvenido de vuelta {{ userData.display_name }}!</h2>
         </ng-template>
       </div>
+    </div>
+
+
+    <div class="persons-wrapper">
+      <div class="object">
+        <div class="container">
+          <div class="container-inner">
+            <img class="circle" style=" background-color: #C193DC;">
+            <img class="img img1" src="assets/HomeGuess.png">
+          </div>
+        </div>
+        <div class="divider" style=" background-color: #C193DC;"></div>
+        <div class="name" style="">"Guess the Song"</div>
+        <div class="title text-center"><strong>¡Adivina la canción entre opciones aleatorias, pedi pistas y competi por
+            los mejores puntajes!</strong></div>
+      </div>
+
+      <div class="object">
+        <div class="container">
+          <div class="container-inner">
+            <img class="circle" style=" background-color: #F58A97;">
+            <img class="img img2" src="assets/HomeMake.png">
+          </div>
+        </div>
+        <div class="divider" style=" background-color: #F58A97;"></div>
+        <div class="name">"Make a Playlist"</div>
+        <div class="title text-center"><strong>Obtén listas de reproducción personalizadas respondiendo un cuestionario
+            o basadas en tu historial musical.</strong></div>
+      </div>
+
+      <div class="object">
+        <div class="container">
+          <div class="container-inner">
+            <img class="circle" style=" background-color: #FFE177;">
+            <img class="img img3" src="assets/HomeStats.png">
+          </div>
+        </div>
+        <div class="divider" style=" background-color: #FFE177;"></div>
+        <div class="name">"Stats"</div>
+        <div class="title text-center"><strong>Descubre tus principales artistas y canciones, sigue tus cambios de
+            hábitos y mantente al tanto de tus tendencias musicales.</strong></div>
+      </div>
+
+      <div class="object">
+        <div class="container">
+          <div class="container-inner">
+            <img class="circle" style="background-color: #D1F19E;">
+            <img class="img img4" src="assets/HomeSocial.png">
+          </div>
+        </div>
+        <div class="divider" style=" background-color: #D1F19E;"></div>
+        <div class="name">"Social"</div>
+        <div class="title text-center"><strong>Conéctate con otros amantes de la música, sigue, compara y disfruta de la
+            comunidad musical.
+          </strong></div>
+      </div>
 
     </div>
+
+
   </div>
 </div>

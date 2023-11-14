@@ -3,8 +3,7 @@
         <app-navbar></app-navbar>
 
         <div class="title">
-            <h1 class="animate__animated animate__zoomIn">🎵
-                GUESS THE SONG 🎵</h1>
+            <h1 class="animate__animated animate__zoomIn">🎵 GUESS THE SONG 🎵</h1>
         </div>
 
 
@@ -59,31 +58,6 @@
             </div>
         </div>
 
-
-
-
-        <!--  <div class="leaderboard-container">
-        
-            <div class="collapse" id="leaderboardCollapse" *ngIf="!gameStarted">
-                <div class="col-md-6 offset-md-6">
-                    <div class="table-container rounded">
-                        <div class="animate__animated animate__fadeInRightBig">
-                            <table class="table table-striped">
-                                <tbody>
-                                    <tr *ngFor="let user of leaderboardData; let i = index">
-                                        <td class="align-middle"><img [src]="user.url_photo" alt="User Photo"
-                                                class="user-photo rounded-circle"></td>
-                                        <td class="align-middle" style="font-size: 18px;">{{ user.displayName }}</td>
-                                        <td class="align-middle" style="font-size: 18px;">{{ user.points }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
-
         <div class="hints" *ngIf="win">
             <p *ngIf="hintMessage" class="animate__animated animate__fadeIn">
                 <strong>{{hintMessage}}</strong>
@@ -105,10 +79,7 @@
 
         <div class="tracks" *ngIf="win">
             <div class="animate__animated animate__zoomIn">
-                <button
-                    style="margin-left: 10px; margin-bottom: 6px; background-color: rgba(193, 147, 220, 0.9); color: rgba(32, 32, 32, 1);"
-                    *ngFor="let song of randomSongs" class="btn btn-dark" type="button"
-                    (click)="handleOptionClick(song)">
+                <button class="btn btn-shine" *ngFor="let song of randomSongs" (click)="handleOptionClick(song)">
                     <strong style="font-size: 12px;">{{ song.track.name }}</strong>
                 </button>
             </div>

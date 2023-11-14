@@ -25,13 +25,13 @@ export class UsersDataService {
   getFriendById = "http://localhost:8080/friends/get-friends-by-user/";
 
 
-  deleteUserUrl = "http://localhost:8080/user/delete/"; // URL ficticia para eliminar (reemplaza con la URL real)
+  deleteUserUrl = "http://localhost:8080/user/delete/";
   deleteFriendUrl = "http://localhost:8080/friends/delete-friend/";
   deleteSongsUrl = "http://localhost:8080/songs/delete-song/";
   deleteArtistUrl = "http://localhost:8080/artists/delete-artist/";
   deleteLeaderboardUrl = "http://localhost:8080/leaderboard/delete-leaderboard-by-user/";
 
-  addUrl = "http://localhost:8080/user/add"; // URL ficticia para agregar (reemplaza con la URL real)
+  addUrl = "http://localhost:8080/user/add";
   addSongUrl = "http://localhost:8080/songs/add-song";
   addArtistUrl = "http://localhost:8080/artists/add-artist";
   addToLeaderUrl = "http://localhost:8080/leaderboard/add-leaderboard";

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { SpotifyService } from '../../service/spotify.service';
 
 import { UsersDataService } from 'src/app/service/user_data/users-data.service';
@@ -20,15 +20,14 @@ export class LoginComponent {
   userDataToSave: UserData = new UserData;
 
   constructor(private service: SpotifyService,
-    private user_service: UsersDataService) { }
+    private user_service: UsersDataService,) { }
 
   ngOnInit() {
     this.user_service.getAllUsers().subscribe(data => {
       console.log(data)
     });
+ 
   }
-
-
 
 
   getTopArtists(): void {

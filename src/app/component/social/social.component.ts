@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment.development';
 import { UsersDataService } from 'src/app/service/user_data/users-data.service';
 import { UserData } from 'src/app/models/user-data';
@@ -9,7 +9,7 @@ import { SpotifyService } from '../../service/spotify.service';
   templateUrl: './social.component.html',
   styleUrls: ['./social.component.css']
 })
-export class SocialComponent{
+export class SocialComponent {
 
   userFromDatabase: any;
   userDataToSave: UserData = new UserData;
@@ -17,6 +17,7 @@ export class SocialComponent{
   followers: any[] = [];
   filteredFriends: any[] = [];
   selectedFriend: any;
+  showFollowers: boolean = false;
 
   showComparison: boolean = false;
   showFollowButton: boolean = true;
@@ -26,19 +27,14 @@ export class SocialComponent{
     followers: []
   };
 
- userMusicData: any ={
-    myArtists:[],
-    frindArtists:[],
-    mySongs:[],
-    friendSongs:[]
+  userMusicData: any = {
+    myArtists: [],
+    frindArtists: [],
+    mySongs: [],
+    friendSongs: []
   };
 
-  
-  showFollowers = false;
 
-  toggleFollowers() {
-    this.showFollowers = !this.showFollowers;
-  }
 
   ngOnInit() {
     this.getMyFriends();
@@ -103,7 +99,7 @@ export class SocialComponent{
         id: friendId
       }
     };
-    
+
     this.user_service.getFriendsById(userId).subscribe(myFriendsData => {
       if (Array.isArray(myFriendsData)) {
         this.friends = myFriendsData.map(friend => friend.user2);
@@ -131,7 +127,7 @@ export class SocialComponent{
         console.error('Error: myFriendsData no es un array');
       }
     });
-  
+
     this.user_service.getAllFriends().subscribe((friendsData: any) => {
       if (Array.isArray(friendsData)) {
         this.selectedUser.followers = friendsData.filter((friend: any) => friend.user2.id === userId).map((friend: any) => friend.user1);
@@ -141,145 +137,148 @@ export class SocialComponent{
       }
     });
   }
-  
-    selectedFriends(friend: any) {
-      this.selectedFriend = friend;
-      this.getUserDetails(friend.id);
+
+  selectedFriends(friend: any) {
+    this.selectedFriend = friend;
+    this.getUserDetails(friend.id);
   }
-  
+
 
   unfollow(friendId: string) {
     const userId = JSON.parse(localStorage.getItem('userData') || '{}').id;
 
     this.user_service.getFriendsById(userId).subscribe(myFriendsData => {
-        console.log(myFriendsData);
+      console.log(myFriendsData);
 
-        if (Array.isArray(myFriendsData)) {
-            myFriendsData.forEach(friendData => {
-              console.log("frienddata",friendData);
-                const currentFriendId = friendData.user2.id;
+      if (Array.isArray(myFriendsData)) {
+        myFriendsData.forEach(friendData => {
+          console.log("frienddata", friendData);
+          const currentFriendId = friendData.user2.id;
 
-                if (currentFriendId === friendId) {
-                  this.user_service.deleteFriend(friendData.id_friend).subscribe(response => {
-                    console.log(`Amigo con ID ${friendData.id_friend} eliminado correctamente.`);
-                    this.getMyFriends();
-                  }, error => {
-                    console.error(`Error al eliminar amigo con ID ${friendData.id_friend}: ${error}`);
-                    this.getMyFriends();
-                  });
-                    console.log(`Unfollowing friend with ID: ${friendId}`);
-                    this.getMyFriends();
-                }
+          if (currentFriendId === friendId) {
+            this.user_service.deleteFriend(friendData.id_friend).subscribe(response => {
+              console.log(`Amigo con ID ${friendData.id_friend} eliminado correctamente.`);
+              this.getMyFriends();
+            }, error => {
+              console.error(`Error al eliminar amigo con ID ${friendData.id_friend}: ${error}`);
+              this.getMyFriends();
             });
-        }
+            console.log(`Unfollowing friend with ID: ${friendId}`);
+            this.getMyFriends();
+          }
+        });
+      }
     });
-}
+  }
 
 
-getArtistByTheUser(userId: string) {
+  getArtistByTheUser(userId: string) {
 
-  if (!userId) {
-    console.error("El userId está vacío");
-    return;
-  }else{
-    this.user_service.getArtistById(userId).subscribe(
-      (friendArtistData: any) => {
-        if (Array.isArray(friendArtistData) && friendArtistData.length > 0) {
-          this.userMusicData.friendArtists = Array.isArray(friendArtistData) ? friendArtistData : [];
-          console.log(friendArtistData);
-        } else {
-          console.log("No hay artistas para el usuario");
+    if (!userId) {
+      console.error("El userId está vacío");
+      return;
+    } else {
+      this.user_service.getArtistById(userId).subscribe(
+        (friendArtistData: any) => {
+          if (Array.isArray(friendArtistData) && friendArtistData.length > 0) {
+            this.userMusicData.friendArtists = Array.isArray(friendArtistData) ? friendArtistData : [];
+            console.log(friendArtistData);
+          } else {
+            console.log("No hay artistas para el usuario");
+          }
+        },
+        (error) => {
+          console.error(`Error al buscar artistas: ${error}`);
         }
-      },
-      (error) => {
-        console.error(`Error al buscar artistas: ${error}`);
-      }
       );
     }
-    
+
     const storedUserId = JSON.parse(localStorage.getItem('userData') || '{}').id;
-    
+
     if (!storedUserId) {
-    console.error("El userId almacenado en el local storage está vacío");
-    return;
-  }else{
-    this.user_service.getArtistById(storedUserId).subscribe(
-      (myArtistData: any) => {
-        if (Array.isArray(myArtistData) && myArtistData.length > 0) {
-          this.userMusicData.myArtists = Array.isArray(myArtistData) ? myArtistData : [];
-          console.log(myArtistData);
-        } else {
-          console.log("No hay artistas para el usuario");
+      console.error("El userId almacenado en el local storage está vacío");
+      return;
+    } else {
+      this.user_service.getArtistById(storedUserId).subscribe(
+        (myArtistData: any) => {
+          if (Array.isArray(myArtistData) && myArtistData.length > 0) {
+            this.userMusicData.myArtists = Array.isArray(myArtistData) ? myArtistData : [];
+            console.log(myArtistData);
+          } else {
+            console.log("No hay artistas para el usuario");
+          }
+        },
+        (error) => {
+          console.error(`Error al buscar artistas: ${error}`);
         }
-      },
-      (error) => {
-        console.error(`Error al buscar artistas: ${error}`);
-      }
-    );
-  }
- 
-}
-
-getSongsByTheUser(userId: string) {
-
-  if (!userId) {
-    console.error("El userId está vacío");
-    return;
-  }else{
-    this.user_service.getSongById(userId).subscribe(
-      (friendSongData: any) => {
-        if (Array.isArray(friendSongData) && friendSongData.length > 0) {
-          this.userMusicData.friendSongs = Array.isArray(friendSongData) ? friendSongData : [];
-          console.log(friendSongData);
-        } else {
-          console.log("No hay artistas para el usuario");
-        }
-      },
-      (error) => {
-        console.error(`Error al buscar artistas: ${error}`);
-      }
       );
     }
-    
-    const storedUserId = JSON.parse(localStorage.getItem('userData') || '{}').id;
-    
-    if (!storedUserId) {
-    console.error("El userId almacenado en el local storage está vacío");
-    return;
-  }else{
-    this.user_service.getSongById(storedUserId).subscribe(
-      (mySongData: any) => {
-        if (Array.isArray(mySongData) && mySongData.length > 0) {
-          this.userMusicData.mySongs = Array.isArray(mySongData) ? mySongData : [];
-          console.log(mySongData);
-        } else {
-          console.log("No hay artistas para el usuario");
-        }
-      },
-      (error) => {
-        console.error(`Error al buscar artistas: ${error}`);
-      }
-    );
+
   }
- 
-}
 
-compareUsers(friendId: string)
-{
-this.getArtistByTheUser(friendId);
-this.getSongsByTheUser(friendId);
+  getSongsByTheUser(userId: string) {
 
-}
+    if (!userId) {
+      console.error("El userId está vacío");
+      return;
+    } else {
+      this.user_service.getSongById(userId).subscribe(
+        (friendSongData: any) => {
+          if (Array.isArray(friendSongData) && friendSongData.length > 0) {
+            this.userMusicData.friendSongs = Array.isArray(friendSongData) ? friendSongData : [];
+            console.log(friendSongData);
+          } else {
+            console.log("No hay artistas para el usuario");
+          }
+        },
+        (error) => {
+          console.error(`Error al buscar artistas: ${error}`);
+        }
+      );
+    }
 
-showComparisonOptions() {
-  this.showComparison = true;
-  this.showFollowButton = false;
-}
+    const storedUserId = JSON.parse(localStorage.getItem('userData') || '{}').id;
 
-hideComparisonOptions() {
-  this.showComparison = false;
-  this.showFollowButton = true;
-}
+    if (!storedUserId) {
+      console.error("El userId almacenado en el local storage está vacío");
+      return;
+    } else {
+      this.user_service.getSongById(storedUserId).subscribe(
+        (mySongData: any) => {
+          if (Array.isArray(mySongData) && mySongData.length > 0) {
+            this.userMusicData.mySongs = Array.isArray(mySongData) ? mySongData : [];
+            console.log(mySongData);
+          } else {
+            console.log("No hay artistas para el usuario");
+          }
+        },
+        (error) => {
+          console.error(`Error al buscar artistas: ${error}`);
+        }
+      );
+    }
+
+  }
+
+  compareUsers(friendId: string) {
+    this.getArtistByTheUser(friendId);
+    this.getSongsByTheUser(friendId);
+
+  }
+
+  showComparisonOptions() {
+    this.showComparison = true;
+    this.showFollowButton = false;
+  }
+
+  hideComparisonOptions() {
+    this.showComparison = false;
+    this.showFollowButton = true;
+  }
+
+  toggleFollowers() {
+    this.showFollowers = !this.showFollowers;
+  }
 
 }
 

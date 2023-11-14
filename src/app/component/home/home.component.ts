@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { SpotifyService } from '../../service/spotify.service';
 import { environment } from 'src/environments/environment.development';
 import { UsersDataService } from 'src/app/service/user_data/users-data.service';
 import { UserData } from 'src/app/models/user-data';
-import { SongData } from 'src/app/models/song-data';
-import { ArtistsData } from 'src/app/models/artists-data';
+
 
 @Component({
   selector: 'app-home',
@@ -18,8 +17,6 @@ export class HomeComponent {
   userData: any;
   topArtists: any;
   topSongs: any;
-  //songToSave: SongData = new SongData;
-  // artistToSave: ArtistsData = new ArtistsData;
   userDataToSave: UserData = new UserData;
   new: boolean = true;
   imageUrl: string = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
@@ -29,9 +26,9 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
-    this.getUserData();
-  }
+    this.getUserData()
 
+  }
   
   getUserData(): void {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
@@ -110,7 +107,6 @@ export class HomeComponent {
       const currentSongData = songData[i];
       const songToSave = {
         id_api_song: currentSongData.id,
-        song_name: currentSongData.name,
         user: {
           id: this.userDataToSave.id
         }
@@ -151,8 +147,6 @@ export class HomeComponent {
 
       const artistToSave = {
         id_api_artist: currentArtistData.id,
-        artist_name: currentArtistData.name,
-        artist_url_photo: currentArtistData.images && currentArtistData.images.length > 1 ? currentArtistData.images[1].url : this.imageUrl,
         user: {
           id: this.userDataToSave.id
         }
@@ -161,6 +155,4 @@ export class HomeComponent {
       });
     }
   }
-
-
 }

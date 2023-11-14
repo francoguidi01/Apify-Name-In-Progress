@@ -46,8 +46,7 @@
                                 <div style="margin-right: 20px;" class="text-center">
                                     <img src="assets/MyFollows.png" alt="imagen" style="width: 40px; height: 40px;">
                                     <p><strong>SEGUIDOS:{{ selectedUser.friends.length }}</strong></p>
-                                </div>
-
+                                </div>                   
                                 <div style="margin-left: 20px;" class="text-center">
                                     <img src="assets/Followers.png" alt="imagen" style="width: 40px; height: 40px;">
                                     <p><strong>SEGUIDORES:{{ selectedUser.followers.length }}</strong></p>
@@ -59,11 +58,12 @@
                     <div class="modal-footer d-flex justify-content-center">
                         <div class="modal-footer d-flex justify-content-center">
 
-                            <img src="assets/Follow.png" type="button" *ngIf="!isFriend(selectedFriend)"
-                                (click)="onAddFriend(selectedFriend.id)" style="width: 50px; height: 50px; ">
-                            <p type="button" *ngIf="!isFriend(selectedFriend)" (click)="onAddFriend(selectedFriend.id)">
-                                <strong>SEGUIR</strong>
-                            </p>
+                                <img src="assets/Follow.png" type="button" *ngIf="!isFriend(selectedFriend)"
+                                    (click)="onAddFriend(selectedFriend.id)" style="width: 50px; height: 50px; ">
+                                <p type="button" *ngIf="!isFriend(selectedFriend)"
+                                    (click)="onAddFriend(selectedFriend.id)">
+                                    <strong>SEGUIR</strong>
+                                </p>
 
                             <img src="assets/Unfollow.png" *ngIf="isFriend(selectedFriend) && !showComparison"
                                 type="button" (click)="unfollow(selectedFriend.id)" style="width: 50px; height: 50px;">
@@ -168,47 +168,51 @@
 
 <div class="modal fade" id="modalcompareArtists" aria-hidden="true">
     <div class="modal-dialog">
+
         <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.8);">
-            <div class="modal-header">
-
-                <h3>
-                    <strong>ARTISTAS</strong>
-                </h3>
-
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header mx-auto d-flex align-items-center justify-content-between">
+                <div class="text-center">
+                    <img src="assets/Artist.png" alt="artistImage" style="width: 40px; height: 40px;">
+                    <h3>ARTISTAS</h3>
+                </div>
             </div>
+
+
             <div class="modal-body">
                 <div class="row">
                     <div class="col">
                         <h3 class="text-center">TUYOS:</h3>
-                        <ul>
-                            <li *ngFor="let artist of userMusicData.myArtists" class="list-inline-item"
-                                style="font-size: medium; margin-top: 4%;">
-                                <img [src]="artist.artist_url_photo" alt="{{ artist.artist_name }}"
-                                    style="width: 50px; height: 50px; border-radius: 10%;">
-                                <strong> {{ artist.artist_name }}</strong>
+                        <ul class="ulCompare">
+                            <li class="liCompare" *ngFor="let artist of userMusicData.myArtists"
+                                style="font-size: 15px; margin-top: 4%;">
+                                <div>
+                                    <img [src]="artist.artist_url_photo" alt="{{ artist.artist_name }}"
+                                        style="width: 50px; height: 50px; border-radius: 10%;">
+                                    <strong> {{ artist.artist_name }}</strong>
+                                </div>
                             </li>
                         </ul>
                     </div>
                     <div class="col">
                         <h3 class="text-center">SUYOS:</h3>
-                        <ul>
-                            <li *ngFor="let artist of userMusicData.friendArtists" class="list-inline-item"
-                                style="font-size: medium; margin-top: 4%">
-                                <img [src]="artist.artist_url_photo" alt="{{ artist.artist_name }}"
-                                    style="width: 50px; height: 50px; border-radius: 10%;">
-                                <strong>{{ artist.artist_name }} </strong>
+                        <ul class="ulCompare">
+                            <li class="liCompare" *ngFor="let artist of userMusicData.friendArtists"
+                                style="font-size: 15px; margin-top: 4%">
+                                <div>
+                                    <img [src]="artist.artist_url_photo" alt="{{ artist.artist_name }}"
+                                        style="width: 50px; height: 50px; border-radius: 10%;">
+                                    <strong>{{ artist.artist_name }}</strong>
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="modal-footer d-flex justify-content-center">
-                <div class="modal-footer d-flex justify-content-center">
-
-                    <img src="assets/Back.png" alt="image_back" data-bs-toggle="modal" data-bs-target="#ModalFollow"
-                        style="width: 50px; height: 50px;">
+            <div class="modal-footer mx-auto d-flex align-items-center justify-content-between">
+                <div class="text-center">
+                    <img src="assets/Back.png" type="button" alt="image_back" data-bs-toggle="modal"
+                        data-bs-target="#ModalFollow" style="width: 35px; height: 35px;">
                     <p type="button" data-bs-toggle="modal" data-bs-target="#ModalFollow">
                         <strong>VOLVER</strong>
                     </p>
@@ -224,29 +228,38 @@
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.8);">
-            <div class="modal-header">
-                <button type=" button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            <div class="modal-header mx-auto d-flex align-items-center justify-content-between">
+                <div class="text-center">
+                    <img src="assets/Song.png" alt="artistImage" style="width: 40px; height: 40px;">
+                    <h3>CANCIONES</h3>
+                </div>
             </div>
+
             <div class="modal-body">
                 <div class="row">
                     <div class="col">
                         <h3 class="text-center">TUYAS:</h3>
-                        <ul class="list-inline-item">
-                            <li *ngFor="let song of userMusicData.mySongs" class="list-inline-item"
-                                style="font-size: large;">
-                                <img src="assets/Star.png" alt="star" style="width: 18px; height: 18px;">
-                                <strong>"{{song.song_name }}"</strong>
+                        <ul class="ulCompare">
+                            <li class="liCompare" *ngFor="let song of userMusicData.mySongs" style="font-size: 15px;"
+                                type="button">
+                                <div style="margin-top: 10%;">
+                                    <img src="assets/Star.png" alt="StarImage" style="width: 20px; height: 20px;">
+                                    <strong>"{{song.song_name }}"</strong>
+                                </div>
                             </li>
                         </ul>
                     </div>
 
                     <div class="col">
                         <h3 class="text-center">SUYAS:</h3>
-                        <ul class="list-inline-item">
-                            <li *ngFor="let song of userMusicData.friendSongs" class="list-inline-item"
-                                style="font-size: large;">
-                                <img src="assets/Star.png" alt="star" style="width: 18px; height: 18px;">
-                                <strong>"{{ song.song_name }}"</strong>
+                        <ul class="ulCompare">
+                            <li class="liCompare" *ngFor="let song of userMusicData.friendSongs"
+                                style="font-size: 15px;" type="button">
+                                <div style="margin-top: 10%;">
+                                    <img src="assets/Star.png" alt="StarImage" style="width: 20px; height: 20px;">
+                                    <strong>"{{ song.song_name }}"</strong>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -254,11 +267,12 @@
                 </div>
             </div>
 
-            <div class="modal-footer d-flex justify-content-center">
-                <div class="modal-footer d-flex justify-content-center">
 
+
+            <div class="modal-footer mx-auto d-flex align-items-center justify-content-between">
+                <div class="text-center">
                     <img src="assets/Back.png" type="button" alt="image_back" data-bs-toggle="modal"
-                        data-bs-target="#ModalFollow" style="width: 50px; height: 50px;">
+                        data-bs-target="#ModalFollow" style="width: 35px; height: 35px;">
                     <p type="button" data-bs-toggle="modal" data-bs-target="#ModalFollow">
                         <strong>VOLVER</strong>
                     </p>

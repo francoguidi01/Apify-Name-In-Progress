@@ -30,7 +30,7 @@ export class SpotifyService {
     })
     .then(response => {
         if (response.ok) {
-            return response.json(); // Necesitas parsear la respuesta JSON
+            return response.json();
         } else {
             throw new Error('Error al agregar usuario.');
         }
