@@ -55,13 +55,13 @@ export class LoginComponent {
     console.log(localTokenData);
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
-      this.service.getTopSongs(this.token).subscribe(topSongs => {
+      this.service.getTopSongs(this.token, 5).subscribe(topSongs => {
         this.topSongs = topSongs;
       });
     } else {
       this.service.get_token().subscribe(token => {
         this.token = token;
-        this.service.getTopArtists(this.token).subscribe(topSongs => {
+        this.service.getTopSongs(this.token, 5).subscribe(topSongs => {
           this.topSongs = topSongs;
         });
       });

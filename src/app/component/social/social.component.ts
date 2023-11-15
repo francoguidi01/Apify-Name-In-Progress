@@ -267,7 +267,7 @@ export class SocialComponent {
       console.error("El token del usuario almacenado en el local storage está vacío");
       return;
     } else {
-      this.service.getTopSongs(storedToken).subscribe(
+      this.service.getTopSongs(storedToken, 5).subscribe(
         (mySongData: any) => {
           if (Array.isArray(mySongData) && mySongData.length > 0) {
             this.userMusicData.mySongs = Array.isArray(mySongData) ? mySongData : [];
@@ -295,7 +295,7 @@ export class SocialComponent {
 
   }
   /*------------------SHOW FLAGS----------*/
-  
+
   showComparisonOptions() {
     this.showComparison = true;
     this.showFollowButton = false;
