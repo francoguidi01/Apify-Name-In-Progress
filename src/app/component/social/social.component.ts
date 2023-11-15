@@ -29,7 +29,7 @@ export class SocialComponent {
 
   userMusicData: any = {
     myArtists: [],
-    frindArtists: [],
+    friendArtists: [],
     mySongs: [],
     friendSongs: []
   };
@@ -171,9 +171,7 @@ export class SocialComponent {
     });
   }
 
-
-  getArtistByTheUser(userId: string) {
-
+  getArtistDataFromFriend(userId: string) {
     if (!userId) {
       console.error("El userId está vacío");
       return;
@@ -182,42 +180,53 @@ export class SocialComponent {
         (friendArtistData: any) => {
           if (Array.isArray(friendArtistData) && friendArtistData.length > 0) {
             this.userMusicData.friendArtists = Array.isArray(friendArtistData) ? friendArtistData : [];
-            console.log(friendArtistData);
+            this.getArtistsSong();
           } else {
             console.log("No hay artistas para el usuario");
           }
-        },
-        (error) => {
-          console.error(`Error al buscar artistas: ${error}`);
         }
       );
     }
+  }
 
-    const storedUserId = JSON.parse(localStorage.getItem('userData') || '{}').id;
+  getArtistsSong() {
 
-    if (!storedUserId) {
-      console.error("El userId almacenado en el local storage está vacío");
-      return;
-    } else {
-      this.user_service.getArtistById(storedUserId).subscribe(
-        (myArtistData: any) => {
-          if (Array.isArray(myArtistData) && myArtistData.length > 0) {
-            this.userMusicData.myArtists = Array.isArray(myArtistData) ? myArtistData : [];
-            console.log(myArtistData);
-          } else {
-            console.log("No hay artistas para el usuario");
-          }
-        },
-        (error) => {
-          console.error(`Error al buscar artistas: ${error}`);
-        }
-      );
-    }
+    const token = JSON.parse(localStorage.getItem('token') || '{}');
+
+    const arrayIds: Array<String> = []
+    this.userMusicData.friendArtists.forEach((artist: { id_api_artists: string }) => {
+      arrayIds.push(artist.id_api_artists);
+    });
+
+    this.service.getArtistsById(arrayIds, token).subscribe(
+      (friendArtistData: any) => {
+        console.log("Artistas amigo:", friendArtistData);
+      });
 
   }
 
-  getSongsByTheUser(userId: string) {
 
+  getArtistDataFromMe() {
+    const storedToken = JSON.parse(localStorage.getItem('token') || '{}');
+    if (!storedToken) {
+      console.error("El token del usuario almacenado en el local storage está vacío");
+      return;
+    } else {
+      this.service.getTopArtists(storedToken).subscribe(
+        (myArtistData: any) => {
+          if (Array.isArray(myArtistData) && myArtistData.length > 0) {
+            this.userMusicData.myArtists = Array.isArray(myArtistData) ? myArtistData : [];
+            console.log("Mis artistas", myArtistData);
+          } else {
+            console.log("No hay artistas para el usuario");
+          }
+        }
+      );
+    }
+  }
+
+
+  getSongDataFromFriend(userId: string) {
     if (!userId) {
       console.error("El userId está vacío");
       return;
@@ -226,46 +235,67 @@ export class SocialComponent {
         (friendSongData: any) => {
           if (Array.isArray(friendSongData) && friendSongData.length > 0) {
             this.userMusicData.friendSongs = Array.isArray(friendSongData) ? friendSongData : [];
-            console.log(friendSongData);
+            this.getFriendsSong();
           } else {
-            console.log("No hay artistas para el usuario");
+            console.log("No hay canciones para el usuario");
           }
-        },
-        (error) => {
-          console.error(`Error al buscar artistas: ${error}`);
         }
       );
     }
+  }
 
-    const storedUserId = JSON.parse(localStorage.getItem('userData') || '{}').id;
+  getFriendsSong() {
 
-    if (!storedUserId) {
-      console.error("El userId almacenado en el local storage está vacío");
+    const token = JSON.parse(localStorage.getItem('token') || '{}');
+    const arrayIds: Array<String> = []
+    this.userMusicData.friendSongs.forEach((song: { id_api_songs: string }) => {
+      arrayIds.push(song.id_api_songs);
+    });
+
+    this.service.getSongsById(arrayIds, token).subscribe(
+      (friendSongsData: any) => {
+        console.log("Canciones amigo:", friendSongsData);
+      });
+
+  }
+
+
+  getSongDataFromMe() {
+    const storedToken = JSON.parse(localStorage.getItem('token') || '{}');
+
+    if (!storedToken) {
+      console.error("El token del usuario almacenado en el local storage está vacío");
       return;
     } else {
-      this.user_service.getSongById(storedUserId).subscribe(
+      this.service.getTopSongs(storedToken).subscribe(
         (mySongData: any) => {
           if (Array.isArray(mySongData) && mySongData.length > 0) {
             this.userMusicData.mySongs = Array.isArray(mySongData) ? mySongData : [];
-            console.log(mySongData);
+            console.log("Mis canciones", mySongData);
+
           } else {
-            console.log("No hay artistas para el usuario");
+            console.log("No hay canciones para el usuario");
           }
-        },
-        (error) => {
-          console.error(`Error al buscar artistas: ${error}`);
         }
       );
     }
+  }
+
+  getSongsByTheUser(userId: string) {
+
+    this.getSongDataFromFriend(userId);
+    this.getSongDataFromMe();
 
   }
 
-  compareUsers(friendId: string) {
-    this.getArtistByTheUser(friendId);
-    this.getSongsByTheUser(friendId);
+  getArtistByTheUser(userId: string) {
+
+    this.getArtistDataFromFriend(userId);
+    this.getArtistDataFromMe();
 
   }
-
+  /*------------------SHOW FLAGS----------*/
+  
   showComparisonOptions() {
     this.showComparison = true;
     this.showFollowButton = false;

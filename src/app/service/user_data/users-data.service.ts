@@ -19,8 +19,8 @@ export class UsersDataService {
 
   
   userById = "http://localhost:8080/user/get-an-user/";
-  songById = "http://localhost:8080/songs/get-songs-by-user/";
-  artistById = "http://localhost:8080/artists/get-artists-by-user/"
+  songById = "http://localhost:8080/songs/get-dto-songs-by-id/";
+  artistById = "http://localhost:8080/artists/get-dto-artist-by-id/"
   leaderboardById = "http://localhost:8080/leaderboard/get-leaderboard-by-user/";
   getFriendById = "http://localhost:8080/friends/get-friends-by-user/";
 

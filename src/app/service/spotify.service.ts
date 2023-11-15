@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-//import 'rxjs/add/operator/map';
 import { map } from 'rxjs/operators';
 import { TokenModel } from '../models/token-model';
 import { environment } from 'src/environments/environment.development';
@@ -175,7 +174,42 @@ export class SpotifyService {
   }
 
 
+getSongsById(ids: Array<String>, token: TokenModel)
+{
+  if (!token) {
+    console.error('Error: Token no disponible. Debes obtener el token primero.');
+    return of(null);
+  }
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + token.access_token
+  });
 
+  return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}tracks?ids=${ids.join(',')}`, { headers })
+    .pipe(
+      map((response: any) => {
+        console.log('TOP artist BY ID:', response);
+        return response;
+      }),
+    );
+}
+
+getArtistsById(ids: Array<String>, token: TokenModel)
+{
+  if (!token) {
+    console.error('Error: Token no disponible. Debes obtener el token primero.');
+    return of(null);
+  }
+  const headers = new HttpHeaders({
+    'Authorization': 'Bearer ' + token.access_token
+  });
+
+  return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}artists?ids=${ids.join(',')}`, { headers })
+    .pipe(
+      map((response: any) => {
+        return response;
+      }),
+    );
+}
 
 
 
