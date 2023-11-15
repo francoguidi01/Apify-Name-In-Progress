@@ -30,42 +30,43 @@ export class LoginComponent {
   }
 
 
-  getTopArtists(): void {
 
-    const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
 
-    console.log(localTokenData);
-    if (Object.keys(localTokenData).length !== 0) {
-      this.token = localTokenData;
-      this.service.getTopArtists(this.token).subscribe(topArtists => {
-        this.topArtists = topArtists;
-      });
-    } else {
-      this.service.get_token().subscribe(token => {
-        this.token = token;
-        this.service.getTopArtists(this.token).subscribe(topArtists => {
-          this.topArtists = topArtists;
-        });
-      });
-    }
-  }
 
-  getTopSongs(): void {
-    const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
-    console.log(localTokenData);
-    if (Object.keys(localTokenData).length !== 0) {
-      this.token = localTokenData;
-      this.service.getTopSongs(this.token, 5).subscribe(topSongs => {
-        this.topSongs = topSongs;
-      });
-    } else {
-      this.service.get_token().subscribe(token => {
-        this.token = token;
-        this.service.getTopSongs(this.token, 5).subscribe(topSongs => {
-          this.topSongs = topSongs;
-        });
-      });
-    }
-  }
+  // getTopArtists(): void {
+  //   const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
+  //   console.log(localTokenData);
+  //   if (Object.keys(localTokenData).length !== 0) {
+  //     this.token = localTokenData;
+  //     this.service.getTopArtists(this.token, ).subscribe(topArtists => {
+  //       this.topArtists = topArtists;
+  //     });
+  //   } else {
+  //     this.service.get_token().subscribe(token => {
+  //       this.token = token;
+  //       this.service.getTopArtists(this.token).subscribe(topArtists => {
+  //         this.topArtists = topArtists;
+  //       });
+  //     });
+  //   }
+  // }
+
+  // getTopSongs(): void {
+  //   const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
+  //   console.log(localTokenData);
+  //   if (Object.keys(localTokenData).length !== 0) {
+  //     this.token = localTokenData;
+  //     this.service.getTopSongs(this.token, 'short_term').subscribe(topSongs => {
+  //       this.topSongs = topSongs;
+  //     });
+  //   } else {
+  //     this.service.get_token().subscribe(token => {
+  //       this.token = token;
+  //       this.service.getTopArtists(this.token).subscribe(topSongs => {
+  //         this.topSongs = topSongs;
+  //       });
+  //     });
+  //   }
+  // }
 
 }

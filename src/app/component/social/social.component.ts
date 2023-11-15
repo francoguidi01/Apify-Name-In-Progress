@@ -212,7 +212,7 @@ export class SocialComponent {
       console.error("El token del usuario almacenado en el local storage está vacío");
       return;
     } else {
-      this.service.getTopArtists(storedToken).subscribe(
+      this.service.getTopArtists(storedToken, 'long_term').subscribe(
         (myArtistData: any) => {
           if (Array.isArray(myArtistData) && myArtistData.length > 0) {
             this.userMusicData.myArtists = Array.isArray(myArtistData) ? myArtistData : [];
@@ -267,7 +267,7 @@ export class SocialComponent {
       console.error("El token del usuario almacenado en el local storage está vacío");
       return;
     } else {
-      this.service.getTopSongs(storedToken, 5).subscribe(
+      this.service.getTopSongs(storedToken, 'long_term').subscribe(
         (mySongData: any) => {
           if (Array.isArray(mySongData) && mySongData.length > 0) {
             this.userMusicData.mySongs = Array.isArray(mySongData) ? mySongData : [];

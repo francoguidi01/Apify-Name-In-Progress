@@ -136,7 +136,7 @@ export class SpotifyService {
   }
 
 
-  getTopArtists(token: TokenModel): Observable<any> {
+  getTopArtists(token: TokenModel, range: String): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -145,8 +145,7 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
     });
-
-    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/artists?limit=5`, { headers })
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/artists?time_range=${range}&limit=5`, { headers })
       .pipe(
         map((response: any) => {
           console.log('TOP ARTISTS:', response);
@@ -154,8 +153,8 @@ export class SpotifyService {
         }),
       );
   }
-
-  getTopSongs(token: TokenModel, limit: number): Observable<any> {
+  //tracks?time_range=short_term
+  getTopSongs(token: TokenModel, range: String/*, limit*/): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -163,14 +162,46 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
     });
-
-    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/tracks?limit=${limit}`, { headers })
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/tracks?time_range=${range}&limit=50`, { headers })
       .pipe(
         map((response: any) => {
           //  console.log('TOP SONGS:', response);
           return response;
         }),
       );
+  }
+  //me/top/artists
+  //me/top/tracks
+  // getDataUser(token: TokenModel, range: String, endpoint: String) {
+  //   if (!token) {
+  //     console.error('Error: Token no disponible. Debes obtener el token primero.');
+  //     return of(null);
+  //   }
+  //   const headers = new HttpHeaders({
+  //     'Authorization': 'Bearer ' + token.access_token
+  //   });
+  //   return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}${endpoint}?time_range=${range}&limit=10`, { headers })
+  //     .pipe(
+  //       map((response: any) => {
+  //         console.log('TOP SONGS:', response);
+  //         return response;
+  //       }),
+  //     );
+  // }
+
+
+  getAudioFeatures(token: TokenModel, ids: String) {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token.access_token
+    });
+    return this._httpClient.get(`https://api.spotify.com/v1/audio-features?ids=${ids}`, { headers })
+      .pipe(
+        map((response: any) => {
+          console.log('Audio Features:', response);
+          return response;
+        }),
+      );
+    //https://api.spotify.com/v1/audio-features
   }
 
 

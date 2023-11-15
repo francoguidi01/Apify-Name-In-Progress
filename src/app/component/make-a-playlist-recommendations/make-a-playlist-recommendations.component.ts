@@ -34,14 +34,14 @@ export class MakeAPlaylistRecommendationsComponent {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
-      this.service.getTopSongs(this.token, 5).subscribe(songData => {
+      this.service.getTopSongs(this.token, 'long_term').subscribe(songData => {
         this.topSongs = songData;
         console.log(this.topSongs)
       });
     } else {
       this.service.get_token().subscribe(token => {
         this.token = token;
-        this.service.getTopSongs(this.token, 5).subscribe(songData => {
+        this.service.getTopSongs(this.token, 'long_term').subscribe(songData => {
           this.topSongs = songData;
           console.log(this.topSongs)
         });
