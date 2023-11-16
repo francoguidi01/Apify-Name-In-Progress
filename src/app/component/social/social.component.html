@@ -28,19 +28,19 @@
             </div>
         </div>
 
-        <div class="modal fade" id="ModalFollow" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        <div class="modal fade" id="ModalFollow" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
             *ngIf="selectedFriend">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.8);">
                     <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideComparisonOptions()"></button>
                     </div>
                     <div class="modal-body">
                         <div class="d-flex align-items-center justify-content-around">
                             <div class="text-center">
                                 <img [src]="selectedFriend.url_photo" alt="UserPhoto"
                                     style="width: 100px; height: 100px; border-radius: 50%;">
-                                <p><strong>{{selectedFriend.id}}</strong></p>
+                                <p class="mx-auto"><strong>{{selectedFriend.display_name}}</strong></p>
                             </div>
                             <div class="d-flex">
                                 <div style="margin-right: 20px;" class="text-center">
@@ -178,17 +178,17 @@
             </div>
 
 
-            <div class="modal-body">
+            <div class="modal-body" *ngIf="myArtistFinal && friendArtistFinal " >
                 <div class="row">
                     <div class="col">
                         <h3 class="text-center">TUYOS:</h3>
                         <ul class="ulCompare">
-                            <li class="liCompare" *ngFor="let artist of userMusicData.myArtists"
+                            <li class="liCompare" *ngFor="let artist of myArtistFinal.items"
                                 style="font-size: 15px; margin-top: 4%;">
                                 <div>
-                                    <img [src]="artist.artist_url_photo" alt="{{ artist.artist_name }}"
+                                        <img [src]="artist.images[0].url" alt="{{ artist.name }}"
                                         style="width: 50px; height: 50px; border-radius: 10%;">
-                                    <strong> {{ artist.artist_name }}</strong>
+                                        <strong> {{ artist.name }}</strong>
                                 </div>
                             </li>
                         </ul>
@@ -196,12 +196,12 @@
                     <div class="col">
                         <h3 class="text-center">SUYOS:</h3>
                         <ul class="ulCompare">
-                            <li class="liCompare" *ngFor="let artist of userMusicData.friendArtists"
+                            <li class="liCompare" *ngFor="let artist of friendArtistFinal.artists"
                                 style="font-size: 15px; margin-top: 4%">
                                 <div>
-                                    <img [src]="artist.artist_url_photo" alt="{{ artist.artist_name }}"
+                                    <img [src]="artist.images[0].url" alt="{{ artist.name }}"
                                         style="width: 50px; height: 50px; border-radius: 10%;">
-                                    <strong>{{ artist.artist_name }}</strong>
+                                    <strong>{{ artist.name }}</strong>
                                 </div>
                             </li>
                         </ul>
@@ -236,16 +236,16 @@
                 </div>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body" *ngIf="friendSongFinal && mySongFinal">
                 <div class="row">
                     <div class="col">
                         <h3 class="text-center">TUYAS:</h3>
                         <ul class="ulCompare">
-                            <li class="liCompare" *ngFor="let song of userMusicData.mySongs" style="font-size: 15px;"
+                            <li class="liCompare" *ngFor="let song of mySongFinal.items" style="font-size: 15px;"
                                 type="button">
                                 <div style="margin-top: 10%;">
                                     <img src="assets/Star.png" alt="StarImage" style="width: 20px; height: 20px;">
-                                    <strong>"{{song.song_name }}"</strong>
+                                    <strong>"{{song.name}}"</strong>
                                 </div>
                             </li>
                         </ul>
@@ -254,11 +254,11 @@
                     <div class="col">
                         <h3 class="text-center">SUYAS:</h3>
                         <ul class="ulCompare">
-                            <li class="liCompare" *ngFor="let song of userMusicData.friendSongs"
+                            <li class="liCompare" *ngFor="let song of friendSongFinal.tracks"
                                 style="font-size: 15px;" type="button">
                                 <div style="margin-top: 10%;">
                                     <img src="assets/Star.png" alt="StarImage" style="width: 20px; height: 20px;">
-                                    <strong>"{{ song.song_name }}"</strong>
+                                    <strong>"{{ song.name }}"</strong>
                                 </div>
                             </li>
                         </ul>

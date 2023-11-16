@@ -84,7 +84,7 @@ export class HomeComponent {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
-      this.service.getTopSongs(this.token, 'long_term').subscribe(songData => {
+      this.service.getTopSongs(this.token, 'long_term',5).subscribe(songData => {
 
         this.topSongs = songData;
 
@@ -94,7 +94,7 @@ export class HomeComponent {
     } else {
       this.service.get_token().subscribe(token => {
         this.token = token;
-        this.service.getTopSongs(this.token, 'long_term').subscribe(songData => {
+        this.service.getTopSongs(this.token, 'long_term', 5).subscribe(songData => {
           this.topSongs = songData;
           this.onAddSong(songData.items);
         });

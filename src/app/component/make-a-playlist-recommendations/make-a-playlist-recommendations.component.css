@@ -1,0 +1,78 @@
+.div-container {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+ 
+  }
+  
+  .background {
+    background-image: url('/assets/Background.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden; 
+    z-index: -1;
+  }
+  .recompilation-container{
+    justify-content: center;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .recompilation-container2{
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px;
+  }
+  h1{
+  margin-top: 20px;
+  color: rgba(0, 0, 0, 0.9);
+}
+p{
+  color: rgba(0, 0, 0, 0.9);
+  font-family: arial;
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+
+  /*----------------Carga---------------*/
+
+  .load {
+    position: absolute;
+    margin-top: 5%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+  }
+  .load img {
+    border: 0;
+    margin: 0;
+    width: 40%;
+    height: 40%;
+    position: absolute;
+    animation: spin 2s ease infinite;
+
+  }
+
+.load :first-child {
+  animation-delay: -1.5s;
+}
+
+.load :nth-child(2) {
+  animation-delay: -1s;
+}
+
+.load :nth-child(3) {
+  animation-delay: -0.5s;
+}
+
+@keyframes spin{
+  0%,100%{transform:translate(0)}
+  25%{transform:translate(160%)}
+  50%{transform:translate(160%, 160%)}
+  75%{transform:translate(0, 160%)}
+}

@@ -1,137 +1,151 @@
-<app-navbar></app-navbar>
+<div class="div-container">
+    <div class="background">
 
-<body>
+        <app-navbar></app-navbar>
 
 
-    <div class="container">
-        <form [formGroup]="quizForm">
-            <div class="animate__animated animate__bounce" *ngIf="currentQuestion === 1">
-                <label for="question1"><strong>¿Qué es lo primero que haces cuando te levantas?</strong></label>
-                <select class="form-select" formControlName="question1">
-                    <option value="1">Me miro al espejo y sonrio.</option>
-                    <option value="2">Voy al baño y me lavo la cara con agua fria.</option>
-                    <option value="3">Me estiro un par de minutos para arrancar con todo.</option>
-                    <option value="4">Answer Testing</option>
-                </select>
-            </div>
-            <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 2">
-                <label for="question2"><strong>Que eligirias para ponerte?</strong></label>
-                <select class="form-select" formControlName="question2">
-                    <option value="1">Unas zapatillas. Me van las Converse.</option>
-                    <option value="2">Unas ojotas.</option>
-                    <option value="3">Unos zapatos capaz.</option>
-                    <option value="4">Answer Testing</option>
-                </select>
-            </div>
-            <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 3">
-                <label for="question3"><strong>Para una noche con tus amigos, ¿Qué harias?</strong></label>
-                <select class="form-select" formControlName="question3">
-                    <option value="1">Hablar tranquilos y algo de música.</option>
-                    <option value="2">Unas pelis de terror y algo dulce.</option>
-                    <option value="3">Algun juego de mesa.</option>
-                    <option value="4">Answer Testing</option>
-                </select>
-            </div>
+        <div *ngIf="showLoadingSection" class="form-container">
+            <img class="animate__animated animate__shakeY " src="assets/Recompilation.png"
+                style="width: 200px; height: 200px;" alt="Recompilation">
 
-            <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 4">
-                <label for="question4"><strong>A tu amigo se entera que le fueron infiel. ¿Qué le
-                        decis?</strong></label>
-                <select class="form-select" formControlName="question4">
-                    <option value="1">Que le pregunte directamente.</option>
-                    <option value="2">Que la deje!! No vale la pena que se esté preocupando por alguien que no lo
-                        merece.</option>
-                    <option value="3">Que investigue primero, no hay que arriesgarse.</option>
-                    <option value="4">Answer Testing</option>
-                </select>
-            </div>
+            <h1 class="animate__animated animate__tada"><strong>"MAKE YOUR PLAYLIST"</strong></h1>
 
-            <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 5">
-                <label for="question5"><strong>Que es lo primero que ves de alguien?</strong></label>
-                <select class="form-select" formControlName="question5">
-                    <option value="1">En el físico. Si no me entra por los ojos no hay nada que hacer...</option>
-                    <option value="2">En el estilo que tiene. Me gustan medios raros.</option>
-                    <option value="3">En su personalidad!!</option>
-                    <option value="4">Answer Testing</option>
-                </select>
-            </div>
+            <p class="animate__animated animate__pulse">Rensponde segun tu personalidad.</p>
 
-            <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 6">
-                <label for="question6"><strong>¿Dónde te irías de vacaciones?</strong></label>
-                <select class="form-select" formControlName="question6">
-                    <option value="1">A Nueva York. Me cansaria de gastar plata.</option>
-                    <option value="2">A Londres. Es una ciudad que tiene de todo (ponele).</option>
-                    <option value="3">A Los Ángeles. A ver si me encuentro algun famoso.</option>
-                    <option value="4">Answer Testing</option>
-                </select>
-            </div>
-
-            <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 7">
-                <label for="question7"><strong>¿Cuál es tu red social
-                        favorita?</strong></label>
-                <select class="form-select" formControlName="question7">
-                    <option value="1">Youtube.</option>
-                    <option value="2">Instagram.</option>
-                    <option value="3">Twitter.</option>
-                    <option value="4">Answer Testing</option>
-                </select>
-            </div>
-
-            <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 8">
-                <label for="question8"><strong>Con quien te llevas mejor?</strong></label>
-                <select class="form-select" formControlName="question8">
-                    <option value="1">Con mi mama, Le cuento todo.</option>
-                    <option value="2">Me vuelven locos todos en mi familia pero los quiero.</option>
-                    <option value="3">Con mi papa, Me banca en todas.</option>
-                    <option value="4">Answer Testing</option>
-                </select>
-            </div>
-
-            <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 9">
-                <label for="question9"><strong>¿A quién borrarías del panorama musical?</strong></label>
-                <select class="form-select" formControlName="question9">
-                    <option value="1">A Justin Bieber, No me gusta mucho su música.</option>
-                    <option value="2">A Eminem, No entiendo su estilo.</option>
-                    <option value="3">A The weekend, me cae mal.</option>
-                    <option value="4">Answer Testing</option>
-                </select>
-            </div>
-
-            <div class="animate__animated animate__shakeX" *ngIf="quizForm.get('question' + currentQuestion)?.touched">
-                <div
-                    *ngIf="quizForm.get('question' + currentQuestion)?.touched && quizForm.get('question' + currentQuestion)?.hasError('required')">
-                    <p style="color: red;"><strong>¡Este campo es obligatorio!</strong></p>
+            <form class="form" [formGroup]="quizForm">
+                <div class="animate__animated animate__fadeInUp" *ngIf="currentQuestion === 1">
+                    <label for="question1"><strong>¿Qué es lo primero que haces cuando te levantas?</strong></label>
+                    <select class="form-select" formControlName="question1">
+                        <option value="1">Me miro al espejo y sonrio.</option>
+                        <option value="2">Voy al baño y me lavo la cara con agua fria.</option>
+                        <option value="3">Me estiro un par de minutos para arrancar con todo.</option>
+                        <option value="4">Answer Testing</option>
+                    </select>
                 </div>
+                <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 2">
+                    <label for="question2"><strong>Que eligirias para ponerte?</strong></label>
+                    <select class="form-select" formControlName="question2">
+                        <option value="1">Unas zapatillas. Me van las Converse.</option>
+                        <option value="2">Unas ojotas.</option>
+                        <option value="3">Unos zapatos capaz.</option>
+                        <option value="4">Answer Testing</option>
+                    </select>
+                </div>
+                <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 3">
+                    <label for="question3"><strong>Para una noche con tus amigos, ¿Qué harias?</strong></label>
+                    <select class="form-select" formControlName="question3">
+                        <option value="1">Hablar tranquilos y algo de música.</option>
+                        <option value="2">Unas pelis de terror y algo dulce.</option>
+                        <option value="3">Algun juego de mesa.</option>
+                        <option value="4">Answer Testing</option>
+                    </select>
+                </div>
+
+                <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 4">
+                    <label for="question4"><strong>A tu amigo se entera que le fueron infiel. ¿Qué le
+                            decis?</strong></label>
+                    <select class="form-select" formControlName="question4">
+                        <option value="1">Que le pregunte directamente.</option>
+                        <option value="2">Que la deje!! No vale la pena que se esté preocupando por alguien que no lo
+                            merece.</option>
+                        <option value="3">Que investigue primero, no hay que arriesgarse.</option>
+                        <option value="4">Answer Testing</option>
+                    </select>
+                </div>
+
+                <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 5">
+                    <label for="question5"><strong>Que es lo primero que ves de alguien?</strong></label>
+                    <select class="form-select" formControlName="question5">
+                        <option value="1">En el físico. Si no me entra por los ojos no hay nada que hacer...</option>
+                        <option value="2">En el estilo que tiene. Me gustan medios raros.</option>
+                        <option value="3">En su personalidad!!</option>
+                        <option value="4">Answer Testing</option>
+                    </select>
+                </div>
+
+                <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 6">
+                    <label for="question6"><strong>¿Dónde te irías de vacaciones?</strong></label>
+                    <select class="form-select" formControlName="question6">
+                        <option value="1">A Nueva York. Me cansaria de gastar plata.</option>
+                        <option value="2">A Londres. Es una ciudad que tiene de todo (ponele).</option>
+                        <option value="3">A Los Ángeles. A ver si me encuentro algun famoso.</option>
+                        <option value="4">Answer Testing</option>
+                    </select>
+                </div>
+
+                <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 7">
+                    <label for="question7"><strong>¿Cuál es tu red social
+                            favorita?</strong></label>
+                    <select class="form-select" formControlName="question7">
+                        <option value="1">Youtube.</option>
+                        <option value="2">Instagram.</option>
+                        <option value="3">Twitter.</option>
+                        <option value="4">Answer Testing</option>
+                    </select>
+                </div>
+
+                <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 8">
+                    <label for="question8"><strong>Con quien te llevas mejor?</strong></label>
+                    <select class="form-select" formControlName="question8">
+                        <option value="1">Con mi mama, Le cuento todo.</option>
+                        <option value="2">Me vuelven locos todos en mi familia pero los quiero.</option>
+                        <option value="3">Con mi papa, Me banca en todas.</option>
+                        <option value="4">Answer Testing</option>
+                    </select>
+                </div>
+
+                <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 9">
+                    <label for="question9"><strong>¿A quién borrarías del panorama musical?</strong></label>
+                    <select class="form-select" formControlName="question9">
+                        <option value="1">A Justin Bieber, No me gusta mucho su música.</option>
+                        <option value="2">A Eminem, No entiendo su estilo.</option>
+                        <option value="3">A The weekend, me cae mal.</option>
+                        <option value="4">Answer Testing</option>
+                    </select>
+                </div>
+
+                <div class="animate__animated animate__shakeX"
+                    *ngIf="quizForm.get('question' + currentQuestion)?.touched">
+                    <div
+                        *ngIf="quizForm.get('question' + currentQuestion)?.touched && quizForm.get('question' + currentQuestion)?.hasError('required')">
+                        <p style="color: red;"><strong>¡Este campo es obligatorio!</strong></p>
+                    </div>
+                </div>
+            </form>
+
+            <button *ngIf="currentQuestion > 1" (click)="previousQuestion()" class="btn btn-shine">Anterior</button>
+
+            <button
+                *ngIf="currentQuestion < totalQuestions && !quizForm.get('question' + currentQuestion)?.pristine && quizForm.get('question' + currentQuestion)?.valid"
+                (click)="nextQuestion()" class="btn btn-shine">Siguiente</button>
+
+            <button *ngIf="currentQuestion === totalQuestions && quizForm.valid" (click)="calculateValues()"
+                class="btn btn-shine">Enviar</button>
+
+            <div *ngIf="currentQuestion === totalQuestions">
+                <p class="animate__animated animate__shakeX" style="color: #FFE177;" *ngIf="quizForm.invalid">
+                    <strong>Ultima pregunta, revisa bien tus respuestas antes de enviar del cuestionario.</strong>
+                </p>
+
             </div>
-        </form>
-
-        <button *ngIf="currentQuestion > 1" (click)="previousQuestion()" class="btn btn-dark">Anterior</button>
-
-        <button
-            *ngIf="currentQuestion < totalQuestions && !quizForm.get('question' + currentQuestion)?.pristine && quizForm.get('question' + currentQuestion)?.valid"
-            (click)="nextQuestion()" class="btn btn-dark">Siguiente</button>
-
-        <button *ngIf="currentQuestion === totalQuestions && quizForm.valid" (click)="calculateValues()"
-            class="btn btn-dark">Enviar</button>
-
-        <div *ngIf="currentQuestion === totalQuestions">
-            <p class="animate__animated animate__shakeX" style="color: red;" *ngIf="quizForm.invalid">
-                <strong>Por favor, responde todas las preguntas antes de enviar el cuestionario.</strong>
-            </p>
-
         </div>
+
+        <div *ngIf="showResultSection" class="container2">
+            <div *ngIf="this.playlistCreated">
+                <img class="animate__animated animate__bounceInDown" src="assets/Dj.png"
+                    style="width: 200px; height: 200px;" alt="Dj">
+                <h1 class="animate__animated animate__zoomIn"><strong>"PLAYLIST CREADA CON EXITO"</strong></h1>
+
+                    <img type="button" class="animate__animated animate__bounceInUp" src="assets/Login.png" style="width: 40px; height: 40px;" alt="Recompilation" (click)="redirectToPlaylist()" />
+                    <span type="button" class="animate__animated animate__bounceInUp" (click)="redirectToPlaylist()"><strong>Presiona para escucharla</strong></span>
+
+            </div>
+        </div>
+
+        <audio id="yeahSound" src="assets/Yeah.mp3" preload="auto" (load)="loadYeah()"></audio>
+
     </div>
-    
-    <div *ngIf="showData" class="table-container rounded">
-        <table class="table table-dark table-striped rounded">
-            <tbody>
-                <tr *ngFor="let recommended of recommended.tracks">
-                    <td class="align-middle" style="font-size: 18px;">{{ recommended.name }}</td>
-                    <td class="align-middle">{{recommended.artists[0].name}}</td>
-                </tr>
-            </tbody>
-        </table>
-        <button (click)="postPlaylist()">Crear Playlist</button>
-        <button (click)="getSongsRecommendedURIS()">Get Uris</button>
-        <button (click)="postSongOnPlaylist()">Añadir canciones a playlist</button>
-    </div>
-</body>
+</div>
+
+<!--
+    -->

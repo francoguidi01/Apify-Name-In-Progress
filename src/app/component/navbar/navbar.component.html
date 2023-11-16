@@ -22,7 +22,9 @@
       </ul>
     </div>
 
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">      <div class="modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.8);">
           <div class="modal-header">
             <button *ngIf="hintDeleteButton" type="button" class="btn-close" data-bs-dismiss="modal"
@@ -45,7 +47,7 @@
             <button class="btn btn-danger" data-bs-dismiss="modal"
               (click)="deleteUserById()"><strong>💀Continuar💀</strong></button>
           </div>
-          
+
         </div>
       </div>
     </div>
@@ -71,12 +73,10 @@
           </a>
         </li>
         <li class="nav-item">
-          <!--
-          <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active" href="#">
+          <a class="nav-link" [routerLink]="['/stats']" routerLinkActive="active" href="#">
             <img src="assets/Stats.png" alt="Imagen" style="width: 32px; height: 32px;">
             <strong> STATS</strong>
-          </a>-->
-          <a class="nav-link" [routerLink]="['/stats']" routerLinkActive="active" href="#">Stats</a> 
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/social']" routerLinkActive="active" href="#">

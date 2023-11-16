@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { SpotifyService } from 'src/app/service/spotify.service';
 import { TokenModel } from 'src/app/models/token-model';
-import { LoginComponent } from '../login/login.component';
-
 @Component({
   selector: 'app-origin',
   templateUrl: './origin.component.html',

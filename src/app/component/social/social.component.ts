@@ -34,6 +34,10 @@ export class SocialComponent {
     friendSongs: []
   };
 
+  friendSongFinal: any;
+  mySongFinal: any;
+  friendArtistFinal: any;
+  myArtistFinal: any;
 
 
   ngOnInit() {
@@ -67,7 +71,6 @@ export class SocialComponent {
     this.user_service.getFriendsById(userId).subscribe(myFriendsData => {
       if (Array.isArray(myFriendsData)) {
         this.friends = myFriendsData.map(friend => friend.user2);
-        console.log(this.friends);
       } else {
         console.error('Error: myFriendsData no es un array');
       }
@@ -122,7 +125,6 @@ export class SocialComponent {
     this.user_service.getFriendsById(userId).subscribe(myFriendsData => {
       if (Array.isArray(myFriendsData)) {
         this.selectedUser.friends = myFriendsData.map(friend => friend.user2);
-        console.log("sigue a", this.selectedUser.friends);
       } else {
         console.error('Error: myFriendsData no es un array');
       }
@@ -131,7 +133,6 @@ export class SocialComponent {
     this.user_service.getAllFriends().subscribe((friendsData: any) => {
       if (Array.isArray(friendsData)) {
         this.selectedUser.followers = friendsData.filter((friend: any) => friend.user2.id === userId).map((friend: any) => friend.user1);
-        console.log("lo siguen", this.selectedUser.followers);
       } else {
         console.error('Error: friendsData no es un array');
       }
@@ -148,11 +149,9 @@ export class SocialComponent {
     const userId = JSON.parse(localStorage.getItem('userData') || '{}').id;
 
     this.user_service.getFriendsById(userId).subscribe(myFriendsData => {
-      console.log(myFriendsData);
 
       if (Array.isArray(myFriendsData)) {
         myFriendsData.forEach(friendData => {
-          console.log("frienddata", friendData);
           const currentFriendId = friendData.user2.id;
 
           if (currentFriendId === friendId) {
@@ -180,7 +179,7 @@ export class SocialComponent {
         (friendArtistData: any) => {
           if (Array.isArray(friendArtistData) && friendArtistData.length > 0) {
             this.userMusicData.friendArtists = Array.isArray(friendArtistData) ? friendArtistData : [];
-            this.getArtistsSong();
+            this.getFriendArtists();
           } else {
             console.log("No hay artistas para el usuario");
           }
@@ -189,7 +188,7 @@ export class SocialComponent {
     }
   }
 
-  getArtistsSong() {
+  getFriendArtists() {
 
     const token = JSON.parse(localStorage.getItem('token') || '{}');
 
@@ -200,7 +199,7 @@ export class SocialComponent {
 
     this.service.getArtistsById(arrayIds, token).subscribe(
       (friendArtistData: any) => {
-        console.log("Artistas amigo:", friendArtistData);
+        this.friendArtistFinal=friendArtistData;
       });
 
   }
@@ -214,12 +213,9 @@ export class SocialComponent {
     } else {
       this.service.getTopArtists(storedToken, 'long_term').subscribe(
         (myArtistData: any) => {
-          if (Array.isArray(myArtistData) && myArtistData.length > 0) {
             this.userMusicData.myArtists = Array.isArray(myArtistData) ? myArtistData : [];
-            console.log("Mis artistas", myArtistData);
-          } else {
-            console.log("No hay artistas para el usuario");
-          }
+            this.myArtistFinal=myArtistData;
+          
         }
       );
     }
@@ -254,7 +250,9 @@ export class SocialComponent {
 
     this.service.getSongsById(arrayIds, token).subscribe(
       (friendSongsData: any) => {
-        console.log("Canciones amigo:", friendSongsData);
+
+        this.friendSongFinal = friendSongsData;
+
       });
 
   }
@@ -267,15 +265,10 @@ export class SocialComponent {
       console.error("El token del usuario almacenado en el local storage está vacío");
       return;
     } else {
-      this.service.getTopSongs(storedToken, 'long_term').subscribe(
+      this.service.getTopSongs(storedToken, 'long_term', 5).subscribe(
         (mySongData: any) => {
-          if (Array.isArray(mySongData) && mySongData.length > 0) {
             this.userMusicData.mySongs = Array.isArray(mySongData) ? mySongData : [];
-            console.log("Mis canciones", mySongData);
-
-          } else {
-            console.log("No hay canciones para el usuario");
-          }
+            this.mySongFinal=mySongData;
         }
       );
     }

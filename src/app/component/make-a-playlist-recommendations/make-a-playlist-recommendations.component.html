@@ -1,5 +1,42 @@
-<button (click)="getSongsId()">1- IDS de songs</button>
-<button (click)="getRecommendations()">2- Recommended</button>
-<button (click)="getSongsRecommendedURIS()">3- conseguir URIS</button>
-<button (click)="postPlaylist()">4- crear Playlist</button>
-<button (click)="postSongOnPlaylist()">5- agregar song to Playlist</button>
+<div class="div-container">
+    <div class="background">
+        <app-navbar></app-navbar>
+        
+        <div *ngIf="showLoadingSection" class="recompilation-container">
+
+            <img class="animate__animated animate__shakeY " src="assets/Recompilation.png"
+                style="width: 200px; height: 200px;" alt="Recompilation">
+
+            <h1 class="animate__animated animate__tada"><strong>"RECOMPILANDO TUS GUSTOS"</strong></h1>
+
+            <p class="animate__animated animate__pulse">Por favor espere...</p>
+
+            <div class="animate__animated animate__fadeInUp">
+            <div class="load">
+                    <img src="assets/Load1.png" alt="Load1">
+                    <img src="assets/Load2.png" alt="Load2">
+                    <img src="assets/Load3.png" alt="Load3">
+                    <img src="assets/Load4.png" alt="Load4">
+                </div>
+            </div>
+        </div>
+
+
+        <div *ngIf="showResultSection" class="recompilation-container2">
+            <div *ngIf="this.playlistCreated">
+                <img class="animate__animated animate__bounceInDown" src="assets/Dj.png"
+                    style="width: 200px; height: 200px;" alt="Dj">
+                <h1 class="animate__animated animate__zoomIn"><strong>"PLAYLIST CREADA CON EXITO"</strong></h1>
+
+                <img type="button" class="animate__animated animate__bounceInUp" src="assets/Login.png" 
+                style="width: 40px; height: 40px;" alt="Recompilation" (click)="redirectToPlaylist()"/>
+
+                    <span type="button" class="animate__animated animate__bounceInUp" 
+                    (click)="redirectToPlaylist()"><strong>Presiona para escucharla</strong></span>
+
+            </div>
+        </div>
+
+        <audio id="yeahSound" src="assets/Yeah.mp3" preload="auto" (load)="loadYeah()"></audio>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<div class="div-container">
+    <div class="background">
+        <app-navbar></app-navbar>
+
+        <div class="animate__animated animate__jackInTheBox">
+            <div class="text-center" style="margin-top: 10px;">
+                <img src="assets/Average.png" type="button" alt="image_back" data-bs-toggle="modal"
+                    data-bs-target="#ModalFollow" style="width: 35px; height: 35px;">
+                <p type="button" data-bs-toggle="modal" data-bs-target="#ModalFollow">
+                    <strong>PROMEDIO PROXIMAMENTE</strong>
+                </p>
+            </div>
+        </div>
+
+        <div class="buttons">
+
+            <div class="animate__animated animate__fadeInLeft">
+                <img src="assets/S.png" alt="Short-Artists" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#shortTable" aria-expanded="false" aria-controls="shortTable"
+                    style="width: 60px; height: 60px; cursor: pointer;"
+                    (click)="toggleSeccion('shortTable', 'short_term')">
+                <p><strong>TIEMPO CORTO</strong></p>
+            </div>
+
+            <div class="animate__animated animate__fadeInDown">
+                <img src="assets/M.png" alt="Medium-Artists" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#mediumTable" aria-expanded="false" aria-controls="mediumTable"
+                    style="width: 60px; height: 60px; cursor: pointer;"
+                    (click)="toggleSeccion('mediumTable', 'medium_term')">
+                <p><strong>TIEMPO MEDIO</strong></p>
+            </div>
+
+            <div class="animate__animated animate__fadeInRight">
+                <img src="assets/L.png" alt="Long-Artists" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#longTable" aria-expanded="false" aria-controls="longTable"
+                    style="width: 60px; height: 60px; cursor: pointer;"
+                    (click)="toggleSeccion('longTable', 'long_term')">
+                <p><strong>TIEMPO LARGO</strong></p>
+            </div>
+        </div>
+
+        <div class="tables">
+
+            <div class="table1" *ngIf="topSongs">
+                <div class="collapse" id="shortTable" [ngClass]="{ 'show': seccionAbierta === 'shortTable' }">
+                    <div class="animate__animated animate__fadeInLeft">
+                        <div *ngFor="let song of topSongs.items; let i= index">
+                            <div class="table__profile">
+                                <img src="{{song.album.images[0].url}}" alt="Album Cover" class="album-cover">
+                                <span class="table__name mx-auto ">{{song.name}}</span>
+                                <span class="table__name mx-auto ">{{song.album.artists[0].name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table2" *ngIf="topSongs">
+                <div class="collapse" id="mediumTable" [ngClass]="{ 'show': seccionAbierta === 'mediumTable' }">
+                    <div class="animate__animated animate__fadeInDown">
+                        <div *ngFor="let song of topSongs.items; let i= index">
+                            <div class="table__profile">
+                                <img src="{{song.album.images[0].url}}" alt="Album Cover" class="album-cover">
+                                <span class="table__name mx-auto ">{{song.name}}</span>
+                                <span class="table__name mx-auto ">{{song.album.artists[0].name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table3" *ngIf="topSongs">
+                <div class="collapse" id="longTable" [ngClass]="{ 'show': seccionAbierta === 'longTable'}">
+                    <div class="animate__animated animate__fadeInRight">
+                        <div *ngFor="let song of topSongs.items; let i= index">
+                            <div class="table__profile">
+                                <img src="{{song.album.images[0].url}}" alt="Album Cover" class="album-cover">
+                                <span class="table__name mx-auto ">{{song.name}}</span>
+                                <span class="table__name mx-auto ">{{song.album.artists[0].name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--
+                                    <span class="table__name ">{{song.album.name}}</span>
+                                <span class="table__name mx-auto">{{song.duration_ms/60000}}</span>
+
+-->

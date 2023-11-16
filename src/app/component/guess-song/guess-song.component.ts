@@ -160,10 +160,13 @@ export class GuessSongComponent {
       };
 
       this.user_service.addToLeader(leaderToSave).subscribe(data => {
+        this.getTheLeaderboard();
+
       });
     } else {
       console.log("Los puntos fueron 0 ni lo agrego");
     }
+    
   }
 
 

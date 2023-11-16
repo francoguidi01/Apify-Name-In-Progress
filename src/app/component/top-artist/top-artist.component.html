@@ -1,0 +1,72 @@
+<div class="div-container">
+    <div class="background">
+        <app-navbar></app-navbar>
+
+        <div class="buttons">
+
+            <div class="animate__animated animate__fadeInLeft">
+                <img src="assets/S.png" alt="Short-Artists" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#shortTable" aria-expanded="false" aria-controls="shortTable"
+                    style="width: 60px; height: 60px; cursor: pointer;" (click)="toggleSeccion('shortTable', 'short_term')">
+                <p><strong>TIEMPO CORTO</strong></p>
+            </div>
+
+            <div class="animate__animated animate__fadeInDown">
+                <img src="assets/M.png" alt="Medium-Artists" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#mediumTable" aria-expanded="false" aria-controls="mediumTable"
+                    style="width: 60px; height: 60px; cursor: pointer;" (click)="toggleSeccion('mediumTable', 'medium_term')">
+                <p><strong>TIEMPO MEDIO</strong></p>
+            </div>
+
+            <div class="animate__animated animate__fadeInRight">
+                <img src="assets/L.png" alt="Long-Artists" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#longTable" aria-expanded="false" aria-controls="longTable"
+                    style="width: 60px; height: 60px; cursor: pointer;" (click)="toggleSeccion('longTable', 'long_term')">
+                <p><strong>TIEMPO LARGO</strong></p>
+            </div>
+        </div>
+
+        <div class="tables">
+
+            <div class="table1" *ngIf="topArtists">
+                <div class="collapse" id="shortTable" [ngClass]="{ 'show': seccionAbierta === 'shortTable' }">
+                    <div class="animate__animated animate__fadeInLeft">
+                        <div *ngFor="let artist of topArtists.items">
+                            <div class="table__profile">
+                                <img src="{{artist.images[2].url}}" alt="User Photo" class="user-photo rounded-circle">
+                                <span class="table__name mx-auto">{{artist.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table2" *ngIf="topArtists">
+                <div class="collapse" id="mediumTable" [ngClass]="{ 'show': seccionAbierta === 'mediumTable' }">
+                    <div class="animate__animated animate__fadeInDown">
+                        <div *ngFor="let artist of topArtists.items">
+                            <div class="table__profile">
+                                <img src="{{artist.images[2].url}}" alt="User Photo" class="user-photo rounded-circle">
+                                <span class="table__name mx-auto">{{artist.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table3" *ngIf="topArtists">
+                <div class="collapse" id="longTable" [ngClass]="{ 'show': seccionAbierta === 'longTable'}">
+                    <div class="animate__animated animate__fadeInRight">
+                        <div *ngFor="let artist of topArtists.items">
+                            <div class="table__profile">
+                                <img src="{{artist.images[2].url}}" alt="User Photo" class="user-photo rounded-circle">
+                                <span class="table__name mx-auto">{{artist.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

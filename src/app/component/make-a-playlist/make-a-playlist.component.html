@@ -2,7 +2,6 @@
     <div class="background">
 
         <app-navbar></app-navbar>
-
         <div class="row">
             <div class="col-sm-6" *ngIf="showIcon1">
                 <div class="animate__animated animate__backInDown">
@@ -17,44 +16,37 @@
                                 <p class="card-text">Responde algunas preguntas para obtener una playlist según tus
                                     gustos.
                                 </p>
-                                <a style="background-color: rgba(209, 241, 158, 0.8); color: black;"
-                                    class="btn btn-dark" (click)="toggleVisibility('form')"><strong>EMPEZAR</strong></a>
+                                <button class="btn btn-shine" [routerLink]="['/make-a-playlist/quiz']"
+                                    routerLinkActive="active">
+                                    <strong>CREAR PLAYLIST</strong>
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-sm-6" *ngIf="showIcon1">
-                    <div class="animate__animated animate__backInDown">
-                        <div class="col-sm-6" *ngIf="showIcon2">
-                            <div class="animate__animated animate__backInUp">
+            <div class="col-sm-6" *ngIf="showIcon2">
+                <div class="animate__animated animate__backInUp">
 
-                                <div class="sc">
-                                    <img class="image-sqe" src="assets/Gustos.png" alt="Imagen">
-                                </div>
+                    <div class="sc">
+                        <img class="image-sqe" src="assets/Gustos.png" alt="Imagen">
+                    </div>
 
-                                <div class="card text-center mb-3 " style="width: 18rem;" *ngIf="showMasEscuchadosCard">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><strong>SEGUN QUE ESCUCHAS</strong></h5>
-                                        <p class="card-text">Analizamos que te gusta para obtener una nueva playlist que
-                                            escuchar.
-                                        </p>
-                                        <a style="background-color: rgba(209, 241, 158, 0.8); color: black;"
-                                            class="btn btn-dark"
-                                            (click)="toggleVisibility('playlist')"><strong>EMPEZAR</strong></a>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="card text-center mb-3 " style="width: 18rem;" *ngIf="showMasEscuchadosCard">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>SEGUN QUE ESCUCHAS</strong></h5>
+                            <p class="card-text">Analizamos que te gusta para obtener una nueva playlist que escuchar.
+                            </p>
+                            <button class="btn btn-shine" [routerLink]="['/make-a-playlist/recommendations']"
+                                routerLinkActive="active">
+                                <strong>CREAR PLAYLIST</strong>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-    <button [routerLink]="['/make-a-playlist/recommendations']" routerLinkActive="active">FUNCIONA RECOMENDACION?</button>
-    <button [routerLink]="['/make-a-playlist/quiz']" routerLinkActive="active">FUNCIONA QUIZ?</button>
-    
     </div>
 </div>

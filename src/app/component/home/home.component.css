@@ -47,8 +47,6 @@
 .persons-wrapper {
   display: flex;
   justify-content: space-between;
-  margin-left: 0px;
-  margin-top: -30px;
 }
 
 .object{

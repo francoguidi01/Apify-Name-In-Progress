@@ -154,7 +154,7 @@ export class SpotifyService {
       );
   }
   //tracks?time_range=short_term
-  getTopSongs(token: TokenModel, range: String/*, limit*/): Observable<any> {
+  getTopSongs(token: TokenModel, range: String, limit: number): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -162,7 +162,7 @@ export class SpotifyService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
     });
-    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/tracks?time_range=${range}&limit=50`, { headers })
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/tracks?time_range=${range}&limit=${limit}`, { headers })
       .pipe(
         map((response: any) => {
           //  console.log('TOP SONGS:', response);
@@ -170,6 +170,7 @@ export class SpotifyService {
         }),
       );
   }
+
   //me/top/artists
   //me/top/tracks
   // getDataUser(token: TokenModel, range: String, endpoint: String) {
@@ -279,8 +280,9 @@ getArtistsById(ids: Array<String>, token: TokenModel)
   
     if (!values) {
       if (songDataIds) {
-        console.log('song data ids: ', songDataIds);
-        return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=5&seed_tracks=${songDataIds.join(',')}`, { headers })
+        console.log('song data ids en SERVICE: ', songDataIds);
+        console.log(songDataIds.join(','));
+        return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=15&seed_tracks=${songDataIds.join(',')}`, { headers })
           .pipe(
             map((response: any) => {
               console.log('TOP RECOMMENDED:', response);
@@ -290,8 +292,7 @@ getArtistsById(ids: Array<String>, token: TokenModel)
       }
     } else {
       console.log('values: ',values);
-      console.log(`url: ${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=5&seed_tracks=6OnfBiiSc9RGKiBKKtZXgQ&target_acousticness=${values[0]}&target_danceability=${values[1]}&target_energy=${values[2]}&target_popularity=${values[3]}&target_valence=${values[4]}`);
-      return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=5&seed_tracks=6OnfBiiSc9RGKiBKKtZXgQ&target_acousticness=${values[0]}&target_danceability=${values[1]}&target_energy=${values[2]}&target_popularity=${values[3]}&target_valence=${values[4]}`, { headers })
+      return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=15&seed_tracks=6OnfBiiSc9RGKiBKKtZXgQ&target_acousticness=${values[0]}&target_danceability=${values[1]}&target_energy=${values[2]}&target_popularity=${values[3]}&target_valence=${values[4]}`, { headers })
         .pipe(
           map((response: any) => {
             console.log('TOP RECOMMENDED:', response);
