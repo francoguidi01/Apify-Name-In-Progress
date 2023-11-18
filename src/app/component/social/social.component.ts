@@ -200,6 +200,7 @@ export class SocialComponent {
     this.service.getArtistsById(arrayIds, token).subscribe(
       (friendArtistData: any) => {
         this.friendArtistFinal=friendArtistData;
+        console.log(this.friendArtistFinal);
       });
 
   }
