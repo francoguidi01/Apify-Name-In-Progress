@@ -27,17 +27,15 @@ export class SocialComponent {
     followers: []
   };
 
-  userMusicData: any = {
-    myArtists: [],
-    friendArtists: [],
-    mySongs: [],
-    friendSongs: []
+  userMusicDataFromBDD: any = {
+    friendArtistsFromBDD: [],
+    friendSongsFromBDD: []
   };
 
-  friendSongFinal: any;
-  mySongFinal: any;
-  friendArtistFinal: any;
-  myArtistFinal: any;
+  friendSong: any;
+  mySong: any;
+  friendArtist: any;
+  myArtist: any;
 
 
   ngOnInit() {
@@ -178,7 +176,7 @@ export class SocialComponent {
       this.user_service.getArtistById(userId).subscribe(
         (friendArtistData: any) => {
           if (Array.isArray(friendArtistData) && friendArtistData.length > 0) {
-            this.userMusicData.friendArtists = Array.isArray(friendArtistData) ? friendArtistData : [];
+            this.userMusicDataFromBDD.friendArtistsFromBDD = Array.isArray(friendArtistData) ? friendArtistData : [];
             this.getFriendArtists();
           } else {
             console.log("No hay artistas para el usuario");
@@ -193,13 +191,13 @@ export class SocialComponent {
     const token = JSON.parse(localStorage.getItem('token') || '{}');
 
     const arrayIds: Array<String> = []
-    this.userMusicData.friendArtists.forEach((artist: { id_api_artists: string }) => {
+    this.userMusicDataFromBDD.friendArtistsFromBDD.forEach((artist: { id_api_artists: string }) => {
       arrayIds.push(artist.id_api_artists);
     });
 
     this.service.getArtistsById(arrayIds, token).subscribe(
       (friendArtistData: any) => {
-        this.friendArtistFinal=friendArtistData;
+        this.friendArtist=friendArtistData;
       });
 
   }
@@ -213,9 +211,7 @@ export class SocialComponent {
     } else {
       this.service.getTopArtists(storedToken, 'long_term').subscribe(
         (myArtistData: any) => {
-            this.userMusicData.myArtists = Array.isArray(myArtistData) ? myArtistData : [];
-            this.myArtistFinal=myArtistData;
-          
+            this.myArtist=myArtistData;
         }
       );
     }
@@ -230,7 +226,7 @@ export class SocialComponent {
       this.user_service.getSongById(userId).subscribe(
         (friendSongData: any) => {
           if (Array.isArray(friendSongData) && friendSongData.length > 0) {
-            this.userMusicData.friendSongs = Array.isArray(friendSongData) ? friendSongData : [];
+            this.userMusicDataFromBDD.friendSongsFromBDD = Array.isArray(friendSongData) ? friendSongData : [];
             this.getFriendsSong();
           } else {
             console.log("No hay canciones para el usuario");
@@ -244,14 +240,14 @@ export class SocialComponent {
 
     const token = JSON.parse(localStorage.getItem('token') || '{}');
     const arrayIds: Array<String> = []
-    this.userMusicData.friendSongs.forEach((song: { id_api_songs: string }) => {
+    this.userMusicDataFromBDD.friendSongsFromBDD.forEach((song: { id_api_songs: string }) => {
       arrayIds.push(song.id_api_songs);
     });
 
     this.service.getSongsById(arrayIds, token).subscribe(
       (friendSongsData: any) => {
 
-        this.friendSongFinal = friendSongsData;
+        this.friendSong = friendSongsData;
 
       });
 
@@ -267,8 +263,7 @@ export class SocialComponent {
     } else {
       this.service.getTopSongs(storedToken, 'long_term', 5).subscribe(
         (mySongData: any) => {
-            this.userMusicData.mySongs = Array.isArray(mySongData) ? mySongData : [];
-            this.mySongFinal=mySongData;
+            this.mySong=mySongData;
         }
       );
     }

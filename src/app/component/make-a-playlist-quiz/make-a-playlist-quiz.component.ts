@@ -14,7 +14,6 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 export class MakeAPlaylistQuizComponent {
 
   ngOnInit() {
-    this.postPlaylist();
   }
   currentQuestion: number = 1;
   totalQuestions: number = 9;
@@ -62,10 +61,8 @@ export class MakeAPlaylistQuizComponent {
 
       for (let i = 1; i <= 9; i++) {
         const answer = this.quizForm.value[`question${i}`];
-        // console.log('answer: ', answer);
 
         if (this.questionAdjudgment.adjustments[answer]) {
-          // Aplicar los ajustes directamente a las propiedades correspondientes en targets
           for (const key in this.questionAdjudgment.adjustments[answer]) {
             if (this.questionAdjudgment.adjustments[answer].hasOwnProperty(key)) {
               targets[key] = (targets[key] || 0) + this.questionAdjudgment.adjustments[answer][key];
@@ -73,37 +70,24 @@ export class MakeAPlaylistQuizComponent {
           }
         }
 
-        // console.log('question ', i, ' ', { ...targets });
       }
 
     }
     return targets;
   }
 
-
-
-  /*== 1 &&*/
-  // 2: { popularity: -1, energy: -0.1, valence: -0.1 }, // -20
-  // 3: { acousticness: 0.1, danceability: 0.1, energy: -0.1 },
-  // 4: { acousticness: -0.1, danceability: -0.1, valence: 0.1 }
-  // 5: { danceability: 0.2, popularity: 1 },//-20
-  // 6: { valence: -0.1, danceability: 0.2, popularity: 1 },//20
-  // 7: { popularity: 1, danceability: 0.2, energy: 0.2 },//-15
-  // 8: { popularity: 1, valence: -0.1, energy: -0.2 },//-15
-  // 9: { acousticness: 0.2, valence: -0.1, popularity: 1 }//-15
   recommended: any;
   showData: boolean = false;
   playlistCreated: any;
 
   calculateValues(): void {
     let targets = this.adJugmentQuiz();
-    //  console.log('Final Targets:', targets);
+
     targets['valence'] = targets['valence'] / 10;
     targets['acousticness'] = targets['acousticness'] / 10;
     targets['danceability'] = targets['danceability'] / 10;
     targets['energy'] = targets['energy'] / 10;
 
-    // console.log('Final Targets:', targets);
     const arrayData = [
       targets['acousticness'].toString(),
       targets['danceability'].toString(),
@@ -115,17 +99,13 @@ export class MakeAPlaylistQuizComponent {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
     if (Object.keys(localTokenData).length !== 0) {
       this.service.getRecommendations(localTokenData, null, arrayData).subscribe(recommended => {
-        this.recommended = recommended;
-        this.getSongsRecommendedURIS();
-        this.postSongOnPlaylist();
+        this.recommended = recommended;  
 
       });
     } else {
       this.service.get_token().subscribe(token => {
         this.service.getRecommendations(localTokenData, null, arrayData).subscribe(recommended => {
           console.log('canciones recomendadas 1: ', recommended);
-          this.getSongsRecommendedURIS();
-          this.postSongOnPlaylist();
 
         });
       });
@@ -151,20 +131,15 @@ export class MakeAPlaylistQuizComponent {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
     const userId = JSON.parse(localStorage.getItem('userData') || '{}').id;
 
-    //  console.log(localTokenData);
     if (Object.keys(localTokenData).length !== 0) {
-      // this.token = localTokenData;
       this.service.postPlaylist(localTokenData, userId).subscribe(playlistCreated => {
         this.playlistCreated = playlistCreated;
+        this.getSongsRecommendedURIS();
         console.log(this.playlistCreated);
       });
     } else {
       this.service.get_token().subscribe(token => {
-        // this.token = token;
-        // this.service.postPlaylist(this.token, userId).subscribe(playlistCreated => {
-        //   this.playlistCreated = playlistCreated;
-        //   console.log(playlistCreated);
-        // });
+        this.getSongsRecommendedURIS();
       });
     }
   }
@@ -176,6 +151,7 @@ export class MakeAPlaylistQuizComponent {
     this.recommended.tracks.forEach((tracks: { uri: String }) => {
       this.uriIds.push(tracks.uri);
     });
+    this.postSongOnPlaylist();
     console.log(this.uriIds);
   }
 
@@ -185,16 +161,11 @@ export class MakeAPlaylistQuizComponent {
     if (Object.keys(localTokenData).length !== 0) {
 
       this.service.postSongOnPlaylist(localTokenData, this.playlistCreated.id, this.uriIds).subscribe(songsAdded => {
-        // this.songsAdded = songsAdded;
-        console.log(songsAdded);
+        this.redirectToPlaylist();
       });
     } else {
       this.service.get_token().subscribe(token => {
-        //  this.token = token;
-        //  this.service.postSongOnPlaylist(this.token, this.playlistCreated.id, this.uriIds).subscribe(songsAdded => {
-        //  this.songsAdded = songsAdded;
-        //      console.log(songsAdded);
-        //    });
+        this.redirectToPlaylist();
       });
     }
   }

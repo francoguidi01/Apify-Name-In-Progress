@@ -1,7 +1,7 @@
 <div class="div-container">
     <div class="background">
         <app-navbar></app-navbar>
-        
+
         <div *ngIf="showLoadingSection" class="recompilation-container">
 
             <img class="animate__animated animate__shakeY " src="assets/Recompilation.png"
@@ -12,7 +12,7 @@
             <p class="animate__animated animate__pulse">Por favor espere...</p>
 
             <div class="animate__animated animate__fadeInUp">
-            <div class="load">
+                <div class="load">
                     <img src="assets/Load1.png" alt="Load1">
                     <img src="assets/Load2.png" alt="Load2">
                     <img src="assets/Load3.png" alt="Load3">
@@ -23,16 +23,29 @@
 
 
         <div *ngIf="showResultSection" class="recompilation-container2">
-            <div *ngIf="this.playlistCreated">
+            <div *ngIf="this.recommended">
                 <img class="animate__animated animate__bounceInDown" src="assets/Dj.png"
-                    style="width: 200px; height: 200px;" alt="Dj">
-                <h1 class="animate__animated animate__zoomIn"><strong>"PLAYLIST CREADA CON EXITO"</strong></h1>
+                    style="width: 100px; height: 100px;" alt="Dj">
+                <h1 class="animate__animated animate__bounceInLeft"><strong>"PLAYLIST CREADA CON EXITO"</strong></h1>
 
-                <img type="button" class="animate__animated animate__bounceInUp" src="assets/Login.png" 
-                style="width: 40px; height: 40px;" alt="Recompilation" (click)="redirectToPlaylist()"/>
+                    <div class="animate__animated animate__bounceInRight">
+                        <button class="btn-shine"
+                        (click)="postPlaylist();" [routerLink]="['/make-a-playlist']"><strong>Presiona para agregarla en spotify</strong></button>
+                    </div>
 
-                    <span type="button" class="animate__animated animate__bounceInUp" 
-                    (click)="redirectToPlaylist()"><strong>Presiona para escucharla</strong></span>
+                <div *ngIf="this.recommended">
+                    <div class="tables">
+                        <div class="animate__animated animate__fadeInDown">
+                            <div *ngFor="let song of this.recommended.tracks; let i = index">
+                                <div class="table__profile">
+                                    <img src="{{ song.album.images[0].url }}" alt="Album Cover" class="album-cover">
+                                    <span class="table__name mx-auto">{{ song.name }}</span>
+                                    <span class="table__name mx-auto">{{ song.album.artists[0].name }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

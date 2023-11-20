@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment.development';
 export class MakeAPlaylistRecommendationsComponent {
 
   ngOnInit(): void {
-    this.postPlaylist();
     this.getTopSongs();
 
   }
@@ -39,20 +38,21 @@ export class MakeAPlaylistRecommendationsComponent {
 
   redirectToPlaylist() {
     window.open(this.playlistCreated.external_urls.spotify, '_blank');
+
   }
 
   getTopSongs(): void {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
-      this.service.getTopSongs(this.token, 'long_term',5).subscribe(songData => {
+      this.service.getTopSongs(this.token, 'long_term', 5).subscribe(songData => {
         this.topSongs = songData;
         this.getSongsId();
       });
     } else {
       this.service.get_token().subscribe(token => {
         this.token = token;
-        this.service.getTopSongs(this.token, 'long_term',5).subscribe(songData => {
+        this.service.getTopSongs(this.token, 'long_term', 5).subscribe(songData => {
           this.topSongs = songData;
           this.getSongsId();
         });
@@ -77,18 +77,26 @@ export class MakeAPlaylistRecommendationsComponent {
       this.token = localTokenData;
       this.service.getRecommendations(this.token, this.idsArray, null).subscribe(recommended => {
         this.recommended = recommended;
-        this.getSongsRecommendedURIS();
+
+        this.showLoadingSection = false;
+        this.showResultSection = true;
+        this.loadYeah();
       });
     } else {
       this.service.get_token().subscribe(token => {
         this.token = token;
         this.service.getRecommendations(this.token, this.idsArray, null).subscribe(recommended => {
           this.recommended = recommended;
-          this.getSongsRecommendedURIS();
+
+          this.showLoadingSection = false;
+          this.showResultSection = true;
+          this.loadYeah();
         });
       });
     }
   }
+
+
 
 
   postPlaylist() {
@@ -100,12 +108,14 @@ export class MakeAPlaylistRecommendationsComponent {
       this.token = localTokenData;
       this.service.postPlaylist(this.token, userId).subscribe(playlistCreated => {
         this.playlistCreated = playlistCreated;
+        this.getSongsRecommendedURIS();
       });
     } else {
       this.service.get_token().subscribe(token => {
         this.token = token;
         this.service.postPlaylist(this.token, userId).subscribe(playlistCreated => {
           this.playlistCreated = playlistCreated;
+          this.getSongsRecommendedURIS();
         });
       });
     }
@@ -115,29 +125,22 @@ export class MakeAPlaylistRecommendationsComponent {
     this.recommended.tracks.forEach((tracks: { uri: String }) => {
       this.uriIds.push(tracks.uri);
     });
-    
-    this.postSongOnPlaylist();
 
-    this.showLoadingSection = false;
-    this.showResultSection = true;
-    this.loadYeah();
+    this.postSongOnPlaylist();
   }
 
   postSongOnPlaylist() {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
-    // console.log(localTokenData);
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
       this.service.postSongOnPlaylist(this.token, this.playlistCreated.id, this.uriIds).subscribe(songsAdded => {
-        // this.songsAdded = songsAdded;
-        console.log(songsAdded);
+      this.redirectToPlaylist();
       });
     } else {
       this.service.get_token().subscribe(token => {
         this.token = token;
         this.service.postSongOnPlaylist(this.token, this.playlistCreated.id, this.uriIds).subscribe(songsAdded => {
-          //  this.songsAdded = songsAdded;
-          console.log(songsAdded);
+          this.redirectToPlaylist();
         });
       });
     }

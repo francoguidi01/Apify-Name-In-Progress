@@ -19,16 +19,16 @@
                         <option value="1">Me miro al espejo y sonrio.</option>
                         <option value="2">Voy al baño y me lavo la cara con agua fria.</option>
                         <option value="3">Me estiro un par de minutos para arrancar con todo.</option>
-                        <option value="4">Answer Testing</option>
+                        <option value="4">Sigo durmiendo.</option>
                     </select>
                 </div>
                 <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 2">
                     <label for="question2"><strong>Que eligirias para ponerte?</strong></label>
                     <select class="form-select" formControlName="question2">
-                        <option value="1">Unas zapatillas. Me van las Converse.</option>
+                        <option value="1">Unas zapatillas.</option>
                         <option value="2">Unas ojotas.</option>
                         <option value="3">Unos zapatos capaz.</option>
-                        <option value="4">Answer Testing</option>
+                        <option value="4">En patas.</option>
                     </select>
                 </div>
                 <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 3">
@@ -37,7 +37,7 @@
                         <option value="1">Hablar tranquilos y algo de música.</option>
                         <option value="2">Unas pelis de terror y algo dulce.</option>
                         <option value="3">Algun juego de mesa.</option>
-                        <option value="4">Answer Testing</option>
+                        <option value="4">Ni me junto, no tengo ganas.</option>
                     </select>
                 </div>
 
@@ -49,7 +49,7 @@
                         <option value="2">Que la deje!! No vale la pena que se esté preocupando por alguien que no lo
                             merece.</option>
                         <option value="3">Que investigue primero, no hay que arriesgarse.</option>
-                        <option value="4">Answer Testing</option>
+                        <option value="4">Nose... y si soy yo el amante</option>
                     </select>
                 </div>
 
@@ -59,17 +59,17 @@
                         <option value="1">En el físico. Si no me entra por los ojos no hay nada que hacer...</option>
                         <option value="2">En el estilo que tiene. Me gustan medios raros.</option>
                         <option value="3">En su personalidad!!</option>
-                        <option value="4">Answer Testing</option>
+                        <option value="4">Si se baña.</option>
                     </select>
                 </div>
 
                 <div class="animate__animated animate__fadeIn" *ngIf="currentQuestion === 6">
-                    <label for="question6"><strong>¿Dónde te irías de vacaciones?</strong></label>
+                    <label for="question6"><strong>¿Dónde te irías de vacaciones si tuvieras mucha plata?</strong></label>
                     <select class="form-select" formControlName="question6">
-                        <option value="1">A Nueva York. Me cansaria de gastar plata.</option>
-                        <option value="2">A Londres. Es una ciudad que tiene de todo (ponele).</option>
-                        <option value="3">A Los Ángeles. A ver si me encuentro algun famoso.</option>
-                        <option value="4">Answer Testing</option>
+                        <option value="1">A EE.UU . Me cansaria de gastar.</option>
+                        <option value="2">A Tailandia. Tiene de todo.</option>
+                        <option value="3">A España.</option>
+                        <option value="4"> A Valeria del mar Y guardo la plata.</option>
                     </select>
                 </div>
 
@@ -80,7 +80,7 @@
                         <option value="1">Youtube.</option>
                         <option value="2">Instagram.</option>
                         <option value="3">Twitter.</option>
-                        <option value="4">Answer Testing</option>
+                        <option value="4">Tuenti.</option>
                     </select>
                 </div>
 
@@ -90,7 +90,7 @@
                         <option value="1">Con mi mama, Le cuento todo.</option>
                         <option value="2">Me vuelven locos todos en mi familia pero los quiero.</option>
                         <option value="3">Con mi papa, Me banca en todas.</option>
-                        <option value="4">Answer Testing</option>
+                        <option value="4">El perro/gato no molesta y me ama.</option>
                     </select>
                 </div>
 
@@ -100,7 +100,7 @@
                         <option value="1">A Justin Bieber, No me gusta mucho su música.</option>
                         <option value="2">A Eminem, No entiendo su estilo.</option>
                         <option value="3">A The weekend, me cae mal.</option>
-                        <option value="4">Answer Testing</option>
+                        <option value="4">La mayoria de bandas pop.</option>
                     </select>
                 </div>
 
@@ -131,13 +131,29 @@
         </div>
 
         <div *ngIf="showResultSection" class="container2">
-            <div *ngIf="this.playlistCreated">
+            <div *ngIf="this.recommended">
                 <img class="animate__animated animate__bounceInDown" src="assets/Dj.png"
-                    style="width: 200px; height: 200px;" alt="Dj">
+                    style="width: 100px; height: 100px;" alt="Dj">
                 <h1 class="animate__animated animate__zoomIn"><strong>"PLAYLIST CREADA CON EXITO"</strong></h1>
 
-                    <img type="button" class="animate__animated animate__bounceInUp" src="assets/Login.png" style="width: 40px; height: 40px;" alt="Recompilation" (click)="redirectToPlaylist()" />
-                    <span type="button" class="animate__animated animate__bounceInUp" (click)="redirectToPlaylist()"><strong>Presiona para escucharla</strong></span>
+                <div class="animate__animated animate__bounceInRight">
+                    <button class="btn-shine"
+                    (click)="postPlaylist();" [routerLink]="['/make-a-playlist']"><strong>Presiona para agregarla en spotify</strong></button>
+                </div>
+
+                <div *ngIf="this.recommended">
+                    <div class="tables">
+                        <div class="animate__animated animate__fadeInDown">
+                            <div *ngFor="let song of this.recommended.tracks; let i = index">
+                                <div class="table__profile">
+                                    <img src="{{ song.album.images[0].url }}" alt="Album Cover" class="album-cover">
+                                    <span class="table__name mx-auto">{{ song.name }}</span>
+                                    <span class="table__name mx-auto">{{ song.album.artists[0].name }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

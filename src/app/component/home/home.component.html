@@ -24,7 +24,7 @@
     
     <div class="persons-wrapper">
       <div class="object">
-        <div class="container">
+        <div class="container" type="button" [routerLink]="['/guess-song']">
           <div class="container-inner">
             <img class="circle" style=" background-color: #C193DC;">
             <img class="img img1" src="assets/HomeGuess.png">
@@ -37,8 +37,8 @@
       </div>
 
       <div class="object">
-        <div class="container">
-          <div class="container-inner">
+        <div class="container" type="button" [routerLink]="['/make-a-playlist']">
+          <div class="container-inner" >
             <img class="circle" style=" background-color: #FFE177;">
             <img class="img img3" src="assets/HomeMake.png">
           </div>
@@ -50,7 +50,7 @@
       </div>
 
       <div class="object">
-        <div class="container">
+        <div class="container" type="button" [routerLink]="['/stats']">
           <div class="container-inner">
             <img class="circle" style=" background-color: #F58A97;">
             <img class="img img2" src="assets/HomeStats.png">
@@ -63,7 +63,7 @@
       </div>
 
       <div class="object">
-        <div class="container">
+        <div class="container" type="button" [routerLink]="['/social']">
           <div class="container-inner">
             <img class="circle" style="background-color: #D1F19E;">
             <img class="img img4" src="assets/HomeSocial.png">
