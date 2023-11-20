@@ -96,6 +96,12 @@
             </div>
         </div>
 
+        <div *ngIf="win">
+            <div class="animate__animated animate__fadeInUp">
+                <h2 class="mx-auto"> VAS {{ points }} PUNTOS</h2>
+            </div>
+        </div>
+
         <audio id="loseSound" src="assets/wrong.mp3" preload="auto"></audio>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">

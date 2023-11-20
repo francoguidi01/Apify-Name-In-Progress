@@ -63,7 +63,6 @@ export class SpotifyService {
       "%20")}&response_type=token&show_dialog=true`;
   }
 
-
   getTokenDataFromUrl(): any {
     const hash = window.location.hash.substr(1);
     const result = hash.split('&').reduce(function (result: any, item: string) {
