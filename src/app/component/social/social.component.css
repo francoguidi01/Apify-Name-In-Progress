@@ -42,8 +42,8 @@
   border-radius: 10px;
   width: 300px;
   margin-left: -18%;
-
 }
+
 
 
 /*-----------------Search----------------*/
@@ -106,7 +106,6 @@ input::placeholder {
   font-weight: 400;
   padding: .5rem;
   border-bottom: solid 1px #f1f1f1;
-
 }
 
 .ulCompare {
@@ -170,22 +169,10 @@ input::placeholder {
 
 }
 
-.leaderboard__icon {
-  fill: #fff;
-  opacity: .35;
-  width: 50px;
-  position: absolute;
-  top: 50%;
-  left: var(--start);
-  transform: translate(-50%, -50%);
-
-}
-
-
-.leaderboard__profile {
+.table__profile {
   width: 270px;
   height: 60px;
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
   padding: 10px;
@@ -194,17 +181,19 @@ input::placeholder {
   cursor: pointer;
   transition: transform .25s cubic-bezier(.7, .98, .86, .98), box-shadow .25s cubic-bezier(.7, .98, .86, .98);
   background-color: rgba(255, 255, 255, 0.9);
-  margin-top: 1%;
+  margin-top: 1%; 
 
 }
 
-.leaderboard__profile:hover {
+
+
+.table__profile:hover {
   transform: scale(1.2);
   box-shadow: 0 9px 47px 11px rgba(51, 51, 51, 0.18);
 
 }
 
-.leaderboard__name {
+.table__name {
   color: #979cb0;
   font-weight: 600;
   font-size: 17px;

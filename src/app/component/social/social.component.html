@@ -16,11 +16,12 @@
                                 [ngClass]="{'followed': isFriend(friend),'not-followed': !isFriend(friend) }"
                                 (click)="selectedFriends(friend)" data-bs-toggle="modal" data-bs-target="#ModalFollow">
 
-                                <div class="name" target="_blank" type="button">
-                                    <p>{{friend.id}}</p>
+                                <div target="_blank" type="button">
+                                    <p style="margin-top: 10px;">{{friend.id}}</p>
                                 </div>
 
-                                <img [src]="friend.url_photo" alt="User Photo" class="user-photo rounded-circle">
+                                <img [src]="friend.url_photo" alt="User Photo" class="user-photo rounded-circle"
+                                    style="margin-top: 1px;">
                             </li>
                         </ul>
                     </div>
@@ -28,12 +29,13 @@
             </div>
         </div>
 
-        <div class="modal fade" id="ModalFollow" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false"
-            *ngIf="selectedFriend" >
+        <div class="modal fade" id="ModalFollow" data-bs-backdrop="static" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="false" *ngIf="selectedFriend">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.8);">
                     <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="hideComparisonOptions()"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            (click)="hideComparisonOptions()"></button>
                     </div>
                     <div class="modal-body">
                         <div class="d-flex align-items-center justify-content-around">
@@ -46,7 +48,7 @@
                                 <div style="margin-right: 20px;" class="text-center">
                                     <img src="assets/MyFollows.png" alt="imagen" style="width: 40px; height: 40px;">
                                     <p><strong>SEGUIDOS:{{ selectedUser.friends.length }}</strong></p>
-                                </div>                   
+                                </div>
                                 <div style="margin-left: 20px;" class="text-center">
                                     <img src="assets/Followers.png" alt="imagen" style="width: 40px; height: 40px;">
                                     <p><strong>SEGUIDORES:{{ selectedUser.followers.length }}</strong></p>
@@ -58,12 +60,11 @@
                     <div class="modal-footer d-flex justify-content-center">
                         <div class="modal-footer d-flex justify-content-center">
 
-                                <img src="assets/Follow.png" type="button" *ngIf="!isFriend(selectedFriend)"
-                                    (click)="onAddFriend(selectedFriend.id)" style="width: 50px; height: 50px; ">
-                                <p type="button" *ngIf="!isFriend(selectedFriend)"
-                                    (click)="onAddFriend(selectedFriend.id)">
-                                    <strong>SEGUIR</strong>
-                                </p>
+                            <img src="assets/Follow.png" type="button" *ngIf="!isFriend(selectedFriend)"
+                                (click)="onAddFriend(selectedFriend.id)" style="width: 50px; height: 50px; ">
+                            <p type="button" *ngIf="!isFriend(selectedFriend)" (click)="onAddFriend(selectedFriend.id)">
+                                <strong>SEGUIR</strong>
+                            </p>
 
                             <img src="assets/Unfollow.png" *ngIf="isFriend(selectedFriend) && !showComparison"
                                 type="button" (click)="unfollow(selectedFriend.id)" style="width: 50px; height: 50px;">
@@ -115,24 +116,27 @@
         <div class="col-md-6 text-center animate__animated animate__fadeInLeft">
             <div class="row">
                 <div>
-                    <img src="assets/MyFollows.png" alt="Imagen" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#leaderboardCollapse" aria-expanded="false" aria-controls="leaderboardCollapse"
-                        style="width: 60px; height: 60px;" (click)="getMyFriends">
+                    <img src="assets/MyFollows.png" alt="Imagen" style="width: 60px; height: 60px;">
                 </div>
                 <p><strong>MIS SEGUIDOS</strong></p>
             </div>
         </div>
 
         <div class="table-follows">
-            <div class="collapse" id="leaderboardCollapse">
-                <div class="animate__animated animate__fadeInLeftBig">
+            <div class="animate__animated animate__fadeInLeftBig">
+                <div *ngIf="friends && friends.length > 0; else noFriends">
                     <div *ngFor="let friend of friends; let i = index">
-                        <div class="leaderboard__profile">
+                        <div class="table__profile">
                             <img [src]="friend.url_photo" alt="User Photo" class="user-photo rounded-circle">
-                            <span class="leaderboard__name">{{ friend.display_name }}</span>
+                            <span class="table__name">{{ friend.display_name }}</span>
                         </div>
                     </div>
                 </div>
+                <ng-template #noFriends>
+                    <div class="table__profile" style="  display:flex">
+                        <span class="table__name">No sigues a nadie todavia.</span>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
@@ -141,25 +145,27 @@
         <div class="col-md-6 text-center animate__animated animate__fadeInRight">
             <div class="row">
                 <div>
-                    <img src="assets/Followers.png" alt="Imagen" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#leaderboardCollapse2" aria-expanded="false"
-                        aria-controls="leaderboardCollapse2" style="width: 60px; height: 60px; cursor: pointer;"
-                        (click)="getMyFollowers()">
+                    <img src="assets/Followers.png" alt="Imagen" style="width: 60px; height: 60px; cursor: pointer;">
                 </div>
                 <p><strong>MIS SEGUIDORES</strong></p>
             </div>
         </div>
 
         <div class="table-follows">
-            <div class="collapse" id="leaderboardCollapse2">
-                <div class="animate__animated animate__fadeInRightBig">
+            <div class="animate__animated animate__fadeInRightBig">
+                <div *ngIf="followers && followers.length > 0; else noFollowers">
                     <div *ngFor="let follower of followers; let i = index">
-                        <div class="leaderboard__profile">
+                        <div class="table__profile">
                             <img [src]="follower.url_photo" alt="User Photo" class="user-photo rounded-circle">
-                            <span class="leaderboard__name">{{ follower.display_name}}</span>
+                            <span class="table__name">{{ follower.display_name}}</span>
                         </div>
                     </div>
                 </div>
+                <ng-template #noFollowers>
+                    <div class="table__profile" style="  display:flex">
+                        <span class="table__name">No te sigue nadie todavia.</span>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>
@@ -177,7 +183,7 @@
                 </div>
             </div>
 
-            <div class="modal-body" *ngIf="myArtist && friendArtist" >
+            <div class="modal-body" *ngIf="myArtist && friendArtist">
                 <div class="row">
                     <div class="col">
                         <h3 class="text-center">TUYOS:</h3>
@@ -185,9 +191,9 @@
                             <li class="liCompare" *ngFor="let artist of myArtist.items"
                                 style="font-size: 15px; margin-top: 4%;">
                                 <div>
-                                        <img [src]="artist.images[0].url" alt="{{ artist.name }}"
+                                    <img [src]="artist.images[0].url" alt="{{ artist.name }}"
                                         style="width: 50px; height: 50px; border-radius: 10%;">
-                                        <strong> {{ artist.name }}</strong>
+                                    <strong> {{ artist.name }}</strong>
                                 </div>
                             </li>
                         </ul>
@@ -223,8 +229,8 @@
 </div>
 
 
-<div class="modal fade" id="modalcompareSongs"  data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabelSongs"
-    aria-hidden="true">
+<div class="modal fade" id="modalcompareSongs" data-bs-backdrop="static" tabindex="-1"
+    aria-labelledby="exampleModalLabelSongs" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" style="background-color: rgba(255, 255, 255, 0.8);">
 
@@ -242,7 +248,7 @@
                         <ul class="ulCompare">
                             <li class="liCompare" *ngFor="let song of mySong.items" style="font-size: 15px;"
                                 type="button">
-                                <div style="margin-top: 10%;">
+                                <div style="margin-top: 10%;" (click)="redirectSong(song.external_urls.spotify)">
                                     <img src="assets/Star.png" alt="StarImage" style="width: 20px; height: 20px;">
                                     <strong>"{{song.name}}"</strong>
                                 </div>
@@ -253,9 +259,9 @@
                     <div class="col">
                         <h3 class="text-center">SUYAS:</h3>
                         <ul class="ulCompare">
-                            <li class="liCompare" *ngFor="let song of friendSong.tracks"
-                                style="font-size: 15px;" type="button">
-                                <div style="margin-top: 10%;">
+                            <li class="liCompare" *ngFor="let song of friendSong.tracks" style="font-size: 15px;"
+                                type="button">
+                                <div style="margin-top: 10%;" (click)="redirectSong(song.external_urls.spotify)">
                                     <img src="assets/Star.png" alt="StarImage" style="width: 20px; height: 20px;">
                                     <strong>"{{ song.name }}"</strong>
                                 </div>

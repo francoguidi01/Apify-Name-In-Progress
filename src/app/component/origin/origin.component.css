@@ -109,5 +109,10 @@
       transition: all 650ms cubic-bezier(0.19, 1, 0.22, 1);
     }
   }
+
+  .imgLG{
+    width: 30px;
+    height: 30px;
+  }
   
 

@@ -40,6 +40,7 @@ export class SocialComponent {
 
   ngOnInit() {
     this.getMyFriends();
+    this.getMyFollowers();
   }
 
   constructor(private service: SpotifyService, private user_service: UsersDataService) {
@@ -47,6 +48,10 @@ export class SocialComponent {
     environment.token = JSON.parse(localStorage.getItem('userData') || '{}');
 
   }
+
+redirectSong(song: string){
+  window.open(song, '_blank');
+}
 
   searchFriends(event: any) {
     const query = event.target.value;
@@ -282,7 +287,6 @@ export class SocialComponent {
     this.getArtistDataFromMe();
 
   }
-  /*------------------SHOW FLAGS----------*/
 
   showComparisonOptions() {
     this.showComparison = true;

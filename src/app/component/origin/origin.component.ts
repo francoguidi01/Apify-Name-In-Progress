@@ -26,4 +26,6 @@ export class OriginComponent {
     this.service.loginSpotifyU(); 
   }
 
+ 
+
 }
