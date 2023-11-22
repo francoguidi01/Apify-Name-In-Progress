@@ -27,7 +27,7 @@ export class TopArtistComponent {
 
   getTopArtists(range: String): void {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
-    console.log(localTokenData);
+    //console.log(localTokenData);
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
       this.service.getTopArtists(this.token, range).subscribe(topArtists => {

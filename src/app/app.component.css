@@ -38,8 +38,8 @@ body{
 }
 
 .logo-image {
-    width: 400px; /* Ajusta el ancho según sea necesario */
-    height: auto; /* La altura se ajustará automáticamente para mantener la relación de aspecto */
+    width: 400px; 
+    height: auto;
 
 }
 

@@ -29,13 +29,13 @@ export class SpotifyService {
     })
       .then(response => {
         if (response.ok) {
-            return response.json();
+          return response.json();
         } else {
           throw new Error('Error al agregar usuario.');
         }
       })
       .then(data => {
-        console.log(data);
+       // console.log(data);
         alert('Usuario agregado con éxito.');
       })
       .catch(error => {
@@ -50,7 +50,6 @@ export class SpotifyService {
     const tokenData = this.getTokenDataFromUrl();
 
     if (Object.keys(tokenData).length === 0) {
-      console.log('gil');
     } else {
       if (!this.isTokenDataEqual(localTokenData, tokenData)) {
         localStorage.setItem('token', JSON.stringify(tokenData));
@@ -59,7 +58,7 @@ export class SpotifyService {
   }
 
   loginSpotifyU(): void {
-    window.location.href = `${environment.api_uri}?client_id=${environment.client_id}&redirect_uri=${environment.redirect_uri_home}&scope=${environment.scope.join(
+    window.location.href = `${environment.API_URL}?client_id=${environment.CLIENT_ID}&redirect_uri=${environment.REDIRECT_URL_HOME}&scope=${environment.SCOPES.join(
       "%20")}&response_type=token&show_dialog=true`;
   }
 
@@ -87,9 +86,9 @@ export class SpotifyService {
       localStorage.setItem('token', JSON.stringify(tokenData));
     }
 
-    console.log(tokenData);
+    //console.log(tokenData);
 
-    const body = 'grant_type=client_credentials&client_id=' + environment.client_id + '&client_secret=' + environment.client_secret_id;
+    const body = 'grant_type=client_credentials&client_id=' + environment.CLIENT_ID + '&client_secret=' + environment.CLIENT_SECRET_ID;
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
@@ -112,23 +111,14 @@ export class SpotifyService {
       return of(null);
     }
 
-    let PLAYLIST_URL: string;
-
-    if (!playlistUrl) {
-      PLAYLIST_URL = '1KJm1KEVA1xQ0YnuJ3mX3q?si=cdc8326412e04c0f';
-    } else {
-      PLAYLIST_URL = playlistUrl;
-    }
-    console.log(token.access_token);
-
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
     });
 
-    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}playlists/${PLAYLIST_URL}`, { headers })
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}playlists/${playlistUrl}`, { headers })
       .pipe(
         map((response: any) => {
-          console.log('Playlist Data:', response);
+       //   console.log('Playlist Data:', response);
           return response;
         })
       );
@@ -147,7 +137,7 @@ export class SpotifyService {
     return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/top/artists?time_range=${range}&limit=5`, { headers })
       .pipe(
         map((response: any) => {
-          console.log('TOP ARTISTS:', response);
+      //    console.log('TOP ARTISTS:', response);
           return response;
         }),
       );
@@ -170,26 +160,6 @@ export class SpotifyService {
       );
   }
 
-  //me/top/artists
-  //me/top/tracks
-  // getDataUser(token: TokenModel, range: String, endpoint: String) {
-  //   if (!token) {
-  //     console.error('Error: Token no disponible. Debes obtener el token primero.');
-  //     return of(null);
-  //   }
-  //   const headers = new HttpHeaders({
-  //     'Authorization': 'Bearer ' + token.access_token
-  //   });
-  //   return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}${endpoint}?time_range=${range}&limit=10`, { headers })
-  //     .pipe(
-  //       map((response: any) => {
-  //         console.log('TOP SONGS:', response);
-  //         return response;
-  //       }),
-  //     );
-  // }
-
-
   getAudioFeatures(token: TokenModel, ids: String) {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
@@ -197,54 +167,50 @@ export class SpotifyService {
     return this._httpClient.get(`https://api.spotify.com/v1/audio-features?ids=${ids}`, { headers })
       .pipe(
         map((response: any) => {
-          console.log('Audio Features:', response);
+        //  console.log('Audio Features:', response);
           return response;
         }),
       );
-    //https://api.spotify.com/v1/audio-features
   }
 
 
-getSongsById(ids: Array<String>, token: TokenModel)
-{
-  if (!token) {
-    console.error('Error: Token no disponible. Debes obtener el token primero.');
-    return of(null);
+  getSongsById(ids: Array<String>, token: TokenModel) {
+    if (!token) {
+      console.error('Error: Token no disponible. Debes obtener el token primero.');
+      return of(null);
+    }
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token.access_token
+    });
+
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}tracks?ids=${ids.join(',')}`, { headers })
+      .pipe(
+        map((response: any) => {
+         // console.log('TOP artist BY ID:', response);
+          return response;
+        }),
+      );
   }
-  const headers = new HttpHeaders({
-    'Authorization': 'Bearer ' + token.access_token
-  });
 
-  return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}tracks?ids=${ids.join(',')}`, { headers })
-    .pipe(
-      map((response: any) => {
-        console.log('TOP artist BY ID:', response);
-        return response;
-      }),
-    );
-}
+  getArtistsById(ids: Array<String>, token: TokenModel) {
+    if (!token) {
+      console.error('Error: Token no disponible. Debes obtener el token primero.');
+      return of(null);
+    }
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + token.access_token
+    });
 
-getArtistsById(ids: Array<String>, token: TokenModel)
-{
-  if (!token) {
-    console.error('Error: Token no disponible. Debes obtener el token primero.');
-    return of(null);
+    return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}artists?ids=${ids.join(',')}`, { headers })
+      .pipe(
+        map((response: any) => {
+          return response;
+        }),
+      );
   }
-  const headers = new HttpHeaders({
-    'Authorization': 'Bearer ' + token.access_token
-  });
-
-  return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}artists?ids=${ids.join(',')}`, { headers })
-    .pipe(
-      map((response: any) => {
-        return response;
-      }),
-    );
-}
 
 
-  getUserDataService(token: TokenModel): Observable<any>
-  {
+  getUserDataService(token: TokenModel): Observable<any> {
     if (!token) {
       console.error('Error: Token no disponible. Debes obtener el token primero.');
       return of(null);
@@ -253,8 +219,6 @@ getArtistsById(ids: Array<String>, token: TokenModel)
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
     });
-    //    https://api.spotify.com/v1/me
-
     return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}me/`, { headers })
       .pipe(
         map((response: any) => {
@@ -276,34 +240,31 @@ getArtistsById(ids: Array<String>, token: TokenModel)
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + token.access_token
     });
-  
+
     if (!values) {
       if (songDataIds) {
-        console.log('song data ids en SERVICE: ', songDataIds);
-        console.log(songDataIds.join(','));
+      //  console.log('song data ids en SERVICE: ', songDataIds);
+       // console.log(songDataIds.join(','));
         return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=15&seed_tracks=${songDataIds.join(',')}`, { headers })
           .pipe(
             map((response: any) => {
-              console.log('TOP RECOMMENDED:', response);
+          //    console.log('TOP RECOMMENDED:', response);
               return response;
             })
           );
       }
     } else {
-      console.log('values: ',values);
+      console.log('values: ', values);
       return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=15&seed_tracks=6OnfBiiSc9RGKiBKKtZXgQ&target_acousticness=${values[0]}&target_danceability=${values[1]}&target_energy=${values[2]}&target_popularity=${values[3]}&target_valence=${values[4]}`, { headers })
         .pipe(
           map((response: any) => {
-            console.log('TOP RECOMMENDED:', response);
+           // console.log('TOP RECOMMENDED:', response);
             return response;
           })
         );
     }
     return of(null);
   }
-
-
-  //users/{user_id}/playlists
 
   postPlaylist(token: TokenModel, user_id: String) {
     if (!token) {
@@ -315,7 +276,7 @@ getArtistsById(ids: Array<String>, token: TokenModel)
     });
     const body = {
       "name": "Playlist Creada con Apify!",
-      "description": "Holaaaa",
+      "description": "Playlist creada para el proyecto final de Laboratorio IV y Metodologia de Sistemas I",
       "public": true
     };
 

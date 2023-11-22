@@ -19,10 +19,9 @@ export class HomeComponent {
   topSongs: any;
   userDataToSave: UserData = new UserData;
   new: boolean = true;
-  imageUrl: string = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
+ 
 
   constructor(private service: SpotifyService, private user_service: UsersDataService) {
-    environment.token = JSON.parse(localStorage.getItem('token') || '{}');
   }
 
   ngOnInit(): void {
@@ -53,22 +52,20 @@ export class HomeComponent {
     this.userDataToSave = {
       id: userData.id,
       display_name: userData.display_name,
-      url_photo: userData.images && userData.images.length > 1 ? userData.images[1].url : this.imageUrl
+      url_photo: userData.images && userData.images.length > 1 ? userData.images[1].url : environment.IMG_PROFILE_USER_URL
     };
 
-    this.imageUrl = this.userDataToSave.url_photo || '';
-
-
+   
     this.user_service.addUser(this.userDataToSave).subscribe(
       (data) => {
         localStorage.setItem('userData', JSON.stringify(this.userDataToSave));
         this.getTopSongs();
         this.getTopArtist();
-        console.log('added', data);
+       // console.log('added', data);
       },
       (error) => {
         if (error.status === 409) {
-          console.log('User already exists. Adding to local storage...');
+         // console.log('User already exists. Adding to local storage...');
           localStorage.setItem('userData', JSON.stringify(this.userDataToSave));
           this.new = false;
         } else {

@@ -26,9 +26,6 @@ export class NavbarComponent {
   userDataToSave: UserData = new UserData;
 
   constructor(private service: SpotifyService, private user_service: UsersDataService, private router: Router) {
-    environment.token = JSON.parse(localStorage.getItem('token') || '{}');
-    environment.token = JSON.parse(localStorage.getItem('userData') || '{}');
-
   }
 
 
@@ -37,7 +34,7 @@ export class NavbarComponent {
     const userId = JSON.parse(localStorage.getItem('userData') || '{}').id;
 
     this.user_service.deleteUser(userId).subscribe(response => {
-      console.log('Usuario eliminado con éxito', response);
+     // console.log('Usuario eliminado con éxito', response);
 
     }, error => {
       console.error('Error al eliminar usuario:', error.error);

@@ -34,9 +34,6 @@ export class GuessSongComponent {
 
 
   constructor(private service: SpotifyService, private user_service: UsersDataService) {
-    environment.token = JSON.parse(localStorage.getItem('token') || '{}');
-    environment.token = JSON.parse(localStorage.getItem('userData') || '{}');
-
   }
 
   ngOnInit() {
@@ -50,7 +47,7 @@ export class GuessSongComponent {
     this.gameStarted = true;
     this.getTheLeaderboard();
 
-    this.service.getPlaylist(localtoken, environment.playlisturl).subscribe(playlist => {
+    this.service.getPlaylist(localtoken, environment.PLAYLIST_URL).subscribe(playlist => {
       if (playlist) {
         this.playlist = playlist;
         this.playTheGame();
@@ -72,7 +69,7 @@ export class GuessSongComponent {
 
     const winningTrackIndex = Math.floor(Math.random() * 4);
     this.winningTrack = this.randomSongs[winningTrackIndex];
-    console.log(this.winningTrack);
+   // console.log(this.winningTrack);
 
     const audioPlayer: HTMLAudioElement = document.getElementById('audioPlayer') as HTMLAudioElement;
     audioPlayer.src = this.winningTrack.track.preview_url;
@@ -122,7 +119,6 @@ export class GuessSongComponent {
     if (selectedTrack === this.winningTrack) {
       this.points += 100;
       this.updatePoints();
-      console.log(this.points);
       this.newGame();
     } else {
       this.onAddLeader();
@@ -163,10 +159,7 @@ export class GuessSongComponent {
         this.getTheLeaderboard();
 
       });
-    } else {
-      console.log("Los puntos fueron 0 ni lo agrego");
-    }
-    
+    } 
   }
 
 

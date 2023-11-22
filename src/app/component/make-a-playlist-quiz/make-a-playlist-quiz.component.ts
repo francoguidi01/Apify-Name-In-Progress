@@ -13,8 +13,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 })
 export class MakeAPlaylistQuizComponent {
 
-  ngOnInit() {
-  }
+
   currentQuestion: number = 1;
   totalQuestions: number = 9;
   quiz: QuizModel = new QuizModel();
@@ -24,8 +23,6 @@ export class MakeAPlaylistQuizComponent {
   showResultSection:boolean= false;
 
   constructor(private formBuilder: FormBuilder, private service: SpotifyService, private http: HttpClient) {
-    environment.token = JSON.parse(localStorage.getItem('token') || '{}');
-    environment.token = JSON.parse(localStorage.getItem('userData') || '{}');
     this.quizForm = this.formBuilder.group({
       'question1': new FormControl(this.quiz.question1, [Validators.required]),
       'question2': new FormControl(this.quiz.question2, [Validators.required]),
@@ -95,7 +92,7 @@ export class MakeAPlaylistQuizComponent {
       targets['popularity'].toString(),
       targets['valence'].toString()
     ];
-    console.log('array data: ', arrayData)
+   // console.log('array data: ', arrayData)
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
     if (Object.keys(localTokenData).length !== 0) {
       this.service.getRecommendations(localTokenData, null, arrayData).subscribe(recommended => {
@@ -105,7 +102,7 @@ export class MakeAPlaylistQuizComponent {
     } else {
       this.service.get_token().subscribe(token => {
         this.service.getRecommendations(localTokenData, null, arrayData).subscribe(recommended => {
-          console.log('canciones recomendadas 1: ', recommended);
+      //    console.log('canciones recomendadas 1: ', recommended);
 
         });
       });
@@ -135,24 +132,20 @@ export class MakeAPlaylistQuizComponent {
       this.service.postPlaylist(localTokenData, userId).subscribe(playlistCreated => {
         this.playlistCreated = playlistCreated;
         this.getSongsRecommendedURIS();
-        console.log(this.playlistCreated);
-      });
-    } else {
-      this.service.get_token().subscribe(token => {
-        this.getSongsRecommendedURIS();
+    //    console.log(this.playlistCreated);
       });
     }
   }
 
   uriIds: Array<String> = [];
   getSongsRecommendedURIS() {
-    console.log('canciones recomendadas2: ', this.recommended);
+   // console.log('canciones recomendadas2: ', this.recommended);
 
     this.recommended.tracks.forEach((tracks: { uri: String }) => {
       this.uriIds.push(tracks.uri);
     });
     this.postSongOnPlaylist();
-    console.log(this.uriIds);
+   // console.log(this.uriIds);
   }
 
   postSongOnPlaylist() {
@@ -161,10 +154,6 @@ export class MakeAPlaylistQuizComponent {
     if (Object.keys(localTokenData).length !== 0) {
 
       this.service.postSongOnPlaylist(localTokenData, this.playlistCreated.id, this.uriIds).subscribe(songsAdded => {
-        this.redirectToPlaylist();
-      });
-    } else {
-      this.service.get_token().subscribe(token => {
         this.redirectToPlaylist();
       });
     }

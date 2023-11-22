@@ -8,7 +8,6 @@ import { NavbarComponent } from './component/navbar/navbar.component';
 import { GuessSongComponent } from './component/guess-song/guess-song.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { SpotifyService } from './service/spotify.service';
 import { MakeAPlaylistComponent } from './component/make-a-playlist/make-a-playlist.component';
 import { HomeComponent } from './component/home/home.component';
 import { SocialComponent } from './component/social/social.component';
@@ -40,7 +39,6 @@ import { TopSongComponent } from './component/top-song/top-song.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  //ACA IRIA ESTE SERVICE SpotifyService
   providers: [],
   bootstrap: [AppComponent]
 })

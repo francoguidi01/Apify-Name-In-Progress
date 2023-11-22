@@ -11,8 +11,7 @@ import { SpotifyService } from '../../service/spotify.service';
 })
 export class SocialComponent {
 
-  userFromDatabase: any;
-  userDataToSave: UserData = new UserData;
+
   friends: any[] = [];
   followers: any[] = [];
   filteredFriends: any[] = [];
@@ -44,9 +43,6 @@ export class SocialComponent {
   }
 
   constructor(private service: SpotifyService, private user_service: UsersDataService) {
-    environment.token = JSON.parse(localStorage.getItem('token') || '{}');
-    environment.token = JSON.parse(localStorage.getItem('userData') || '{}');
-
   }
 
 redirectSong(song: string){
@@ -110,7 +106,7 @@ redirectSong(song: string){
       if (Array.isArray(myFriendsData)) {
         this.friends = myFriendsData.map(friend => friend.user2);
         if (this.friends.some(friend => friend.id === friendId)) {
-          console.log('El amigo ya está en tu lista de amigos.');
+        //  console.log('El amigo ya está en tu lista de amigos.');
           return;
         } else {
           this.user_service.addNewFriend(FriendToSave).subscribe(data => {
@@ -159,13 +155,13 @@ redirectSong(song: string){
 
           if (currentFriendId === friendId) {
             this.user_service.deleteFriend(friendData.id_friend).subscribe(response => {
-              console.log(`Amigo con ID ${friendData.id_friend} eliminado correctamente.`);
+            //  console.log(`Amigo con ID ${friendData.id_friend} eliminado correctamente.`);
               this.getMyFriends();
             }, error => {
               console.error(`Error al eliminar amigo con ID ${friendData.id_friend}: ${error}`);
               this.getMyFriends();
             });
-            console.log(`Unfollowing friend with ID: ${friendId}`);
+        //    console.log(`Unfollowing friend with ID: ${friendId}`);
             this.getMyFriends();
           }
         });

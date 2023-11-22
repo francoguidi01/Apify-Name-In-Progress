@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -10,36 +11,8 @@ export class UsersDataService {
   constructor(private httpClient: HttpClient) { }
 
 
-  // URL de la API ficticia (reemplaza con la URL de tu API real)
-  apiUrl = "http://localhost:8080/user/get-all-users";
-
-  allSongs = "http://localhost:8080/songs/get-all-songs";
-  allLeader = "http://localhost:8080/leaderboard/get-leaderboard";
-  AllFriends="http://localhost:8080/friends/get-all-friends";
-
-  
-  userById = "http://localhost:8080/user/get-an-user/";
-  songById = "http://localhost:8080/songs/get-dto-songs-by-id/";
-  artistById = "http://localhost:8080/artists/get-dto-artist-by-id/"
-  leaderboardById = "http://localhost:8080/leaderboard/get-leaderboard-by-user/";
-  getFriendById = "http://localhost:8080/friends/get-friends-by-user/";
-
-
-  deleteUserUrl = "http://localhost:8080/user/delete/";
-  deleteFriendUrl = "http://localhost:8080/friends/delete-friend/";
-  deleteSongsUrl = "http://localhost:8080/songs/delete-song/";
-  deleteArtistUrl = "http://localhost:8080/artists/delete-artist/";
-  deleteLeaderboardUrl = "http://localhost:8080/leaderboard/delete-leaderboard-by-user/";
-
-  addUrl = "http://localhost:8080/user/add";
-  addSongUrl = "http://localhost:8080/songs/add-song";
-  addArtistUrl = "http://localhost:8080/artists/add-artist";
-  addToLeaderUrl = "http://localhost:8080/leaderboard/add-leaderboard";
-  addFriendUrl = "http://localhost:8080/friends/add-friend";
-
-
   searchFriends(query: string) {
-    return this.httpClient.get(this.apiUrl).pipe(
+    return this.httpClient.get(environment.GET_ALL_USERS).pipe(
       map((users: any) =>
         users.filter((user: any) =>
           user.id.toLowerCase().includes(query.toLowerCase())
@@ -49,74 +22,69 @@ export class UsersDataService {
   }
 
   getAllUsers() {
-
-    return this.httpClient.get(this.apiUrl);
+    return this.httpClient.get(environment.GET_ALL_USERS);
   }
 
   getAllLeaderboard() {
-    return this.httpClient.get(this.allLeader);
+    return this.httpClient.get(environment.GET_ALL_LEADERBOARD);
   }
 
   getAllFriends() {
-    return this.httpClient.get(this.AllFriends);
+    return this.httpClient.get(environment.GET_ALL_FRIENDS);
   }
 
   getUserById(id: string) {
-    return this.httpClient.get(this.userById + id);
+    return this.httpClient.get(environment.GET_USER_BY_ID + id);
   }
 
   getFriendsById(id: string) {
-    return this.httpClient.get(this.getFriendById + id);
-  }
-
-  getLeaderboardById(id: string) {
-    return this.httpClient.get(this.leaderboardById + id);
+    return this.httpClient.get(environment.GET_FRIEND_BY_ID + id);
   }
 
 
   getSongById(id: string) {
-    return this.httpClient.get(this.songById + id);
+    return this.httpClient.get(environment.GET_SONG_BY_ID + id);
   }
 
   getArtistById(id: string) {
-    return this.httpClient.get(this.artistById + id);
+    return this.httpClient.get(environment.GET_ARTIST_BY_ID + id);
   }
   getAllSongs() {
-    return this.httpClient.get(this.allSongs);
+    return this.httpClient.get(environment.GET_ALL_SONGS);
   }
 
   deleteUser(id: string) {
-    return this.httpClient.delete(this.deleteUserUrl + id);
+    return this.httpClient.delete(environment.DELETE_USER_URL + id);
   }
 
   deleteFriend(id: string) {
-    return this.httpClient.delete(this.deleteFriendUrl + id);
+    return this.httpClient.delete(environment.DELETE_FRIEND_URL + id);
   }
 
   deleteSong(id: string) {
-    return this.httpClient.delete(this.deleteSongsUrl + id);
+    return this.httpClient.delete(environment.DELETE_SONGS_URL + id);
   }
 
   deleteArtist(id: string) {
-    return this.httpClient.delete(this.deleteArtistUrl + id);
+    return this.httpClient.delete(environment.DELETE_ARTIST_URL + id);
   }
 
   deleteLeaderboard(id: string) {
-    return this.httpClient.delete(this.deleteLeaderboardUrl + id);
+    return this.httpClient.delete(environment.DELETE_LEADERBOARD_URL + id);
   }
 
   addUser(newData: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.httpClient.post(this.addUrl, newData, { headers });
+    return this.httpClient.post(environment.ADD_USER_URL, newData, { headers });
   }
 
   addSongs(newData: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.httpClient.post(this.addSongUrl, newData, { headers });
+    return this.httpClient.post(environment.ADD_SONG_URL, newData, { headers });
   }
 
   addArtist(newData: any) {
@@ -124,21 +92,21 @@ export class UsersDataService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.httpClient.post(this.addArtistUrl, newData, { headers });
+    return this.httpClient.post(environment.ADD_ARTIST_URL, newData, { headers });
   }
 
   addToLeader(newData: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.httpClient.post(this.addToLeaderUrl, newData, { headers });
+    return this.httpClient.post(environment.ADD_TO_LEADER_URL, newData, { headers });
   }
 
   addNewFriend(newData: any) {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
-    return this.httpClient.post(this.addFriendUrl, newData, { headers });
+    return this.httpClient.post(environment.ADD_FRIEND_URL, newData, { headers });
   }
 
 }

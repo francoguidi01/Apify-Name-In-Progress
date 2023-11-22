@@ -10,13 +10,9 @@ export class MakeAPlaylistRecommendationsComponent {
 
   ngOnInit(): void {
     this.getTopSongs();
-
   }
 
   constructor(private service: SpotifyService) {
-    environment.token = JSON.parse(localStorage.getItem('token') || '{}');
-    environment.token = JSON.parse(localStorage.getItem('userData') || '{}');
-
   }
 
   token: any;
@@ -32,7 +28,6 @@ export class MakeAPlaylistRecommendationsComponent {
     if (this.showResultSection) {
       const yeah = document.getElementById('yeahSound') as HTMLAudioElement;
       yeah.play();
-
     }
   }
 
@@ -67,7 +62,7 @@ export class MakeAPlaylistRecommendationsComponent {
       this.idsArray.push(items.id);
     });
     this.getRecommendations();
-    console.log(this.idsArray);
+   // console.log(this.idsArray);
   }
 
 
