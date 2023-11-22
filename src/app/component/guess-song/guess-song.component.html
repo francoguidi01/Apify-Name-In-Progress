@@ -48,13 +48,20 @@
         <div class="collapse" id="leaderboardCollapse" *ngIf="!gameStarted"
             style=" margin-left: 76% ; margin-top: -8%;">
             <div class="animate__animated animate__fadeInRightBig">
-                <div *ngFor="let user of leaderboardData; let i = index">
-                    <div class="leaderboard__profile">
-                        <img [src]="user.url_photo" alt="profile-photo" class="user-photo rounded-circle">
-                        <span class="leaderboard__name">{{ user.displayName }}</span>
-                        <span class="leaderboard__value">{{ user.points }}<span>puntos</span></span>
+                <div *ngIf="leaderboardData && leaderboardData.length > 0; else noLeader">
+                    <div *ngFor="let user of leaderboardData; let i = index">
+                        <div class="leaderboard__profile">
+                            <img [src]="user.url_photo" alt="profile-photo" class="user-photo rounded-circle">
+                            <span class="leaderboard__name">{{ user.displayName }}</span>
+                            <span class="leaderboard__value">{{ user.points }}<span>puntos</span></span>
+                        </div>
                     </div>
                 </div>
+                <ng-template #noLeader>
+                    <div class="leaderboard__profile" style="display:flex">
+                        <span class="leaderboard__name mx-auto">Nadie lidera la tabla todavia.</span>
+                    </div>
+                </ng-template>
             </div>
         </div>
 

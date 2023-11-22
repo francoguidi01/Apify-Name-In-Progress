@@ -167,17 +167,6 @@ h2{
 
 /*-----------------------------------------------------------------*/
 
-.leaderboard__icon {
-    fill: #fff;
-    opacity: .35;
-    width: 50px;
-    position: absolute;
-    top: 50%;
-    left: var(--start);
-    transform: translate(-50%, -50%);
-}
-
-
 .leaderboard__profile {
     width: 300px;
     height: 60px;
