@@ -26,6 +26,7 @@ export class GuessSongComponent {
 
   win: boolean = false;
   gameStarted: boolean = false;
+  finishGame: boolean = false;
   leaderboardData: any;
 
   userFromDatabase: any;
@@ -126,6 +127,7 @@ export class GuessSongComponent {
       this.disableOptions();
       this.win = false;
       this.gameStarted = false;
+      this.finishGame=true;
       this.magicButton.nativeElement.click();
     }
 

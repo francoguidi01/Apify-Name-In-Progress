@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { SpotifyService } from 'src/app/service/spotify.service';
 
 @Component({
@@ -10,6 +10,11 @@ export class TopSongComponent {
   token: any;
   topSongs: any;
   seccionAbierta: string | null = null;
+  averageText: string = '';
+  averageCalculation: string = '';
+  averageFlag: boolean = false;
+  @ViewChild('magicButton1') magicButton1: any;
+  @ViewChild('magicButton2') magicButton2: any;
 
   constructor(private service: SpotifyService) {
 
@@ -26,17 +31,19 @@ export class TopSongComponent {
 
   getTopSongs(range: String): void {
     const localTokenData = JSON.parse(localStorage.getItem('token') || '{}');
-  //  console.log(localTokenData);
+    //  console.log(localTokenData);
     if (Object.keys(localTokenData).length !== 0) {
       this.token = localTokenData;
       this.service.getTopSongs(this.token, range, 5).subscribe(topSongs => {
         this.topSongs = topSongs;
+        this.averageFlag = true;
       });
     } else {
       this.service.get_token().subscribe(token => {
         this.token = token;
         this.service.getTopSongs(this.token, range, 5).subscribe(topSongs => {
           this.topSongs = topSongs;
+          this.averageFlag = true;
         });
       });
     }
@@ -44,7 +51,6 @@ export class TopSongComponent {
 
   show_promedio: boolean = false;
   promedio: number = 0;
-  you_are_normie: string = '';
 
   promedio_popularity() {
     let sum_popularity = 0;
@@ -58,21 +64,27 @@ export class TopSongComponent {
       this.promedio = sum_popularity / this.topSongs.items.length;
       this.show_promedio = true;
 
+      this.averageText = '';
+      this.averageCalculation = '';
+
       if (this.promedio < 50) {
-        this.you_are_normie = 'No sos, bro tranqui';
-        console.log(this.you_are_normie);
+        this.averageText += 'No sos tan apegado a lo popular, sos mas tranqui. ';
       } else {
-        this.you_are_normie = '¡Aguante Ed Sheeran, ¿no?';
-        console.log(this.you_are_normie);
+        this.averageText += 'Escuchas lo mismo que los demas, nada de especial. ';
       }
-      console.log(this.promedio);
 
     } else {
       this.promedio = 0;
       this.show_promedio = false;
     }
+
+    this.getAudioFeatures();
   }
+
+
   audioFeatures: any;
+
+
   getAudioFeatures() {
     if (this.topSongs) {
       let ids = '';
@@ -85,12 +97,13 @@ export class TopSongComponent {
       this.service.getAudioFeatures(this.token, ids).subscribe(audioFeatures => {
         this.audioFeatures = audioFeatures;
         console.log(this.audioFeatures);
+        this.getAudioStats();
       });
     }
   }
 
-  getAudioStats() {
 
+  getAudioStats() {
     if (this.audioFeatures) {
       let sum_acousticness = 0;
       let sum_danceability = 0;
@@ -112,53 +125,63 @@ export class TopSongComponent {
       console.log('Suma de energy:', sum_energy);
       console.log('Suma de instrumentalness:', sum_instrumentalness);
 
+      this.averageCalculation += 'Tus canciones se acercan al ' + this.promedio.toFixed(2) + '% de lo que escucha la gente. ';
+      this.averageCalculation += 'Además, son un ' + sum_acousticness.toFixed(2) + '% acústicas, ';
+      this.averageCalculation += 'pero un ' + sum_instrumentalness.toFixed(2) + '% instrumentales y ';
+      this.averageCalculation += 'un ' + sum_danceability.toFixed(2) + '% bailables, ';
+      this.averageCalculation += 'un ' + sum_liveness.toFixed(2) + '% tocadas en vivo, ';
+      this.averageCalculation += 'y un ' + sum_energy.toFixed(2) + '% enérgicas.';
+
+
+
+
       if (sum_acousticness < 10) {
-        console.log('no te gusta mucho lo acustico no?: acousticness');
-      }
-      if (sum_danceability < 10) {
-        console.log('Parece que no te gusta mucho la música bailable: danceability.');
-      }
-      if (sum_liveness < 10) {
-        console.log('No pareces ser fan de las actuaciones en vivo: liveness.');
-      }
-      if (sum_energy < 10) {
-        console.log('Tu música no es muy enérgica: energy.');
+        this.averageText += 'No sos muy fan de lo acústico ';
       } else {
-        console.log('te gusta el ruido eh: energy')
+        this.averageText += 'Te gusta mas lo que viene siendo lo acústico ';
       }
+
+      if (sum_danceability < 10) {
+        this.averageText += 'y parece que no te gusta mucho bailar aunque ';
+      } else {
+        this.averageText += 'y parece que te gusta mucho bailar aqunque ';
+      }
+
+      if (sum_liveness < 10) {
+        this.averageText += 'disfrutas mas de la cancion si no esta tocada en vivo. ';
+      } else {
+        this.averageText += 'disfrutas mas de la cancion si es tocada en vivo. ';
+      }
+
+      if (sum_energy < 10) {
+        this.averageText += 'Lo que si preferis la música menos enérgica ';
+      } else {
+        this.averageText += 'Lo que si preferis la música mas enérgica ';
+      }
+
       if (sum_instrumentalness < 10) {
-        console.log('Parece que prefieres música vocal en lugar de instrumental.: instrumentalness');
+        this.averageText += 'y todas las canciones que son pura letra.';
+      } else {
+        this.averageText += 'y todas las canciones que son pura instrumental.';
       }
+
+
+
     }
+    console.log(this.averageText);
   }
 
-  currentAudio: HTMLAudioElement | undefined = undefined;
-  // currentUrl: string = '';
-  previewStarted: boolean = true;
 
-  playPreview(audioUrl: string) {
-    if (this.currentAudio) {
-      this.currentAudio.pause();
-    }
-    if (audioUrl) {
-      const audio: HTMLAudioElement = new Audio(audioUrl);
-      audio.play();
-      this.currentAudio = audio;
-      //this.currentUrl = audioUrl;
-      this.previewStarted = false;
+  getAverage() {
+    if (this.averageFlag === true) {
+      this.promedio_popularity();
+      this.averageFlag = false;
+      this.magicButton1.nativeElement.click();
+      console.log(this.averageText);
     } else {
-      alert('No tiene preview :(');
+      this.magicButton2.nativeElement.click();
     }
+    console.log(this.averageText);
   }
-
-  pausePreview() {
-    if (this.currentAudio) {
-      this.currentAudio.pause();
-    }
-    this.previewStarted = true;
-    console.log('holaAAAAAAAAAAAAAAAaaaAaA');
-  }
-
-
 
 }

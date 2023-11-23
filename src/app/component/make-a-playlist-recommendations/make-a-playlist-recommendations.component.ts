@@ -57,7 +57,7 @@ export class MakeAPlaylistRecommendationsComponent {
 
 
   getSongsId() {
-    console.log(this.topSongs)
+    //console.log(this.topSongs)
     this.topSongs.items.forEach((items: { id: String }) => {
       this.idsArray.push(items.id);
     });

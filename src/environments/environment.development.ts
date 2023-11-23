@@ -17,7 +17,6 @@ export const environment = {
         "playlist-modify-public",
         "playlist-modify-private"
     ],
-    TOKEN: null,
     PLAYLIST_URL: '1KJm1KEVA1xQ0YnuJ3mX3q?si=cdc8326412e04c0f',
     IMG_PROFILE_USER_URL:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
 

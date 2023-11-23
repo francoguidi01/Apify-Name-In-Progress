@@ -254,7 +254,7 @@ export class SpotifyService {
           );
       }
     } else {
-      console.log('values: ', values);
+      //console.log('values: ', values);
       return this._httpClient.get(`${environment.API_SPOTIFY_ALL_DATA}recommendations?limit=15&seed_tracks=6OnfBiiSc9RGKiBKKtZXgQ&target_acousticness=${values[0]}&target_danceability=${values[1]}&target_energy=${values[2]}&target_popularity=${values[3]}&target_valence=${values[4]}`, { headers })
         .pipe(
           map((response: any) => {
