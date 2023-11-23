@@ -37,6 +37,7 @@ export class TopSongComponent {
       this.service.getTopSongs(this.token, range, 5).subscribe(topSongs => {
         this.topSongs = topSongs;
         this.averageFlag = true;
+        this.promedio_popularity();
       });
     } else {
       this.service.get_token().subscribe(token => {
@@ -44,6 +45,7 @@ export class TopSongComponent {
         this.service.getTopSongs(this.token, range, 5).subscribe(topSongs => {
           this.topSongs = topSongs;
           this.averageFlag = true;
+          this.promedio_popularity();
         });
       });
     }
@@ -92,11 +94,9 @@ export class TopSongComponent {
       this.topSongs.items.forEach((item: { id: String; }) => {
         ids += `,${item.id}`;
       });
-      console.log(ids);
-
+      
       this.service.getAudioFeatures(this.token, ids).subscribe(audioFeatures => {
         this.audioFeatures = audioFeatures;
-        console.log(this.audioFeatures);
         this.getAudioStats();
       });
     }
@@ -111,7 +111,7 @@ export class TopSongComponent {
       let sum_energy = 0;
       let sum_instrumentalness = 0;
       const audioFeaturesWithoutNull = this.audioFeatures.audio_features.slice(1);
-      console.log(audioFeaturesWithoutNull);
+
       audioFeaturesWithoutNull.forEach((song: { acousticness: any; danceability: any; liveness: any; energy: any; instrumentalness: any; }) => {
         sum_acousticness += song.acousticness;
         sum_danceability += song.danceability;
@@ -119,11 +119,6 @@ export class TopSongComponent {
         sum_energy += song.energy;
         sum_instrumentalness += song.instrumentalness;
       });
-      console.log('Suma de acousticness:', sum_acousticness);
-      console.log('Suma de danceability:', sum_danceability);
-      console.log('Suma de liveness:', sum_liveness);
-      console.log('Suma de energy:', sum_energy);
-      console.log('Suma de instrumentalness:', sum_instrumentalness);
 
       this.averageCalculation += 'Tus canciones se acercan al ' + this.promedio.toFixed(2) + '% de lo que escucha la gente. ';
       this.averageCalculation += 'Además, son un ' + sum_acousticness.toFixed(2) + '% acústicas, ';
@@ -165,23 +160,17 @@ export class TopSongComponent {
         this.averageText += 'y todas las canciones que son pura instrumental.';
       }
 
-
-
     }
-    console.log(this.averageText);
   }
 
 
   getAverage() {
     if (this.averageFlag === true) {
-      this.promedio_popularity();
-      this.averageFlag = false;
       this.magicButton1.nativeElement.click();
-      console.log(this.averageText);
+      this.averageFlag = false;
     } else {
       this.magicButton2.nativeElement.click();
     }
-    console.log(this.averageText);
   }
 
 }
