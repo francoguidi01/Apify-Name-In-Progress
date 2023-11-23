@@ -2,15 +2,17 @@
     <div class="background">
         <app-navbar></app-navbar>
 
-        <div class="animate__animated animate__jackInTheBox">
+        <span class="animate__animated animate__jackInTheBox">
+            <img src="assets/Average.png" type="button" alt="image_back" style="width: 35px; height: 35px; margin-top: 10px; margin-left: 690px;"
+            (click)="getAverage()">
             <div class="text-center" style="margin-top: 10px; margin-left: 45px;">
-                <img src="assets/Average.png" type="button" alt="image_back" style="width: 35px; height: 35px;"
-                    (click)="getAverage()">
-                <p type="button" (click)="getAverage()">
-                    <strong>¿QUIEN ERES MUSICALMENTE?</strong>
-                </p>
+                <span>
+                    <span type="button" (click)="getAverage()">
+                        <strong>¿QUIEN ERES MUSICALMENTE?</strong>
+                    </span>
+                </span>
             </div>
-        </div>
+        </span>
 
         <div class="buttons">
 
